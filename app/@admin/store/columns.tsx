@@ -1,20 +1,11 @@
 "use client";
 
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 
 import type { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+
+import TableRowAction from "@/components/TableRowAction";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -97,33 +88,7 @@ export const columns: ColumnDef<StoreType>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
-
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0 outline-none">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className="h-4 w-4" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              className="hover:bg-primary-blue hover:text-white"
-              onClick={() =>
-                navigator.clipboard.writeText(payment.id.toString())
-              }
-            >
-              Edit
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-red-500 hover:text-white">
-              Delete
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <TableRowAction row={row} />;
     },
   },
 ];

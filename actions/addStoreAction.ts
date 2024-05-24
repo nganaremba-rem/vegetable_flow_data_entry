@@ -1,9 +1,10 @@
 "use server";
 
-import { addStoreFormSchema } from "@/app/@admin/store/add/AddStoreformSchema";
+import { StoreSchema } from "@/schema/StoreSchema";
+import { revalidateTag } from "next/cache";
 
 export async function addStoreAction(formData: FormData) {
-	const validatedFields = addStoreFormSchema.safeParse({
+	const validatedFields = StoreSchema.safeParse({
 		storeId: formData.get("storeId"),
 		storeName: formData.get("storeName"),
 		salesRep: formData.get("salesRep"),
@@ -41,6 +42,7 @@ export async function addStoreAction(formData: FormData) {
 			};
 		}
 
+		revalidateTag("store");
 		return {
 			message: responseData?.message || "Store added successfully",
 			issues: [],
@@ -57,7 +59,7 @@ export async function addStoreAction(formData: FormData) {
 // 	prevState: AddFormState,
 // 	formData: FormData,
 // ) {
-// 	const validatedFields = addStoreFormSchema.safeParse({
+// 	const validatedFields = StoreSchema.safeParse({
 // 		storeId: formData.get("storeId"),
 // 		storeName: formData.get("storeName"),
 // 		salesRep: formData.get("salesRep"),

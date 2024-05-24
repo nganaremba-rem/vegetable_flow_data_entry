@@ -11,6 +11,9 @@ async function getData(): Promise<StoreType[]> {
   // Fetch data from your API here.
   const response = await fetch("http://burn.pagekite.me/store/getAll", {
     cache: "no-cache",
+    next: {
+      tags: ["store"],
+    },
   });
 
   // const response = await fetch(
@@ -35,7 +38,7 @@ export default async function Store() {
     <>
       <div className="p-2">
         <div className="flex justify-between items-center px-3 md:px-10">
-          <h1 className="font-extrabold text-xl">Store</h1>
+          <h1 className="font-extrabold text-xl px-10">Store</h1>
           <div className="flex items-center gap-4">
             <CSVDownloadButton />
             <Link href={"/store/add"}>

@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRef, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { formSchema } from "./LoginFormSchema";
+import { formSchema } from "../../schema/LoginFormSchema";
 
 type FormSchema = z.infer<typeof formSchema>;
 
@@ -43,6 +43,9 @@ export default function Login() {
     formData.append("email", form.getValues("email"));
     formData.append("password", form.getValues("password"));
     const { issues, message } = await loginAction(formData);
+    if (issues.length === 0) {
+      form.reset();
+    }
     setState({ issues: [...issues], message });
   };
 

@@ -19,14 +19,15 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
-import { addStoreFormSchema } from "./AddStoreformSchema";
+import { StoreSchema } from "@/schema/StoreSchema";
+import { revalidateTag } from "next/cache";
 
 export type AddFormState = {
   issues: string[];
   message: string;
 };
 
-type FormSchema = z.infer<typeof addStoreFormSchema>;
+type FormSchema = z.infer<typeof StoreSchema>;
 
 export default function AddStore() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function AddStore() {
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<FormSchema>({
-    resolver: zodResolver(addStoreFormSchema),
+    resolver: zodResolver(StoreSchema),
     defaultValues: {
       storeId: "",
       address: "",
@@ -53,6 +54,9 @@ export default function AddStore() {
     formData.append("salesRep", form.getValues("salesRep"));
     formData.append("address", form.getValues("address"));
     const { issues, message } = await addStoreAction(formData);
+    if (issues.length === 0) {
+      form.reset();
+    }
     setState({ issues: [...issues], message });
   };
 
