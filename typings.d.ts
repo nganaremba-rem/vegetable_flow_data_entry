@@ -60,3 +60,11 @@ export interface SalesManagerForcastDataType {
 	storeId: string;
 	itemForecastList: SMItemForCastDataType[];
 }
+
+export interface FinalForecastedDataType {
+	itemCode: string;
+	itemName: string;
+	count: number;
+	weight: number;
+	suppliers: string;
+}
