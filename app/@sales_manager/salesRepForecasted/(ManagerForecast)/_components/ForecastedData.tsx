@@ -1,0 +1,62 @@
+"use client";
+
+import { Separator } from "@/components/ui/separator";
+import type { SalesRepForcastedDataType, SrPredictedDataType } from "@/typings";
+import { useState } from "react";
+import { columns } from "../columns";
+import { DataTable } from "./data-table";
+
+export default function ForecastedData({
+  forecastedData,
+  currentData,
+}: {
+  forecastedData: SrPredictedDataType[];
+  currentData: SalesRepForcastedDataType;
+}) {
+  //   const currentItem = forecastedData.find((item) => item.itemId === itemId);
+  //   if (!currentItem) return;
+  const [pagination, setPagination] = useState({
+    pageSize: 3,
+    pageIndex: 0,
+  });
+
+  const totalPackets = forecastedData.reduce((acc, curr) => {
+    if (!curr.smForeCast || curr.smForeCast === -1) return acc;
+
+    return acc + curr.smForeCast;
+  }, 0);
+
+  const totalWeights = currentData.packetWeight * totalPackets;
+
+  return (
+    <>
+      <div
+        id={`component-${currentData.itemCode}`}
+        className="flex items-center justify-end "
+      >
+        <div className="p-2 flex items-center  rounded gap-2 ">
+          <div className="text-muted-foreground">
+            Total Packets{" "}
+            <h1 className="font-extrabold text-lg text-gray-800">
+              {totalPackets}
+            </h1>
+          </div>
+          <Separator orientation="vertical" />
+          <div className="text-muted-foreground">
+            Total Weights{" "}
+            <h1 className="font-extrabold text-lg text-gray-800">
+              {totalWeights}
+            </h1>
+          </div>
+        </div>
+      </div>
+      <DataTable
+        pagination={pagination}
+        searchId="storeId"
+        searchPlaceholder="Search Store ID"
+        columns={columns}
+        data={forecastedData}
+      />
+    </>
+  );
+}

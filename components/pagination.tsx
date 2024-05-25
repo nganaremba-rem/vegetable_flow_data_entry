@@ -43,7 +43,7 @@ export function DataTablePagination<TData>({
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[3, 5, 7, 10, 20, 30, 40, 50].map((pageSize) => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
                   {pageSize}
                 </SelectItem>
@@ -60,7 +60,11 @@ export function DataTablePagination<TData>({
           <div className="flex items-center sm:space-x-2">
             <Button
               variant="outline"
-              className=" h-8 w-8 p-0 lg:flex"
+              className={`h-8 w-8 p-0 lg:flex ${
+                !table.getCanPreviousPage()
+                  ? "bg-red-600"
+                  : "bg-green-400 hover:bg-green-500"
+              }`}
               onClick={() => table.setPageIndex(0)}
               disabled={!table.getCanPreviousPage()}
             >
@@ -69,7 +73,11 @@ export function DataTablePagination<TData>({
             </Button>
             <Button
               variant="outline"
-              className="h-8 w-8 p-0"
+              className={`h-8 w-8 p-0 ${
+                !table.getCanPreviousPage()
+                  ? "bg-red-600"
+                  : "bg-green-400 hover:bg-green-500"
+              }`}
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
             >
@@ -78,7 +86,11 @@ export function DataTablePagination<TData>({
             </Button>
             <Button
               variant="outline"
-              className="h-8 w-8 p-0"
+              className={`h-8 w-8 p-0 ${
+                !table.getCanNextPage()
+                  ? "bg-red-600"
+                  : "bg-green-400 hover:bg-green-500"
+              }`}
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
             >
@@ -87,7 +99,11 @@ export function DataTablePagination<TData>({
             </Button>
             <Button
               variant="outline"
-              className=" h-8 w-8 p-0 lg:flex"
+              className={`h-8 w-8 p-0 lg:flex ${
+                !table.getCanNextPage()
+                  ? "bg-red-600"
+                  : "bg-green-400 hover:bg-green-500"
+              }`}
               onClick={() => table.setPageIndex(table.getPageCount() - 1)}
               disabled={!table.getCanNextPage()}
             >

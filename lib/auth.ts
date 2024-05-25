@@ -49,10 +49,10 @@ export async function logout() {
 	redirect("/");
 }
 
-export async function getSession(): Promise<userSessionType | null> {
+export async function getSession<T>(): Promise<T | null> {
 	const session = cookies().get("session")?.value;
 	if (!session) return null;
-	return await decrypt(session);
+	return (await decrypt(session)) as T;
 }
 
 export async function updateSession(request: NextRequest) {

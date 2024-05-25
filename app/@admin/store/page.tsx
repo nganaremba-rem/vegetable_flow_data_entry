@@ -1,11 +1,10 @@
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
-import React from "react";
-import { FaFileCsv, FaStore } from "react-icons/fa6";
+import { FaStore } from "react-icons/fa6";
 
-import { type StoreType, columns } from "./columns";
-import Link from "next/link";
 import CSVDownloadButton from "@/components/CSVDownloadButton";
+import Link from "next/link";
+import { type StoreType, columns } from "./columns";
 
 async function getData(): Promise<StoreType[]> {
   // Fetch data from your API here.
@@ -51,7 +50,7 @@ export default async function Store() {
         </div>
 
         <div className="container mx-auto py-10">
-          <DataTable columns={columns} data={data} />
+          <DataTable searchId="storeName" columns={columns} data={data} />
         </div>
       </div>
     </>

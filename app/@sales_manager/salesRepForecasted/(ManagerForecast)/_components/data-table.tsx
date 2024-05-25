@@ -13,6 +13,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
+import { DataTableViewOptions } from "@/components/column-toggle";
+import { DataTablePagination } from "@/components/pagination";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -22,14 +24,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { DataTableViewOptions } from "./column-toggle";
-import { DataTablePagination } from "./pagination";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchPlaceholder?: string;
   searchId: string;
+  pagination?: {
+    pageSize: number;
+    pageIndex: number;
+  };
 }
 
 export function DataTable<TData, TValue>({
@@ -37,6 +41,7 @@ export function DataTable<TData, TValue>({
   data,
   searchPlaceholder = "Search Store",
   searchId,
+  pagination,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -54,6 +59,9 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
+    initialState: {
+      pagination: pagination ?? { pageSize: 3, pageIndex: 0 },
+    },
     state: {
       sorting,
       columnFilters,

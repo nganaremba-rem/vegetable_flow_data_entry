@@ -13,9 +13,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { UserIcon } from "lucide-react";
 import { getSession } from "@/lib/auth";
+import type { userSessionType } from "@/typings";
 
 export default async function ProfileButton() {
-  const session = await getSession();
+  const session = await getSession<userSessionType>();
   if (!session) return;
   const userInfo = session.userInfo;
 
