@@ -1,8 +1,8 @@
 import type { userInfoType } from "@/typings";
-import Sidebar from "./Sidebar";
-import ProfileButton from "./ProfileButton";
-import Link from "next/link";
 import { Home } from "lucide-react";
+import Link from "next/link";
+import ProfileButton from "./ProfileButton";
+import Sidebar from "./Sidebar";
 
 export default function AdminNavbar({
   userInfo,
@@ -11,11 +11,14 @@ export default function AdminNavbar({
 }) {
   if (!userInfo) return null;
   return (
-    <div className="flex justify-between p-2 shadow-sky-50 shadow-lg mb-10">
+    <div className="flex justify-between p-2 dark:shadow-gray-900 shadow-sky-50 shadow-lg mb-10">
       <Sidebar />
       <div className="flex items-center gap-2">
-        <Link href={"/"} className="p-2 hover:bg-slate-200 rounded">
-          <Home size={30} color="#333" />
+        <Link
+          href={"/"}
+          className="p-2 hover:bg-slate-200 dark:hover:bg-gray-700 rounded"
+        >
+          <Home size={30} className="text-gray-800 dark:text-slate-300" />
         </Link>
         <ProfileButton />
       </div>

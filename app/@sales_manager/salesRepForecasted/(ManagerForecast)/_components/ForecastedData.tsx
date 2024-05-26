@@ -31,20 +31,20 @@ export default function ForecastedData({
   return (
     <>
       <div
-        id={`component-${currentData.itemCode}`}
-        className="flex items-center justify-end "
+        id={`component-${currentData.itemName.replace(/\s/g, "-")}`}
+        className="flex items-center justify-end"
       >
         <div className="p-2 flex items-center  rounded gap-2 ">
           <div className="text-muted-foreground">
             Total Packets{" "}
-            <h1 className="font-extrabold text-lg text-gray-800">
+            <h1 className="font-extrabold text-lg text-gray-800 dark:text-slate-300">
               {totalPackets}
             </h1>
           </div>
           <Separator orientation="vertical" />
           <div className="text-muted-foreground">
             Total Weights{" "}
-            <h1 className="font-extrabold text-lg text-gray-800">
+            <h1 className="font-extrabold text-lg text-gray-800 dark:text-slate-300">
               {totalWeights}
             </h1>
           </div>

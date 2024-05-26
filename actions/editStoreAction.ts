@@ -1,9 +1,18 @@
 "use server";
 
+import { getSession } from "@/lib/auth";
 import { StoreSchema } from "@/schema/StoreSchema";
+import type { userSessionType } from "@/typings";
 import { revalidateTag } from "next/cache";
 
 export async function storeUpdateAction(formData: FormData) {
+	const session = await getSession<userSessionType>();
+	if (!session)
+		return {
+			message: "",
+			issues: ["Session expired. Please login again."],
+		};
+
 	const validatedFields = StoreSchema.safeParse({
 		storeId: formData.get("storeId"),
 		storeName: formData.get("storeName"),
@@ -19,16 +28,14 @@ export async function storeUpdateAction(formData: FormData) {
 	}
 
 	try {
-		const response = await fetch(
-			`http://burn.pagekite.me/store/${validatedFields.data.storeId}`,
-			{
-				method: "POST",
-				body: JSON.stringify(validatedFields.data),
-				headers: {
-					"Content-Type": "application/json",
-				},
+		const response = await fetch("http://burn.pagekite.me/store/updateInfo", {
+			method: "POST",
+			body: JSON.stringify(validatedFields.data),
+			headers: {
+				"Content-Type": "application/json",
+				userId: session.userInfo.userId,
 			},
-		);
+		});
 		if (!response.ok) {
 			console.log(response);
 			return {

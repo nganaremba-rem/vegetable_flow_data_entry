@@ -3,7 +3,6 @@
 import { storeUpdateAction } from "@/actions/editStoreAction";
 import FormButton from "@/components/FormButton";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -16,8 +15,7 @@ import { Input } from "@/components/ui/input";
 import { StoreSchema } from "@/schema/StoreSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React from "react";
-import { useRef, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosArrowBack } from "react-icons/io";
 import type { z } from "zod";

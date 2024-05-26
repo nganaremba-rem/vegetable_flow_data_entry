@@ -31,7 +31,7 @@ export function ComboBoxResponsive({
 }: {
   placeholder: string;
   data: DataType[];
-  cb: (id: number) => void;
+  cb: (id: string) => void;
 }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -63,7 +63,7 @@ export function ComboBoxResponsive({
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
         <Button variant="outline" className="w-[150px] justify-start">
-          {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+          {selectedStatus ? <>{selectedStatus.label}</> : <>{placeholder}</>}
         </Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -89,7 +89,7 @@ export function StatusList({
   setOpen: (open: boolean) => void;
   setSelectedStatus: (status: DataType | null) => void;
   data: DataType[];
-  cb: (id: number) => void;
+  cb: (id: string) => void;
 }) {
   return (
     <Command>
@@ -106,7 +106,7 @@ export function StatusList({
                   data.find((priority) => priority.value === value) || null
                 );
                 setOpen(false);
-                cb(Number(value));
+                cb(value);
               }}
             >
               {status.label}

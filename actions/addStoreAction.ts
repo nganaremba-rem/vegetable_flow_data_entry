@@ -1,9 +1,18 @@
 "use server";
 
+import { getSession } from "@/lib/auth";
 import { StoreSchema } from "@/schema/StoreSchema";
+import type { userSessionType } from "@/typings";
 import { revalidateTag } from "next/cache";
 
 export async function addStoreAction(formData: FormData) {
+	const session = await getSession<userSessionType>();
+	if (!session)
+		return {
+			message: "",
+			issues: ["Session expired. Please login again."],
+		};
+
 	const validatedFields = StoreSchema.safeParse({
 		storeId: formData.get("storeId"),
 		storeName: formData.get("storeName"),
@@ -24,13 +33,14 @@ export async function addStoreAction(formData: FormData) {
 			body: JSON.stringify(validatedFields.data),
 			headers: {
 				"Content-Type": "application/json",
+				userId: session.userInfo.userId,
 			},
 		});
 		if (!response.ok) {
 			console.log(response);
 			return {
 				message: "",
-				issues: [response?.statusText] || ["An error occurred"],
+				issues: [response?.statusText || "An error occurred"],
 			};
 		}
 		const responseData = await response.json();

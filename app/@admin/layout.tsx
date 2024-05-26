@@ -1,5 +1,6 @@
 import AdminNavbar from "@/components/AdminNavbar";
 import { getSession } from "@/lib/auth";
+import type { userSessionType } from "@/typings";
 import { redirect } from "next/navigation";
 
 export default async function Layout({
@@ -7,7 +8,7 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getSession();
+  const session = await getSession<userSessionType>();
 
   if (!session) redirect("/");
 

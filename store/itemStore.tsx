@@ -19,7 +19,7 @@ export const useItemStore = create<itemStoreStateType>((set) => ({
       if (!currentItem) return state;
       const index = state.items.indexOf(currentItem);
       state.items[index][field] = noOfItem;
-      return state;
+      return { ...state, items: [...state.items] };
     }),
   setItems: (items) => set({ items }),
 }));

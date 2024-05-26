@@ -1,17 +1,24 @@
 "use server";
 
-import type { SalesManagerForcastDataType } from "@/typings";
+import { getSession } from "@/lib/auth";
+import type { SalesManagerForcastDataType, userSessionType } from "@/typings";
 
 export async function salesManagerForecastAction(
 	formData: SalesManagerForcastDataType[],
-	userId: string,
 ) {
+	const session = await getSession<userSessionType>();
+	if (!session)
+		return {
+			message: "",
+			issues: ["Session expired. Please login again."],
+		};
+
 	console.log(formData);
 	const response = await fetch("http://burn.pagekite.me/forecast/update", {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
-			userId: userId,
+			userId: session.userInfo.userId,
 		},
 		body: JSON.stringify(formData),
 	});

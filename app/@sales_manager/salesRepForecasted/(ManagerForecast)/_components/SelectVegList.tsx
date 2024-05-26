@@ -18,12 +18,12 @@ export default function SelectVegList() {
 
   const vegList = forcastedData?.map((item) => ({
     label: item.itemName,
-    value: item.itemCode,
+    value: item.itemName.replace(/\s/g, "-"),
   }));
 
-  const scrollToComponent = (id: number) => {
+  const scrollToComponent = (id: string) => {
     const element = document.getElementById(`component-${id}`);
-    console.log(element);
+    console.log(element, id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }

@@ -54,10 +54,7 @@ export default function SubmitToProcurementButton({
   console.log(dataToSubmit);
 
   async function submitData() {
-    const { issues, message } = await salesManagerForecastAction(
-      dataToSubmit,
-      userId
-    );
+    const { issues, message } = await salesManagerForecastAction(dataToSubmit);
 
     setState({
       issues,
@@ -82,7 +79,7 @@ export default function SubmitToProcurementButton({
           </div>
           <Separator className="my-5" />
           <Button
-            className="bg-red-600 hover:bg-red-700 w-max self-end"
+            className="bg-red-600 hover:bg-red-700 text-white w-max self-end"
             onClick={() => setOpenErrorDialog(false)}
           >
             Close
@@ -97,7 +94,7 @@ export default function SubmitToProcurementButton({
           </div>
           <Separator className="my-5" />
           <Button
-            className="bg-red-600 hover:bg-red-700 w-max self-end"
+            className="bg-red-600 text-white hover:bg-red-700 w-max self-end"
             onClick={() => setOpenSuccessDialog(false)}
           >
             Close
@@ -112,7 +109,7 @@ export default function SubmitToProcurementButton({
           });
         }}
         disabled={isPending}
-        className="bg-primary-blue hover:bg-sky-700"
+        className="bg-primary-blue hover:bg-sky-700 text-white"
       >
         {isPending ? "Submitting..." : "Submit to Procurement Team"}
       </Button>

@@ -1,6 +1,5 @@
 "use server";
 
-import React from "react";
 import LogoutButton from "@/components/LogoutButton";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
@@ -11,9 +10,9 @@ import {
   DropdownMenuSub,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserIcon } from "lucide-react";
 import { getSession } from "@/lib/auth";
 import type { userSessionType } from "@/typings";
+import { UserIcon } from "lucide-react";
 
 export default async function ProfileButton() {
   const session = await getSession<userSessionType>();
@@ -23,7 +22,7 @@ export default async function ProfileButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="outline-none select-none flex items-center gap-2">
-        <div className="hidden sm:flex text-muted-foreground overflow-hidden w-[7rem] bg-slate-200 p-2 rounded-full">
+        <div className="hidden sm:flex text-muted-foreground overflow-hidden w-[7rem] bg-slate-200 dark:bg-gray-700 dark:text-slate-200 p-2 rounded-full">
           <div className="overflow-hidden text-ellipsis whitespace-nowrap">
             {userInfo.userName}
           </div>

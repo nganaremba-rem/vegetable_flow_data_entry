@@ -22,7 +22,7 @@ export default function SheetItem({
         className={` p-2 grid grid-cols-[1fr_5fr] rounded cursor-pointer select-none ${
           pathname === href
             ? "bg-primary-blue hover:bg-[rgb(1,130,250)] text-white font-bold"
-            : "hover:bg-slate-200 text-gray-600"
+            : "hover:bg-slate-200 text-gray-600 dark:text-slate-300 dark:hover:bg-gray-700"
         }`}
       >
         <div>{icon}</div>

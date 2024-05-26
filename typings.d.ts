@@ -19,7 +19,7 @@ export interface itemType {
 	packetWeight: number;
 	preset: number;
 	inventory?: number;
-	packets_required?: number;
+	packets_required: number;
 }
 
 export interface salesForecastSubmitDataType {
@@ -67,4 +67,10 @@ export interface FinalForecastedDataType {
 	count: number;
 	weight: number;
 	suppliers: string;
+}
+
+export interface FinalForecastedDataResponseType {
+	status: "SUCCESS" | "ERROR";
+	message: string;
+	dataList: FinalForecastedDataType[];
 }

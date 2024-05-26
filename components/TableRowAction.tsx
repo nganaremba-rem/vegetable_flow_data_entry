@@ -2,8 +2,8 @@ import type { StoreType } from "@/app/@admin/store/columns";
 import type { Row } from "@tanstack/react-table";
 import React from "react";
 
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MoreHorizontal } from "lucide-react";
 
 import {
   Dialog,
@@ -16,16 +16,15 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import DeleteEntry from "@/components/DeleteEntry";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
-import DeleteEntry from "@/components/DeleteEntry";
 
 export default function TableRowAction({ row }: { row: Row<StoreType> }) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
@@ -39,7 +38,7 @@ export default function TableRowAction({ row }: { row: Row<StoreType> }) {
       open={openDropdown}
       onOpenChange={(open) => setOpenDropdown(open)}
     >
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger className="bg-primary-blue text-white" asChild>
         <Button variant="ghost" className="h-8 w-8 p-0 outline-none">
           <span className="sr-only">Open menu</span>
           <MoreHorizontal className="h-4 w-4" />

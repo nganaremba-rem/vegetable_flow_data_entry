@@ -6,6 +6,7 @@ import { DialogContainer } from "@/components/DialogContainer";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { generateCSVData } from "@/lib/generateCsvData";
 import { useItemStore } from "@/store/itemStore";
 import type { itemType, userSessionType } from "@/typings";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
@@ -32,20 +33,41 @@ export default function MainComponent({
   const [isSuccessDialogOpen, setIsSuccessDialogOpen] = useState(false);
 
   useEffect(() => {
+    for (const item of items) {
+      item.packets_required =
+        item?.packets_required !== 0 && !item?.packets_required
+          ? item.preset - (item.inventory || 0)
+          : item.packets_required;
+    }
+
     setItems(items);
   }, [items, setItems]);
 
   async function submitForecast(finalItems: itemType[]) {
-    const dataToSubmit = finalItems.map((item) => ({
-      itemCode: item.id,
-      inventory: item?.inventory || 0,
-      srForecast: item?.packets_required || 0,
-    }));
+    const dataToSubmit = finalItems.map((item) => {
+      let srForecast = 0;
 
-    const { issues, message } = await salesRepForecast(
-      dataToSubmit,
-      userInfo.userInfo.userId
-    );
+      if (item?.packets_required !== 0 && !item?.packets_required) {
+        srForecast =
+          item.preset - (item.inventory || 0) < 0
+            ? 0
+            : item.preset - (item.inventory || 0);
+      } else if (item.packets_required < 0) {
+        srForecast = 0;
+      } else {
+        srForecast = item.packets_required;
+      }
+
+      return {
+        itemCode: item.id,
+        inventory: item?.inventory || 0,
+        srForecast,
+      };
+    });
+
+    console.log(dataToSubmit);
+
+    const { issues, message } = await salesRepForecast(dataToSubmit);
     setState({ issues, message });
 
     if (issues.length > 0) {
@@ -57,8 +79,10 @@ export default function MainComponent({
     }
   }
 
+  const csvData = generateCSVData(items);
+
   return (
-    <div className="px-10 flex flex-col gap-2 py-2">
+    <div className="2xl:px-[15rem] px-3 md:px-10 flex flex-col gap-2 py-2">
       <DialogContainer open={isErrorDialogOpen} setOpen={setIsErrorDialogOpen}>
         <div className="flex flex-col ">
           <div className="text-red-600 flex gap-6 items-center">
@@ -67,7 +91,7 @@ export default function MainComponent({
           </div>
           <Separator className="my-5" />
           <Button
-            className="bg-red-600 hover:bg-red-700 w-max self-end"
+            className="bg-red-600 text-white hover:bg-red-700 w-max self-end"
             onClick={() => setIsErrorDialogOpen(false)}
           >
             Close
@@ -85,7 +109,7 @@ export default function MainComponent({
           </div>
           <Separator className="my-5" />
           <Button
-            className="bg-red-600 hover:bg-red-700 w-max self-end"
+            className="bg-red-600 text-white hover:bg-red-700 w-max self-end"
             onClick={() => setIsSuccessDialogOpen(false)}
           >
             Close
@@ -93,7 +117,7 @@ export default function MainComponent({
         </div>
       </DialogContainer>
       <div className="self-end flex items-center gap-2">
-        <CSVDownloadButton />
+        <CSVDownloadButton filename="Sales Rep Record" csvData={csvData} />
         <Button
           onClick={() => {
             startTransition(() => {
@@ -101,7 +125,7 @@ export default function MainComponent({
             });
           }}
           disabled={isPending}
-          className="w-max bg-primary-blue hover:bg-sky-700"
+          className="w-max bg-primary-blue hover:bg-sky-700 dark:text-white"
         >
           {isPending ? "Submitting..." : "Submit to Sales Manager"}
         </Button>

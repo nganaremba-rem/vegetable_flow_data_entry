@@ -1,4 +1,4 @@
-import StoreUpdateForm from "./StoreUpdateForm";
+import StoreUpdateForm from "./_components/StoreUpdateForm";
 
 async function getStoreByStoreId(storeId: string) {
   // API call to get store by storeId

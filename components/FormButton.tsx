@@ -1,9 +1,8 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
-import { useFormStatus } from "react-dom";
 import { ClipLoader } from "react-spinners";
+import { Button } from "./ui/button";
 
 export default function FormButton({
   children,
@@ -19,7 +18,7 @@ export default function FormButton({
 
   return (
     <Button
-      className={cn("", className)}
+      className={cn("dark:text-slate-200", className)}
       type="submit"
       {...rest}
       disabled={isPending}

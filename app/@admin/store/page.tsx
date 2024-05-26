@@ -1,10 +1,9 @@
-import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { FaStore } from "react-icons/fa6";
 
-import CSVDownloadButton from "@/components/CSVDownloadButton";
 import Link from "next/link";
-import { type StoreType, columns } from "./columns";
+import TableContainer from "./_component/TableContainer";
+import type { StoreType } from "./columns";
 
 async function getData(): Promise<StoreType[]> {
   // Fetch data from your API here.
@@ -14,13 +13,6 @@ async function getData(): Promise<StoreType[]> {
       tags: ["store"],
     },
   });
-
-  // const response = await fetch(
-  //   "https://649ea8b1245f077f3e9cbb88.mockapi.io/user",
-  //   {
-  //     cache: "no-cache",
-  //   }
-  // );
 
   if (!response.ok) {
     throw new Error("Failed to fetch data");
@@ -37,11 +29,10 @@ export default async function Store() {
     <>
       <div className="p-2">
         <div className="flex justify-between items-center px-3 md:px-10">
-          <h1 className="font-extrabold text-xl px-10">Store</h1>
+          <h1 className="font-extrabold text-xl px-3 md:px-10">Store</h1>
           <div className="flex items-center gap-4">
-            <CSVDownloadButton />
             <Link href={"/store/add"}>
-              <Button className="bg-primary-blue flex items-center gap-2 hover:bg-sky-700">
+              <Button className="bg-primary-blue text-white flex items-center gap-2 hover:bg-sky-700">
                 Add New Store
                 <FaStore size={20} />
               </Button>
@@ -50,7 +41,7 @@ export default async function Store() {
         </div>
 
         <div className="container mx-auto py-10">
-          <DataTable searchId="storeName" columns={columns} data={data} />
+          <TableContainer data={data} />
         </div>
       </div>
     </>
