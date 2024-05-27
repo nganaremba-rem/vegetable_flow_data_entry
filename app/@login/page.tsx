@@ -63,6 +63,7 @@ export default function Login() {
             <div className="text-green-600">{state?.message}</div>
           )}
           <form
+            method="post"
             ref={formRef}
             // action={formAction}
             onSubmit={form.handleSubmit(() => {

@@ -26,11 +26,13 @@ export async function loginAction(formData: FormData) {
 				"Content-Type": "application/json",
 			},
 		});
-		console.log(response);
 		if (!response.ok) {
-			console.log(response);
 			return {
-				issues: [response?.statusText] || ["An error occurred"],
+				issues: [
+					response?.statusText === "Unavailable"
+						? "Backend Server is not running OR there might be other user logged in currently"
+						: response.statusText,
+				] || ["An error occurred"],
 				message: "",
 			};
 		}
