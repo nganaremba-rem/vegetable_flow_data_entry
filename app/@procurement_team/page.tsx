@@ -1,3 +1,4 @@
+import ErrorMessage from "@/components/ErrorMessage";
 import { getSession } from "@/lib/auth";
 import type {
   FinalForecastedDataResponseType,
@@ -43,9 +44,7 @@ export default async function ProcurementTeam() {
   if (finalForecastedData.status !== "SUCCESS")
     return (
       <>
-        <div className="text-lg font-bold text-center p-2 text-red-600">
-          {finalForecastedData?.message || "Error fetching data"}
-        </div>
+        <ErrorMessage data={finalForecastedData} />
       </>
     );
 
