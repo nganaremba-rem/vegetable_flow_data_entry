@@ -2,6 +2,7 @@
 
 import { getSession } from "@/lib/auth";
 import type { SalesManagerForcastDataType, userSessionType } from "@/typings";
+import { revalidateTag } from "next/cache";
 
 export async function salesManagerForecastAction(
 	formData: SalesManagerForcastDataType[],
@@ -40,6 +41,9 @@ export async function salesManagerForecastAction(
 			message: "",
 		};
 	}
+
+	revalidateTag("salesRepForecasted");
+	revalidateTag("smReportStatus");
 
 	return {
 		issues: [],

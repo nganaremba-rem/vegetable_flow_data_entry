@@ -9,9 +9,9 @@ import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useState, useTransition } from "react";
 
 export default function SubmitToProcurementButton({
-  userId,
+  isAlreadySubmitted,
 }: {
-  userId: string;
+  isAlreadySubmitted: boolean;
 }) {
   const { forcastedData } = useSrForcastedStore((state) => state);
   const [isPending, startTransition] = useTransition();
@@ -69,6 +69,8 @@ export default function SubmitToProcurementButton({
     setOpenSuccessDialog(true);
   }
 
+  console.log(isAlreadySubmitted);
+
   return (
     <>
       <DialogContainer open={openErrorDialog} setOpen={setOpenErrorDialog}>
@@ -108,7 +110,7 @@ export default function SubmitToProcurementButton({
             submitData();
           });
         }}
-        disabled={isPending}
+        disabled={isPending || isAlreadySubmitted}
         className="bg-primary-blue hover:bg-sky-700 text-white"
       >
         {isPending ? "Submitting..." : "Submit to Procurement Team"}

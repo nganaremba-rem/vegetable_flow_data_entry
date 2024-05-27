@@ -1,7 +1,7 @@
 "use server";
 
-import { formSchema } from "@/schema/LoginFormSchema";
 import { encrypt } from "@/lib/auth";
+import { formSchema } from "@/schema/LoginFormSchema";
 import type { userInfoType } from "@/typings";
 import { cookies } from "next/headers";
 
@@ -26,6 +26,7 @@ export async function loginAction(formData: FormData) {
 				"Content-Type": "application/json",
 			},
 		});
+		console.log(response);
 		if (!response.ok) {
 			console.log(response);
 			return {

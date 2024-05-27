@@ -4,6 +4,7 @@ import type {
   FinalForecastedDataResponseType,
   userSessionType,
 } from "@/typings";
+import { checkIfAlreadySubmitted } from "../@sales_manager/salesRepForecasted/(ManagerForecast)/page";
 import MainComponent from "./_components/MainComponent";
 
 async function getFinalForecastedData(userId: string) {
@@ -36,6 +37,8 @@ async function getFinalForecastedData(userId: string) {
 export default async function ProcurementTeam() {
   const session = await getSession<userSessionType>();
   if (!session) return null;
+
+  const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
 
   const finalForecastedData = await getFinalForecastedData(
     session.userInfo.userId

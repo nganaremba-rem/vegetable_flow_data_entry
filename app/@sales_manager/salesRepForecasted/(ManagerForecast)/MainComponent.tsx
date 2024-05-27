@@ -1,18 +1,18 @@
 "use client";
 
 import { useSrForcastedStore } from "@/store/srForcastedStore";
-import type { SalesRepForcastedDataType, userSessionType } from "@/typings";
+import type { SalesRepForcastedDataType } from "@/typings";
 import { useEffect } from "react";
 import ForecastedData from "./_components/ForecastedData";
 import SelectVegList from "./_components/SelectVegList";
 import SubmitToProcurementButton from "./_components/SubmitToProcurementButton";
 
 export default function MainComponent({
+  isAlreadySubmitted,
   salesRepForecastedData,
-  session,
 }: {
   salesRepForecastedData: SalesRepForcastedDataType[];
-  session: userSessionType;
+  isAlreadySubmitted: boolean;
 }) {
   const { setItems, forcastedData } = useSrForcastedStore((state) => state);
 
@@ -37,7 +37,7 @@ export default function MainComponent({
     <>
       <div className="relative px-2 2xl:px-[10rem]">
         <div className="flex md:hidden items-center p-2 mb-10 gap-2">
-          <SubmitToProcurementButton userId={session.userInfo.userId} />
+          <SubmitToProcurementButton isAlreadySubmitted={isAlreadySubmitted} />
           <SelectVegList />
         </div>
         <div className="text-gray-800 dark:text-slate-200 text-xl font-bold px-3 md:px-10">
@@ -62,6 +62,7 @@ export default function MainComponent({
                 </div>
               </div>
               <ForecastedData
+                isAlreadySubmitted={isAlreadySubmitted}
                 currentData={data}
                 forecastedData={data.srPredictDataList}
               />

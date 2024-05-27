@@ -8,7 +8,8 @@ export default function RootLayout({
   return (
     <>
       <div className="relative">
-        <StickyNav /> {children}
+        <StickyNav />
+        {children}
       </div>
     </>
   );

@@ -74,3 +74,8 @@ export interface FinalForecastedDataResponseType {
 	message: string;
 	dataList: FinalForecastedDataType[] | [];
 }
+
+export interface salesManagerReportStatus {
+	status: boolean;
+	updateTime: string;
+}

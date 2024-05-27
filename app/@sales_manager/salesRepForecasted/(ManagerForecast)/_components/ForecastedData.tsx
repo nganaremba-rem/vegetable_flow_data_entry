@@ -3,15 +3,18 @@
 import { Separator } from "@/components/ui/separator";
 import type { SalesRepForcastedDataType, SrPredictedDataType } from "@/typings";
 import { useState } from "react";
+import { columns as alreadySubmittedCols } from "../alreadySubmittedColumn";
 import { columns } from "../columns";
 import { DataTable } from "./data-table";
 
 export default function ForecastedData({
   forecastedData,
   currentData,
+  isAlreadySubmitted,
 }: {
   forecastedData: SrPredictedDataType[];
   currentData: SalesRepForcastedDataType;
+  isAlreadySubmitted: boolean;
 }) {
   //   const currentItem = forecastedData.find((item) => item.itemId === itemId);
   //   if (!currentItem) return;
@@ -27,6 +30,8 @@ export default function ForecastedData({
   }, 0);
 
   const totalWeights = currentData.packetWeight * totalPackets;
+
+  const cols = isAlreadySubmitted ? alreadySubmittedCols : columns;
 
   return (
     <>
@@ -54,7 +59,7 @@ export default function ForecastedData({
         pagination={pagination}
         searchId="storeId"
         searchPlaceholder="Search Store ID"
-        columns={columns}
+        columns={cols}
         data={forecastedData}
       />
     </>
