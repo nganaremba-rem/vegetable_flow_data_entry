@@ -23,7 +23,7 @@ export default function FormButton({
       {...rest}
       disabled={isPending}
     >
-      <div className="inline-block">{children}</div>
+      <div className="inline-block mx-5">{children}</div>
       {isPending && <ClipLoader size={20} color="#ecedee" />}
     </Button>
   );
