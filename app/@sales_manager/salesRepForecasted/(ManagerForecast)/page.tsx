@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/auth";
+import { oldGetRequest } from "@/services/apiGetRequests";
 import type {
   SalesRepForcastedDataType,
   salesManagerReportStatus,
@@ -7,22 +8,11 @@ import type {
 import MainComponent from "./MainComponent";
 
 async function getSalesRepForecastedData(userId: string) {
-  const response = await fetch("http://burn.pagekite.me/forecast/getAll", {
-    headers: {
-      userId,
-    },
-    cache: "no-store",
-    next: {
-      tags: ["salesRepForecasted"],
-    },
+  return await oldGetRequest<SalesRepForcastedDataType>({
+    endpointUrl: "/forecast/getAll",
+    tags: ["salesRepForecasted"],
+    userId,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch sales rep forecasted data");
-  }
-
-  const data: SalesRepForcastedDataType[] = await response.json();
-  return data;
 }
 
 export async function checkIfAlreadySubmitted(userId: string) {

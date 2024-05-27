@@ -1,5 +1,5 @@
-import React from "react";
+async function getAllUsers() {}
 
-export default function UserPage() {
+export default async function UserPage() {
   return <div>UserPage</div>;
 }

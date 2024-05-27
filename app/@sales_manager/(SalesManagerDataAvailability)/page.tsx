@@ -1,27 +1,14 @@
 import { getSession } from "@/lib/auth";
+import { oldGetRequest } from "@/services/apiGetRequests";
 import type { DataAvailabilityType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
 async function getDataAvailability(userId: string) {
-  const response = await fetch(
-    "http://burn.pagekite.me/forecast/availability",
-    {
-      headers: {
-        userId,
-      },
-      cache: "no-store",
-      next: {
-        tags: ["data_availability"],
-      },
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data availability");
-  }
-
-  const data = (await response.json()) as DataAvailabilityType[];
-  return data;
+  return await oldGetRequest<DataAvailabilityType>({
+    endpointUrl: "/forecast/availability",
+    tags: ["data_availability"],
+    userId,
+  });
 }
 
 export default async function SalesManager() {

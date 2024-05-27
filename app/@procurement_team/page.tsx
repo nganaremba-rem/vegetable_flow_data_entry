@@ -1,44 +1,22 @@
 import ErrorMessage from "@/components/ErrorMessage";
 import { getSession } from "@/lib/auth";
-import type {
-  FinalForecastedDataResponseType,
-  userSessionType,
-} from "@/typings";
-import { checkIfAlreadySubmitted } from "../@sales_manager/salesRepForecasted/(ManagerForecast)/page";
+import { getRequest } from "@/services/apiGetRequests";
+import type { FinalForecastedDataType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
 async function getFinalForecastedData(userId: string) {
-  const response = await fetch("http://burn.pagekite.me/forecast/getPtReport", {
-    headers: {
-      userId,
-    },
-    cache: "no-store",
-    next: {
-      tags: ["final-forecasted-data"],
-    },
+  return await getRequest<FinalForecastedDataType>({
+    endpointUrl: "/forecast/getPtReport",
+    tags: ["final-forecasted-data"],
+    userId,
   });
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  const responseData = await response.json();
-
-  if (responseData?.status !== "SUCCESS") {
-    return {
-      status: responseData.status,
-      message: responseData?.message || "Failed to fetch data",
-      dataList: [],
-    };
-  }
-
-  return responseData as FinalForecastedDataResponseType;
 }
 
 export default async function ProcurementTeam() {
   const session = await getSession<userSessionType>();
   if (!session) return null;
 
-  const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
+  // const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
 
   const finalForecastedData = await getFinalForecastedData(
     session.userInfo.userId

@@ -1,27 +1,20 @@
 import { getSession } from "@/lib/auth";
+import { oldGetRequest } from "@/services/apiGetRequests";
 import type { itemType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
-async function getItems() {
-  const response = await fetch("http://burn.pagekite.me/item/getAll", {
-    cache: "no-store",
-    next: {
-      tags: ["item"],
-    },
+async function getItems(userId: string) {
+  return await oldGetRequest<itemType>({
+    endpointUrl: "/item/getAll",
+    tags: ["item"],
+    userId,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch items");
-  }
-
-  const data = await response.json();
-  return data as itemType[];
 }
 
 export default async function SaleRep() {
-  const userInfo = await getSession<userSessionType>();
-  if (!userInfo) return null;
-  const items = await getItems();
+  const session = await getSession<userSessionType>();
+  if (!session) return null;
+  const items = await getItems(session.userInfo.userId);
 
-  return <MainComponent items={items} userInfo={userInfo} />;
+  return <MainComponent items={items} userInfo={session} />;
 }

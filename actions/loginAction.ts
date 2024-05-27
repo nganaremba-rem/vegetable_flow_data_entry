@@ -32,7 +32,7 @@ export async function loginAction(formData: FormData) {
 					response?.statusText === "Unavailable"
 						? "Backend Server is not running OR there might be other user logged in currently"
 						: response.statusText,
-				] || ["An error occurred"],
+				],
 				message: "",
 			};
 		}

@@ -79,3 +79,15 @@ export interface salesManagerReportStatus {
 	status: boolean;
 	updateTime: string;
 }
+
+export interface CustomResponseType<T> {
+	status: "SUCCESS" | "ERROR";
+	message: string;
+	dataList: T[];
+}
+
+export interface CustomMutateResponseType<T> {
+	status: "SUCCESS" | "ERROR";
+	message: string;
+	data: T;
+}

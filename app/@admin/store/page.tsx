@@ -1,29 +1,25 @@
 import { Button } from "@/components/ui/button";
 import { FaStore } from "react-icons/fa6";
 
+import { getSession } from "@/lib/auth";
+import { oldGetRequest } from "@/services/apiGetRequests";
+import type { userSessionType } from "@/typings";
 import Link from "next/link";
 import TableContainer from "./_component/TableContainer";
 import type { StoreType } from "./columns";
 
-async function getData(): Promise<StoreType[]> {
-  // Fetch data from your API here.
-  const response = await fetch("http://burn.pagekite.me/store/getAll", {
-    cache: "no-store",
-    next: {
-      tags: ["store"],
-    },
+async function getData(userId: string): Promise<StoreType[]> {
+  return await oldGetRequest<StoreType>({
+    endpointUrl: "/store/getAll",
+    tags: ["store"],
+    userId,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  const data = await response.json();
-  return data;
 }
 
 export default async function Store() {
-  const data = await getData();
+  const session = await getSession<userSessionType>();
+  if (!session) return null;
+  const data = await getData(session.userInfo.userId);
 
   return (
     <>
