@@ -10,7 +10,7 @@ async function getFinalForecastedData(userId: string) {
     headers: {
       userId,
     },
-    cache: "no-cache",
+    cache: "no-store",
     next: {
       tags: ["final-forecasted-data"],
     },
@@ -22,7 +22,11 @@ async function getFinalForecastedData(userId: string) {
   const responseData = await response.json();
 
   if (responseData?.status !== "SUCCESS") {
-    throw new Error("Failed to fetch data");
+    return {
+      status: responseData.status,
+      message: responseData?.message || "Failed to fetch data",
+      dataList: [],
+    };
   }
 
   return responseData as FinalForecastedDataResponseType;
@@ -35,6 +39,15 @@ export default async function ProcurementTeam() {
   const finalForecastedData = await getFinalForecastedData(
     session.userInfo.userId
   );
+
+  if (finalForecastedData.status !== "SUCCESS")
+    return (
+      <>
+        <div className="text-lg font-bold text-center p-2 text-red-600">
+          {finalForecastedData?.message || "Error fetching data"}
+        </div>
+      </>
+    );
 
   return (
     <>

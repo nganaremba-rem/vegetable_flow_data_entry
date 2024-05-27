@@ -8,7 +8,7 @@ import type { StoreType } from "./columns";
 async function getData(): Promise<StoreType[]> {
   // Fetch data from your API here.
   const response = await fetch("http://burn.pagekite.me/store/getAll", {
-    cache: "no-cache",
+    cache: "no-store",
     next: {
       tags: ["store"],
     },

@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/auth";
-import type { userSessionType } from "@/typings";
+import type { DataAvailabilityType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
 async function getDataAvailability(userId: string) {
@@ -9,7 +9,7 @@ async function getDataAvailability(userId: string) {
       headers: {
         userId,
       },
-      cache: "no-cache",
+      cache: "no-store",
       next: {
         tags: ["data_availability"],
       },
@@ -20,7 +20,7 @@ async function getDataAvailability(userId: string) {
     throw new Error("Failed to fetch data availability");
   }
 
-  const data = await response.json();
+  const data = (await response.json()) as DataAvailabilityType[];
   return data;
 }
 

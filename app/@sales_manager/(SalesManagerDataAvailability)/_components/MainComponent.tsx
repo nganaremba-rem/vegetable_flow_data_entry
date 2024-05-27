@@ -16,7 +16,7 @@ export default function MainComponent({
   const csvData = generateCSVData(dataAvailability);
 
   return (
-    <div className="px-3 sm:px-10 flex flex-col gap-2 py-2">
+    <div className="px-3 sm:px-[15rem] flex flex-col gap-2 py-2">
       <h1 className="text-3xl font-bold">Data Availability</h1>
       <p className="text-muted-foreground text-sm">
         Date: {format(Date.now(), "dd/MM/yyyy")}

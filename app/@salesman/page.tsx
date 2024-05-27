@@ -4,7 +4,7 @@ import MainComponent from "./_components/MainComponent";
 
 async function getItems() {
   const response = await fetch("http://burn.pagekite.me/item/getAll", {
-    cache: "no-cache",
+    cache: "no-store",
     next: {
       tags: ["item"],
     },

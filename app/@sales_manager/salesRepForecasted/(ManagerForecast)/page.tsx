@@ -7,7 +7,7 @@ async function getSalesRepForecastedData(userId: string) {
     headers: {
       userId,
     },
-    cache: "no-cache",
+    cache: "no-store",
     next: {
       tags: ["salesRepForecasted"],
     },

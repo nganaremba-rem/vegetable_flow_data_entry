@@ -72,5 +72,5 @@ export interface FinalForecastedDataType {
 export interface FinalForecastedDataResponseType {
 	status: "SUCCESS" | "ERROR";
 	message: string;
-	dataList: FinalForecastedDataType[];
+	dataList: FinalForecastedDataType[] | [];
 }
