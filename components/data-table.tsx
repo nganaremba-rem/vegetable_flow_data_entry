@@ -28,14 +28,14 @@ import { DataTablePagination } from "./pagination";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  searchPlaceholder?: string;
+  searchPlaceholder: string;
   searchId: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
-  searchPlaceholder = "Search Store",
+  searchPlaceholder,
   searchId,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);

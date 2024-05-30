@@ -1,3 +1,5 @@
+"use server";
+
 import { apiBaseUrl } from "@/constants/constants";
 import type { CustomResponseType } from "@/typings";
 
@@ -18,35 +20,48 @@ export async function getRequest<T>({
 	tags: string[];
 	userId: string;
 }): Promise<CustomResponseType<T>> {
-	const response = await fetch(`${apiBaseUrl}${endpointUrl}`, {
-		headers: {
-			userId,
-		},
-		cache,
-		next: {
-			tags,
-		},
-	});
+	try {
+		const response = await fetch(`${apiBaseUrl}${endpointUrl}`, {
+			headers: {
+				userId,
+			},
+			cache,
+			next: {
+				tags,
+			},
+		});
 
-	if (!response.ok) {
-		throw new Error("Failed to fetch data");
-	}
+		if (!response.ok) {
+			return {
+				status: "ERROR",
+				message: response.statusText || "Failed to fetch data",
+				data: [] as T,
+			};
+		}
 
-	const responseData = await response.json();
+		const responseData = await response.json();
 
-	if (responseData?.status !== "SUCCESS") {
+		console.log(responseData);
+
+		if (responseData?.status !== "SUCCESS" && responseData?.status !== true) {
+			return {
+				status: responseData?.status || "ERROR",
+				message: responseData?.message || "An error occurred",
+				data: [] as T,
+			};
+		}
 		return {
-			status: responseData?.status || "ERROR",
-			message: responseData?.message || "An error occurred",
-			dataList: [] as T[],
+			status: responseData?.status || "SUCCESS",
+			message: responseData?.message || "",
+			data: responseData?.data as T,
+		};
+	} catch (error: any) {
+		return {
+			status: "ERROR",
+			message: error?.message || "An error occurred",
+			data: [] as T,
 		};
 	}
-
-	return {
-		status: responseData?.status || "SUCCESS",
-		message: responseData?.message || "",
-		dataList: responseData?.dataList as T[],
-	};
 }
 
 export async function oldGetRequest<T>({

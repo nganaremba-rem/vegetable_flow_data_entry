@@ -60,7 +60,7 @@ export default function UpdatePacketsRequiredField({
   if (!item) return null;
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 w-[5rem]">
       <Button
         onClick={() => {
           setDataToShow(
@@ -72,14 +72,14 @@ export default function UpdatePacketsRequiredField({
             "packets_required"
           );
         }}
-        className="bg-red-600 hover:bg-red-700 text-white"
+        className="bg-red-600 h-7 flex justify-center items-center text-xl w-4 hover:bg-red-700 text-white"
       >
         -
       </Button>
       <Input
         className={`${
           oldInventory !== item.inventory ? "border border-green-700" : ""
-        }  w-[5rem]`}
+        }  w-[3rem]`}
         onBlur={() => {
           if (dataToShow === "" || Number(dataToShow) < 0) {
             setDataToShow(0);
@@ -118,7 +118,7 @@ export default function UpdatePacketsRequiredField({
             "packets_required"
           );
         }}
-        className="bg-green-600 hover:bg-green-700 text-white"
+        className="bg-green-600 h-7 flex justify-center items-center text-xl w-4 hover:bg-green-700 text-white"
       >
         +
       </Button>

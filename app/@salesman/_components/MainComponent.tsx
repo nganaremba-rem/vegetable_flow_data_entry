@@ -8,17 +8,19 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { generateCSVData } from "@/lib/generateCsvData";
 import { useItemStore } from "@/store/itemStore";
-import type { itemType, userSessionType } from "@/typings";
+import type { itemType } from "@/typings";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { columns } from "../columns";
 
 export default function MainComponent({
   items,
-  userInfo,
+  storeId,
+  byRole,
 }: {
   items: itemType[];
-  userInfo: userSessionType;
+  storeId: string;
+  byRole: string;
 }) {
   const { setItems, items: finalItems } = useItemStore((state) => state);
   const [isPending, startTransition] = useTransition();
@@ -65,9 +67,15 @@ export default function MainComponent({
       };
     });
 
-    console.log(dataToSubmit);
+    const finalData = {
+      storeId,
+      byRole,
+      data: dataToSubmit,
+    };
 
-    const { issues, message } = await salesRepForecast(dataToSubmit);
+    console.log(finalData);
+
+    const { issues, message } = await salesRepForecast(finalData);
     setState({ issues, message });
 
     if (issues.length > 0) {
@@ -82,7 +90,7 @@ export default function MainComponent({
   const csvData = generateCSVData(items);
 
   return (
-    <div className="2xl:px-[15rem] px-3 md:px-10 flex flex-col gap-2 py-2">
+    <div className="2xl:px-[17rem] px-3 md:px-10 flex flex-col gap-2 py-2">
       <DialogContainer open={isErrorDialogOpen} setOpen={setIsErrorDialogOpen}>
         <div className="flex flex-col ">
           <div className="text-red-600 flex gap-6 items-center">

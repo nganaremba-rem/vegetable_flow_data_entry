@@ -18,6 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { IoIosArrowBack } from "react-icons/io";
+import { toast } from "react-toastify";
 import type { z } from "zod";
 
 export default function StoreUpdateForm({
@@ -43,15 +44,16 @@ export default function StoreUpdateForm({
   });
 
   const submitForm = async () => {
-    // formRef?.current?.submit();
-    const formData = new FormData();
-    formData.append("storeId", form.getValues("storeId"));
-    formData.append("address", form.getValues("address"));
-    formData.append("salesRep", form.getValues("salesRep"));
-    formData.append("storeName", form.getValues("storeName"));
-    const { issues, message } = await storeUpdateAction(formData);
+    setState({ issues: [""], message: "" });
+    const { issues, message, status } = await storeUpdateAction(
+      form.getValues()
+    );
 
-    setState({ issues: [...issues], message });
+    if (status === "SUCCESS") {
+      toast.success(message || "Store updated successfully");
+    } else {
+      setState({ issues: [...issues], message });
+    }
   };
 
   return (

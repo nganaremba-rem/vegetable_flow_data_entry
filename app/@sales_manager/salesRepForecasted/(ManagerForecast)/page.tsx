@@ -1,14 +1,10 @@
 import { getSession } from "@/lib/auth";
-import { oldGetRequest } from "@/services/apiGetRequests";
-import type {
-  SalesRepForcastedDataType,
-  salesManagerReportStatus,
-  userSessionType,
-} from "@/typings";
-import MainComponent from "./MainComponent";
+import { getRequest } from "@/services/apiGetRequests";
+import type { SalesRepForcastedDataType, userSessionType } from "@/typings";
+import MainComponent from "./_components/MainComponent";
 
 async function getSalesRepForecastedData(userId: string) {
-  return await oldGetRequest<SalesRepForcastedDataType>({
+  return await getRequest<SalesRepForcastedDataType[]>({
     endpointUrl: "/forecast/getAll",
     tags: ["salesRepForecasted"],
     userId,
@@ -16,44 +12,30 @@ async function getSalesRepForecastedData(userId: string) {
 }
 
 export async function checkIfAlreadySubmitted(userId: string) {
-  const response = await fetch("http://burn.pagekite.me/forecast/smReport", {
-    headers: {
-      userId,
-    },
-    cache: "no-store",
-    next: {
-      tags: ["smReportStatus"],
-      // revalidate: 1000,
-    },
+  return await getRequest({
+    endpointUrl: "/forecast/smReportStatus",
+    tags: ["smReportStatus"],
+    userId,
   });
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch the Sales manager report status");
-  }
-
-  const data: salesManagerReportStatus = await response.json();
-  return data;
 }
 
 export default async function SalesRepForeCasted() {
   const session = await getSession<userSessionType>();
   if (!session) return null;
 
-  const smsReportStatus = await checkIfAlreadySubmitted(
-    session.userInfo.userId
-  );
+  const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
 
-  const salesRepForecastedData = await getSalesRepForecastedData(
-    session.userInfo.userId
-  );
+  if (!smReportStatus.status) return <>{smReportStatus.message}</>;
 
-  if (!salesRepForecastedData) return null;
+  const response = await getSalesRepForecastedData(session.userInfo.userId);
+
+  if (!response) return null;
 
   return (
     // <div>Hello</div>
     <MainComponent
-      isAlreadySubmitted={smsReportStatus.status}
-      salesRepForecastedData={salesRepForecastedData}
+      isAlreadySubmitted={smReportStatus.status === true}
+      salesRepForecastedData={response.data}
     />
   );
 }

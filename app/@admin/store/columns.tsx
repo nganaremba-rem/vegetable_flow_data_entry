@@ -2,11 +2,12 @@
 
 import { Checkbox } from "@/components/ui/checkbox";
 
-import type { ColumnDef } from "@tanstack/react-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import type { ColumnDef } from "@tanstack/react-table";
 
+import deleteStoreAction from "@/actions/deleteStoreAction";
 import TableRowAction from "@/components/TableRowAction";
-
+import { format } from "date-fns";
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type StoreType = {
@@ -84,11 +85,21 @@ export const columns: ColumnDef<StoreType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Created On" />
     ),
+    cell: ({ row }) => {
+      return format(row.original.createdOn, "dd/MM/yyyy");
+    },
   },
   {
     id: "actions",
     cell: ({ row }) => {
-      return <TableRowAction row={row} />;
+      return (
+        <TableRowAction
+          editPageLink={`/store/edit/${row.original.storeId}`}
+          serverActionFn={() =>
+            deleteStoreAction(row.original.storeId.toString())
+          }
+        />
+      );
     },
   },
 ];

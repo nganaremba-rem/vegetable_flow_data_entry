@@ -9,7 +9,7 @@ export const columns: ColumnDef<FinalForecastedDataType>[] = [
   {
     accessorKey: "itemName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Veg Name" />
+      <DataTableColumnHeader column={column} title="Vegetable Name" />
     ),
   },
   {

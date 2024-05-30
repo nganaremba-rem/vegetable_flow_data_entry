@@ -3,9 +3,9 @@
 import { useSrForcastedStore } from "@/store/srForcastedStore";
 import type { SalesRepForcastedDataType } from "@/typings";
 import { useEffect } from "react";
-import ForecastedData from "./_components/ForecastedData";
-import SelectVegList from "./_components/SelectVegList";
-import SubmitToProcurementButton from "./_components/SubmitToProcurementButton";
+import ForecastedData from "./ForecastedData";
+import SelectVegList from "./SelectVegList";
+import SubmitToProcurementButton from "./SubmitToProcurementButton";
 
 export default function MainComponent({
   isAlreadySubmitted,

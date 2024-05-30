@@ -81,13 +81,41 @@ export interface salesManagerReportStatus {
 }
 
 export interface CustomResponseType<T> {
-	status: "SUCCESS" | "ERROR";
+	status: "SUCCESS" | "ERROR" | boolean;
 	message: string;
-	dataList: T[];
+	data: T;
 }
 
 export interface CustomMutateResponseType<T> {
-	status: "SUCCESS" | "ERROR";
+	status: "SUCCESS" | "ERROR" | boolean;
 	message: string;
+	issues: string[];
 	data: T;
+}
+
+export interface UserType {
+	id: number;
+	userName: string;
+	empId: string;
+	address: string;
+	gender: "M" | "F";
+	email: string;
+	roleCode: string;
+	storeId: string;
+	info: string;
+	createdBy: string;
+	createdOn: string;
+}
+
+export interface RoleType {
+	roleCode: string;
+	roleName: string;
+}
+
+export interface VegetableType {
+	id: number;
+	itemName: string;
+	itemGroup: string;
+	packetWeight: number;
+	preset: number;
 }

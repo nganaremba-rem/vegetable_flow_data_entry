@@ -43,14 +43,14 @@ export const columns: ColumnDef<ItemType>[] = [
   {
     accessorKey: "itemName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Item Name" />
+      <DataTableColumnHeader column={column} title="Vegetable Name" />
     ),
   },
 
   {
     accessorKey: "preset",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Preset Target" />
+      <DataTableColumnHeader column={column} title="Target" />
     ),
   },
   {

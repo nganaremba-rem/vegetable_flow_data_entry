@@ -1,5 +1,3 @@
-import type { StoreType } from "@/app/@admin/store/columns";
-import type { Row } from "@tanstack/react-table";
 import React from "react";
 
 import { Button } from "@/components/ui/button";
@@ -24,9 +22,24 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { CustomMutateResponseType } from "@/typings";
 import Link from "next/link";
 
-export default function TableRowAction({ row }: { row: Row<StoreType> }) {
+export default function TableRowAction({
+  editPageLink,
+  serverActionFn,
+}: {
+  editPageLink: string;
+  serverActionFn: () => Promise<
+    | {
+        status: string;
+        issues: any;
+        message: string;
+        data: never[];
+      }
+    | CustomMutateResponseType<[]>
+  >;
+}) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [state, setState] = React.useState<{
     issues: string[];
@@ -48,7 +61,7 @@ export default function TableRowAction({ row }: { row: Row<StoreType> }) {
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <Link
           className="w-full block py-1 px-2 rounded hover:bg-primary-blue hover:text-white"
-          href={`/store/edit/${row.original.storeId}`}
+          href={editPageLink}
         >
           Edit
         </Link>
@@ -76,7 +89,7 @@ export default function TableRowAction({ row }: { row: Row<StoreType> }) {
               <DeleteEntry
                 setOpenDropdown={setOpenDropdown}
                 setState={setState}
-                id={row.original.storeId}
+                serverActionFn={serverActionFn}
               />
             </DialogFooter>
           </DialogContent>

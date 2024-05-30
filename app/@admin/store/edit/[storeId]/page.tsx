@@ -1,18 +1,16 @@
+import { getSession } from "@/lib/auth";
+import type { StoreSchema } from "@/schema/StoreSchema";
+import { getRequest } from "@/services/apiGetRequests";
+import type { userSessionType } from "@/typings";
+import type { z } from "zod";
 import StoreUpdateForm from "./_components/StoreUpdateForm";
 
-async function getStoreByStoreId(storeId: string) {
-  // API call to get store by storeId
-  // const response = await fetch(`http://burn.pagekite.me/store/${storeId}`);
-  // if (!response.ok) {
-  //     throw new Error("Failed to fetch store");
-  // }
-  // return response.json();
-  return {
-    storeId: "1",
-    storeName: "Store Name",
-    salesRep: "Sales Rep",
-    address: "Address",
-  };
+export async function getStoreByStoreId(storeId: string, userId: string) {
+  return getRequest<z.infer<typeof StoreSchema>>({
+    endpointUrl: `/store/getById/${storeId}`,
+    tags: [],
+    userId,
+  });
 }
 
 type paramType = {
@@ -22,7 +20,13 @@ type paramType = {
 };
 
 export default async function EditStore({ params }: paramType) {
-  const store = await getStoreByStoreId(params.storeId);
+  const session = await getSession<userSessionType>();
+  if (!session) return null;
 
-  return <StoreUpdateForm store={store} />;
+  const storeResponse = await getStoreByStoreId(
+    params.storeId,
+    session.userInfo.userId
+  );
+
+  return <StoreUpdateForm store={storeResponse.data} />;
 }

@@ -1,3 +1,4 @@
+import ToastifyProvider from "@/context/ToastifyProvider";
 import { ThemeProvider } from "@/context/theme-provider";
 import { getSession } from "@/lib/auth";
 import { cn } from "@/lib/utils";
@@ -47,7 +48,7 @@ export default async function RootLayout({
     : null;
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -61,7 +62,9 @@ export default async function RootLayout({
           disableTransitionOnChange
           forcedTheme="light"
         >
-          {parallelRouteToRender ?? children}
+          <ToastifyProvider>
+            {parallelRouteToRender ?? children}
+          </ToastifyProvider>
         </ThemeProvider>
       </body>
     </html>

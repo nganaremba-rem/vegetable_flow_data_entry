@@ -18,6 +18,7 @@ export default function UpdateInventoryField({ row }: { row: Row<ItemType> }) {
 
   return (
     <Input
+      className="max-w-[3rem]"
       value={dataToShow}
       onBlur={() => {
         if (dataToShow === "") {

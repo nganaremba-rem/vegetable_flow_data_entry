@@ -1,5 +1,4 @@
 import AdminCard from "@/components/AdminCard";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 
 export default function Admin() {
@@ -9,8 +8,8 @@ export default function Admin() {
         <Link href={"/store"}>
           <AdminCard title="Store" />
         </Link>
-        <Link href={"/item"}>
-          <AdminCard title="Item" />
+        <Link href={"/vegetable"}>
+          <AdminCard title="Vegetable" />
         </Link>
         <Link href={"/user"}>
           <AdminCard title="User" />

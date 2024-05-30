@@ -1,4 +1,5 @@
 import AdminNavbar from "@/components/AdminNavbar";
+import { Toaster } from "@/components/ui/toaster";
 import { getSession } from "@/lib/auth";
 import type { userSessionType } from "@/typings";
 import { redirect } from "next/navigation";
@@ -16,6 +17,7 @@ export default async function Layout({
     <>
       <AdminNavbar userInfo={session?.userInfo} />
       {children}
+      <Toaster />
     </>
   );
 }

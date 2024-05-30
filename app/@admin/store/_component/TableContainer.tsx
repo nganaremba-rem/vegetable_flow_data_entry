@@ -10,7 +10,12 @@ export default function TableContainer({ data }: { data: StoreType[] }) {
   return (
     <div>
       <CSVDownloadButton csvData={csvData} filename="Store" />
-      <DataTable searchId="storeName" columns={columns} data={data} />
+      <DataTable
+        searchPlaceholder="Search Store Name"
+        searchId="storeName"
+        columns={columns}
+        data={data}
+      />
     </div>
   );
 }

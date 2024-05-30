@@ -5,7 +5,7 @@ import type { FinalForecastedDataType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
 async function getFinalForecastedData(userId: string) {
-  return await getRequest<FinalForecastedDataType>({
+  return await getRequest<FinalForecastedDataType[]>({
     endpointUrl: "/forecast/getPtReport",
     tags: ["final-forecasted-data"],
     userId,
@@ -25,7 +25,7 @@ export default async function ProcurementTeam() {
   if (finalForecastedData.status !== "SUCCESS")
     return (
       <>
-        <ErrorMessage data={finalForecastedData} />
+        <ErrorMessage message={finalForecastedData?.message} />
       </>
     );
 
@@ -35,7 +35,7 @@ export default async function ProcurementTeam() {
         <h1 className="font-extrabold px-3 dark:text-slate-300 md:px-10 py-4 text-gray-800 text-3xl">
           Final Forecasted Data
         </h1>
-        <MainComponent finalForecastedData={finalForecastedData.dataList} />
+        <MainComponent finalForecastedData={finalForecastedData.data} />
       </div>
     </>
   );

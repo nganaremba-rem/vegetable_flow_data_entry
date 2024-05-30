@@ -1,15 +1,8 @@
+"use server";
+
 import { apiBaseUrl } from "@/constants/constants";
-import { axiosInstance } from "@/lib/axiosInstance";
 import type { CustomMutateResponseType } from "@/typings";
-
-export interface signInFormDataType {
-	email: string;
-	password: string;
-}
-
-export function signInUser(signInUserData: signInFormDataType) {
-	return axiosInstance.post("/user/logIn", signInUserData);
-}
+import { revalidateTag } from "next/cache";
 
 export async function mutateData<T>({
 	endpointUrl,
@@ -17,45 +10,60 @@ export async function mutateData<T>({
 	userId,
 	method = "POST",
 	tags = [],
+	revalidateTagString,
 }: {
 	endpointUrl: string;
 	data: any;
 	userId: string;
 	method?: "POST" | "PUT" | "DELETE";
 	tags?: string[];
+	revalidateTagString: string;
 }): Promise<CustomMutateResponseType<T>> {
-	const response = await fetch(`${apiBaseUrl}${endpointUrl}`, {
-		method: method.toUpperCase(),
-		headers: {
-			userId,
-		},
-		body: JSON.stringify(data),
-		next: {
-			tags,
-		},
-	});
+	try {
+		const response = await fetch(`${apiBaseUrl}${endpointUrl}`, {
+			method,
+			headers: {
+				"Content-Type": "application/json",
+				userId,
+			},
+			body: JSON.stringify(data),
+			cache: "no-store",
+		});
+		console.log(response);
+		if (!response.ok) {
+			return {
+				status: "ERROR",
+				message: "",
+				issues: [response.statusText || "Failed to mutate data"],
+				data: {} as T,
+			};
+		}
 
-	if (!response.ok) {
+		const responseData = await response.json();
+
+		if (responseData?.status !== "SUCCESS") {
+			return {
+				status: responseData?.status || "ERROR",
+				message: "",
+				issues: [responseData?.message || "An error occurred"],
+				data: {} as T,
+			};
+		}
+
+		revalidateTag(revalidateTagString);
+
+		return {
+			status: responseData?.status || "SUCCESS",
+			message: responseData?.message || "",
+			issues: [],
+			data: responseData?.data as T,
+		};
+	} catch (error: any) {
 		return {
 			status: "ERROR",
-			message: "An error occurred",
+			message: "",
+			issues: [error?.message || "An error occurred"],
 			data: {} as T,
 		};
 	}
-
-	const responseData = await response.json();
-
-	if (responseData?.status !== "SUCCESS") {
-		return {
-			status: responseData?.status || "ERROR",
-			message: responseData?.message || "An error occurred",
-			data: {} as T,
-		};
-	}
-
-	return {
-		status: responseData?.status || "SUCCESS",
-		message: responseData?.message || "",
-		data: responseData?.data as T,
-	};
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import { addStoreAction } from "@/actions/addStoreAction";
 import FormButton from "@/components/FormButton";
 import { IoIosArrowBack } from "react-icons/io";
 
+import { addStoreAction } from "@/actions/addStoreAction";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -15,11 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { StoreSchema } from "@/schema/StoreSchema";
-import type { userSessionType } from "@/typings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import type { z } from "zod";
 
 export type AddFormState = {
@@ -29,7 +29,7 @@ export type AddFormState = {
 
 type FormSchema = z.infer<typeof StoreSchema>;
 
-export default function AddStore({ session }: { session: userSessionType }) {
+export default function AddStore() {
   const router = useRouter();
   const [state, setState] = useState<AddFormState>({
     issues: [],
@@ -48,17 +48,15 @@ export default function AddStore({ session }: { session: userSessionType }) {
   });
 
   const submitForm = async () => {
-    const formData = new FormData();
-    formData.append("storeId", form.getValues("storeId"));
-    formData.append("storeName", form.getValues("storeName"));
-    formData.append("salesRep", form.getValues("salesRep"));
-    formData.append("address", form.getValues("address"));
-    const { issues, message } = await addStoreAction(formData);
+    setState({ issues: [""], message: "" });
+    const { message, status, issues } = await addStoreAction(form.getValues());
 
-    if (issues.length === 0) {
+    if (status === "SUCCESS") {
       form.reset();
+      toast.success(message || "Store added successfully");
+    } else {
+      setState({ issues: [...issues], message });
     }
-    setState({ issues: [...issues], message });
   };
 
   return (
@@ -88,6 +86,7 @@ export default function AddStore({ session }: { session: userSessionType }) {
             onSubmit={form.handleSubmit(() => {
               startTransition(() => submitForm());
             })}
+            method="POST"
             className="space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-4 items-center"
           >
             <FormField

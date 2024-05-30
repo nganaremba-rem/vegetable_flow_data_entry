@@ -2,14 +2,14 @@ import { Button } from "@/components/ui/button";
 import { FaStore } from "react-icons/fa6";
 
 import { getSession } from "@/lib/auth";
-import { oldGetRequest } from "@/services/apiGetRequests";
+import { getRequest } from "@/services/apiGetRequests";
 import type { userSessionType } from "@/typings";
 import Link from "next/link";
 import TableContainer from "./_component/TableContainer";
 import type { StoreType } from "./columns";
 
-async function getData(userId: string): Promise<StoreType[]> {
-  return await oldGetRequest<StoreType>({
+async function getData(userId: string) {
+  return await getRequest<StoreType[]>({
     endpointUrl: "/store/getAll",
     tags: ["store"],
     userId,
@@ -19,7 +19,7 @@ async function getData(userId: string): Promise<StoreType[]> {
 export default async function Store() {
   const session = await getSession<userSessionType>();
   if (!session) return null;
-  const data = await getData(session.userInfo.userId);
+  const response = await getData(session.userInfo.userId);
 
   return (
     <>
@@ -37,7 +37,7 @@ export default async function Store() {
         </div>
 
         <div className="container mx-auto py-10">
-          <TableContainer data={data} />
+          <TableContainer data={response.data} />
         </div>
       </div>
     </>

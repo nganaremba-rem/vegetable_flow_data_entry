@@ -24,28 +24,28 @@ export default function Sidebar() {
         <SheetItem
           icon={<Store />}
           setSheetOpen={setSheetOpen}
-          itemName="Store"
+          itemName="Stores"
           href="/store"
         />
         <Separator />
         <SheetItem
           icon={<Users />}
           setSheetOpen={setSheetOpen}
-          itemName="User"
+          itemName="Users"
           href="/user"
         />
         <Separator />
         <SheetItem
           icon={<Carrot />}
           setSheetOpen={setSheetOpen}
-          itemName="Item"
-          href="/item"
+          itemName="Vegetables"
+          href="/vegetable"
         />
         <Separator />
         <SheetItem
           icon={<Tractor />}
           setSheetOpen={setSheetOpen}
-          itemName="Farmer"
+          itemName="Farmers"
           href="/farmer"
         />
         <Separator />

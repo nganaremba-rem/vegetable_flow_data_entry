@@ -15,7 +15,7 @@ export default async function StickyNav() {
 
   return (
     <div className="flex sticky top-0 z-[3] bg-slate-100 dark:bg-[#0A0A0A] dark:shadow-gray-900 justify-between items-center p-2 shadow-sky-50 shadow-lg mb-10">
-      <h1 className="font-bold uppercase px-5">{session.userInfo.storeId}</h1>
+      <h1 className="font-bold uppercase px-5">Sales Manager</h1>
       <div className="flex items-center gap-[2rem]">
         <Link
           href={"/"}
@@ -25,7 +25,7 @@ export default async function StickyNav() {
         </Link>
         <div className="hidden md:flex items-center gap-2">
           <SubmitToProcurementButton
-            isAlreadySubmitted={smReportStatus.status}
+            isAlreadySubmitted={smReportStatus.status === true}
           />
           <SelectVegList />
         </div>
