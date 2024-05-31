@@ -5,8 +5,10 @@ type CSVDataFormatRequired = {
 export type CSVDataFinalType = string[][];
 
 export function generateCSVData(
-	data: CSVDataFormatRequired[],
+	data: CSVDataFormatRequired[] | null | undefined,
 ): CSVDataFinalType {
+	if (!data || data?.length === 0) return [];
+
 	const csvData: CSVDataFinalType = [];
 	const headers = Object.keys(data[0]);
 	csvData.push(headers);

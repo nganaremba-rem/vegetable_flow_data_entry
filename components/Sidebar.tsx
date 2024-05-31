@@ -1,8 +1,9 @@
 "use client";
 
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { AlignJustify, Carrot, Store, Tractor, Users } from "lucide-react";
+import { AlignJustify, Carrot, Store, Users } from "lucide-react";
 import { useState } from "react";
+import { GiFarmer } from "react-icons/gi";
 import SheetItem from "./SheetItem";
 import { Separator } from "./ui/separator";
 
@@ -43,7 +44,7 @@ export default function Sidebar() {
         />
         <Separator />
         <SheetItem
-          icon={<Tractor />}
+          icon={<GiFarmer size={20} />}
           setSheetOpen={setSheetOpen}
           itemName="Farmers"
           href="/farmer"

@@ -1,6 +1,6 @@
 "use client";
 
-import { updateVegetableAction } from "@/actions/editVegetableAction";
+import { farmerUpdateAction } from "@/actions/editFarmerAction";
 import FormButton from "@/components/FormButton";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { VegetableSchema } from "@/schema/VegetableSchema";
-import type { VegetableType } from "@/typings";
+import { FarmerSchema } from "@/schema/FarmerSchema";
+import type { FarmerType } from "@/typings";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
@@ -22,11 +22,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import { toast } from "react-toastify";
 import type { z } from "zod";
 
-export default function VegetableUpdateForm({
-  vegetable,
-}: {
-  vegetable: VegetableType;
-}) {
+export default function FarmerUpdateForm({ farmer }: { farmer: FarmerType }) {
   const [state, setState] = useState<{ issues: string[]; message: string }>({
     issues: [],
     message: "",
@@ -34,25 +30,24 @@ export default function VegetableUpdateForm({
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
-  const form = useForm<z.infer<typeof VegetableSchema>>({
-    resolver: zodResolver(VegetableSchema),
+  const form = useForm<z.infer<typeof FarmerSchema>>({
+    resolver: zodResolver(FarmerSchema),
     defaultValues: {
-      id: vegetable.id,
-      itemName: vegetable.itemName,
-      itemGroup: vegetable.itemGroup,
-      packetWeight: vegetable.packetWeight,
-      preset: vegetable.preset,
+      farmerId: farmer.farmerId || "",
+      fullName: farmer.fullName || "",
+      address: farmer.address || "",
+      phoneNo: farmer.phoneNo || "",
     },
   });
 
   const submitForm = async () => {
     setState({ issues: [""], message: "" });
-    const { issues, message, status } = await updateVegetableAction(
+    const { issues, message, status } = await farmerUpdateAction(
       form.getValues()
     );
 
     if (status === "SUCCESS") {
-      toast.success(message || "Vegetable updated successfully");
+      toast.success(message || "Farmer updated successfully");
     } else {
       setState({ issues: [...issues], message });
     }
@@ -70,7 +65,7 @@ export default function VegetableUpdateForm({
               <IoIosArrowBack size={30} />
             </Button>
             <h1 className="font-bold text-lg text-gray-600">
-              Update Vegetable ID: {vegetable.id}
+              Update Farmer ID: {farmer.farmerId}
             </h1>
           </div>
           <Form {...form}>
@@ -90,12 +85,12 @@ export default function VegetableUpdateForm({
             >
               <FormField
                 control={form.control}
-                name="id"
+                name="farmerId"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Vegetable ID
+                        Farmer ID
                       </FormLabel>
                       <FormControl>
                         <Input disabled {...field} />
@@ -107,12 +102,12 @@ export default function VegetableUpdateForm({
               />
               <FormField
                 control={form.control}
-                name="itemName"
+                name="fullName"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Vegetable Name
+                        Full Name
                       </FormLabel>
                       <FormControl>
                         <Input {...field} />
@@ -124,12 +119,12 @@ export default function VegetableUpdateForm({
               />
               <FormField
                 control={form.control}
-                name="itemGroup"
+                name="address"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Vegetable Group
+                        Address
                       </FormLabel>
                       <FormControl>
                         <Input {...field} />
@@ -139,42 +134,40 @@ export default function VegetableUpdateForm({
                   );
                 }}
               />
-
               <FormField
                 control={form.control}
-                name="packetWeight"
+                name="phoneNo"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Vegetable Weight
+                        Phone Number
                       </FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   );
                 }}
               />
-
-              <FormField
+              {/* <FormField
                 control={form.control}
-                name="preset"
+                name="availableItem"
                 render={({ field }) => {
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Target
+                        Available Items
                       </FormLabel>
                       <FormControl>
-                        <Input type="number" {...field} />
+                        <Input readOnly disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   );
                 }}
-              />
+              /> */}
 
               <FormButton
                 isPending={isPending}

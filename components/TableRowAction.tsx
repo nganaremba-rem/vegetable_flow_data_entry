@@ -28,6 +28,7 @@ import Link from "next/link";
 export default function TableRowAction({
   editPageLink,
   serverActionFn,
+  availableItemUpdateLink = null,
 }: {
   editPageLink: string;
   serverActionFn: () => Promise<
@@ -39,6 +40,7 @@ export default function TableRowAction({
       }
     | CustomMutateResponseType<[]>
   >;
+  availableItemUpdateLink?: string | null;
 }) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [state, setState] = React.useState<{
@@ -57,7 +59,7 @@ export default function TableRowAction({
           <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent align="start">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
         <Link
           className="w-full block py-1 px-2 rounded hover:bg-primary-blue hover:text-white"
@@ -94,6 +96,16 @@ export default function TableRowAction({
             </DialogFooter>
           </DialogContent>
         </Dialog>
+        <DropdownMenuSeparator />
+
+        {availableItemUpdateLink !== null && (
+          <Link
+            className="w-full block py-1 px-2 rounded hover:bg-sky-600 hover:text-white"
+            href={availableItemUpdateLink}
+          >
+            Update Available Items
+          </Link>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

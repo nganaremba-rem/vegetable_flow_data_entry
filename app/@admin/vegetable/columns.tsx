@@ -1,7 +1,5 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/checkbox";
-
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
 
@@ -13,27 +11,40 @@ import type { VegetableType } from "@/typings";
 // You can use a Zod schema here if you want.
 
 export const columns: ColumnDef<VegetableType>[] = [
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
   {
-    id: "select",
-    header: ({ table }) => (
-      <Checkbox
-        checked={
-          table.getIsAllPageRowsSelected() ||
-          (table.getIsSomePageRowsSelected() && "indeterminate")
-        }
-        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-        aria-label="Select all"
-      />
-    ),
-    cell: ({ row }) => (
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={(value) => row.toggleSelected(!!value)}
-        aria-label="Select row"
-      />
-    ),
-    enableSorting: false,
-    enableHiding: false,
+    id: "actions",
+    cell: ({ row }) => {
+      return (
+        <TableRowAction
+          editPageLink={`/vegetable/edit/${row.original.id}`}
+          serverActionFn={() =>
+            deleteVegetableAction(row.original.id.toString())
+          }
+        />
+      );
+    },
   },
   {
     accessorKey: "id",
@@ -64,18 +75,5 @@ export const columns: ColumnDef<VegetableType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Target" />
     ),
-  },
-  {
-    id: "actions",
-    cell: ({ row }) => {
-      return (
-        <TableRowAction
-          editPageLink={`/vegetable/edit/${row.original.id}`}
-          serverActionFn={() =>
-            deleteVegetableAction(row.original.id.toString())
-          }
-        />
-      );
-    },
   },
 ];

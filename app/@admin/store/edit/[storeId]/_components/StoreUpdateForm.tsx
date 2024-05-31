@@ -36,10 +36,10 @@ export default function StoreUpdateForm({
   const form = useForm<z.infer<typeof StoreSchema>>({
     resolver: zodResolver(StoreSchema),
     defaultValues: {
-      address: store.address,
-      salesRep: store.salesRep,
-      storeId: store.storeId,
-      storeName: store.storeName,
+      address: store.address || "",
+      salesRep: store.salesRep || "",
+      storeId: store.storeId || "",
+      storeName: store.storeName || "",
     },
   });
 

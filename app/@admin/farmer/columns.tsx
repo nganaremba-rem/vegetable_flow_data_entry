@@ -3,15 +3,14 @@
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
 
-import deleteUserAction from "@/actions/deleteUserAction";
+import deleteFarmerAction from "@/actions/deleteFarmerAction";
 import TableRowAction from "@/components/TableRowAction";
-import type { UserType } from "@/typings";
-import { format } from "date-fns";
+import type { FarmerType } from "@/typings";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
-export const columns: ColumnDef<UserType>[] = [
+export const columns: ColumnDef<FarmerType>[] = [
   // {
   //   id: "select",
   //   header: ({ table }) => (
@@ -39,8 +38,11 @@ export const columns: ColumnDef<UserType>[] = [
     cell: ({ row }) => {
       return (
         <TableRowAction
-          editPageLink={`/user/edit/${row.original.empId}`}
-          serverActionFn={() => deleteUserAction(row.original.empId.toString())}
+          editPageLink={`/farmer/edit/${row.original.farmerId}`}
+          serverActionFn={() =>
+            deleteFarmerAction(row.original.farmerId.toString())
+          }
+          availableItemUpdateLink={`/farmer/edit/availableItems/${row.original.farmerId}`}
         />
       );
     },
@@ -51,23 +53,16 @@ export const columns: ColumnDef<UserType>[] = [
       <DataTableColumnHeader column={column} title="ID" />
     ),
   },
-
   {
-    accessorKey: "empId",
+    accessorKey: "farmerId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Employee ID" />
+      <DataTableColumnHeader column={column} title="Farmer ID" />
     ),
   },
   {
-    accessorKey: "userName",
+    accessorKey: "fullName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Username" />
-    ),
-  },
-  {
-    accessorKey: "email",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Email" />
+      <DataTableColumnHeader column={column} title="Full Name" />
     ),
   },
   {
@@ -77,42 +72,15 @@ export const columns: ColumnDef<UserType>[] = [
     ),
   },
   {
-    accessorKey: "gender",
+    accessorKey: "phoneNo",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Gender" />
+      <DataTableColumnHeader column={column} title="Phone Number" />
     ),
   },
   {
-    accessorKey: "roleCode",
+    accessorKey: "availableItem",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Role Code" />
-    ),
-  },
-  {
-    accessorKey: "storeId",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Store ID" />
-    ),
-  },
-  {
-    accessorKey: "info",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Info" />
-    ),
-  },
-  {
-    accessorKey: "createdOn",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created On" />
-    ),
-    cell: ({ row }) => {
-      return format(row.original.createdOn, "dd/MM/yyyy");
-    },
-  },
-  {
-    accessorKey: "createdBy",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created by" />
+      <DataTableColumnHeader column={column} title="Available Items" />
     ),
   },
 ];

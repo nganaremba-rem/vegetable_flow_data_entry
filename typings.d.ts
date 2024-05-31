@@ -119,3 +119,12 @@ export interface VegetableType {
 	packetWeight: number;
 	preset: number;
 }
+
+export interface FarmerType {
+	id: string;
+	farmerId: string;
+	fullName: string;
+	address: string;
+	phoneNo: string;
+	availableItem: string;
+}
