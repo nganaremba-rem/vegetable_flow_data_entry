@@ -1,0 +1,75 @@
+"use client";
+
+import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import type { ColumnDef } from "@tanstack/react-table";
+
+import SuggestedForecastField from "./_components/SuggestedForecastField";
+
+// This type is used to define the shape of our data.
+// You can use a Zod schema here if you want.
+export type ItemType = {
+  id: number;
+  itemName: string;
+  itemGroup: string;
+  packetWeight: number;
+  preset: number;
+};
+
+export const alreadForecastedColumns: ColumnDef<ItemType>[] = [
+  // {
+  //   id: "select",
+  //   header: ({ table }) => (
+  //     <Checkbox
+  //       checked={
+  //         table.getIsAllPageRowsSelected() ||
+  //         (table.getIsSomePageRowsSelected() && "indeterminate")
+  //       }
+  //       onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+  //       aria-label="Select all"
+  //     />
+  //   ),
+  //   cell: ({ row }) => (
+  //     <Checkbox
+  //       checked={row.getIsSelected()}
+  //       onCheckedChange={(value) => row.toggleSelected(!!value)}
+  //       aria-label="Select row"
+  //     />
+  //   ),
+  //   enableSorting: false,
+  //   enableHiding: false,
+  // },
+  {
+    accessorKey: "itemName",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Vegetable Name" />
+    ),
+  },
+
+  {
+    accessorKey: "preset",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Target" />
+    ),
+  },
+  {
+    id: "inventory",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Inventory" />
+    ),
+  },
+  {
+    id: "suggested_forecast",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Suggested Forecast" />
+    ),
+    cell: ({ row }) => {
+      return <SuggestedForecastField row={row} />;
+    },
+  },
+  {
+    id: "packets_required",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Packets Required" />
+    ),
+  },
+];

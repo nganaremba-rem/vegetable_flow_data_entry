@@ -49,18 +49,6 @@ export default function MainComponent({
               {data.itemName}
             </h1>
             <div className="p-3 md:p-10">
-              <div className="flex items-center justify-end">
-                <div className="text-muted-foreground text-sm">
-                  Packet Weight:{" "}
-                  <span
-                    className={
-                      "font-extrabold text-lg text-gray-800 dark:text-slate-300"
-                    }
-                  >
-                    {data.packetWeight}
-                  </span>
-                </div>
-              </div>
               <ForecastedData
                 isAlreadySubmitted={isAlreadySubmitted}
                 currentData={data}

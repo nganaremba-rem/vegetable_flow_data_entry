@@ -11,16 +11,19 @@ import { useItemStore } from "@/store/itemStore";
 import type { itemType } from "@/typings";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
+import { alreadForecastedColumns } from "../alreadySubmittedColumns";
 import { columns } from "../columns";
 
 export default function MainComponent({
   items,
   storeId,
   byRole,
+  isAlreadyForecasted,
 }: {
   items: itemType[];
   storeId: string;
   byRole: string;
+  isAlreadyForecasted: boolean;
 }) {
   const { setItems, items: finalItems } = useItemStore((state) => state);
   const [isPending, startTransition] = useTransition();
@@ -132,7 +135,7 @@ export default function MainComponent({
               submitForecast(finalItems);
             });
           }}
-          disabled={isPending}
+          disabled={isPending || isAlreadyForecasted}
           className="w-max bg-primary-blue hover:bg-sky-700 dark:text-white"
         >
           {isPending ? "Submitting..." : "Submit to Sales Manager"}
@@ -141,7 +144,7 @@ export default function MainComponent({
       <DataTable
         searchId="itemName"
         searchPlaceholder="Search Items"
-        columns={columns}
+        columns={isAlreadyForecasted ? alreadForecastedColumns : columns}
         data={items}
       />
     </div>
