@@ -96,7 +96,7 @@ export default function StoreUpdateForm({
                         Store ID
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

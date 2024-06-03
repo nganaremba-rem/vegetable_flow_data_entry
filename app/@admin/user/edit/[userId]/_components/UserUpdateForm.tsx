@@ -114,7 +114,7 @@ export default function UserUpdateForm({
                         Employee ID
                       </FormLabel>
                       <FormControl>
-                        <Input {...field} />
+                        <Input disabled {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

@@ -2,6 +2,7 @@
 
 import { loginAction } from "@/actions/loginAction";
 import FormButton from "@/components/FormButton";
+import Logo from "@/components/Logo";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -50,11 +51,11 @@ export default function Login() {
   };
 
   return (
-    <div className="md:flex justify-center bg-primary-base dark:bg-primary-baseDark md:dark:bg-secondary-baseDark md:bg-white pt-10 md:pt-0 items-center min-h-[100svh]">
-      <div className=" rounded-xl md:shadow-xl md:ring-1 md:dark:ring-slate-700 md:ring-slate-200 p-5 sm:p-7 md:p-8 lg:p-10  md:bg-primary-base dark:bg-primary-baseDark">
-        <h1 className="py-5 text-2xl font-extrabold text-gray-600 dark:text-slate-200">
-          KSW - Vegetable Flow Data Entry
-        </h1>
+    <div className="md:flex justify-center bg-white  md:dark:bg-secondary-baseDark  pt-10 md:pt-0 items-center min-h-[100svh] md:bg-primary-base dark:bg-primary-baseDark">
+      <div className=" rounded-xl md:shadow-xl md:ring-1 md:dark:ring-slate-700 md:ring-slate-200 p-5 sm:p-7 md:p-8 lg:py-6 lg:px-12 md:bg-white dark:bg-primary-baseDark">
+        <div className="flex justify-center">
+          <Logo size={100} />
+        </div>
         <Form {...form}>
           {state?.issues?.[0] && (
             <div className="text-red-600">{state?.issues?.[0]}</div>
@@ -69,7 +70,7 @@ export default function Login() {
             onSubmit={form.handleSubmit(() => {
               startTransition(() => submitFuncion());
             })}
-            className="space-y-2"
+            className="space-y-2 my-3"
           >
             <FormField
               control={form.control}
@@ -104,7 +105,6 @@ export default function Login() {
                 </FormItem>
               )}
             />
-
             <div className="flex items-center gap-2 pb-5">
               <Checkbox
                 id="showPassword"
@@ -120,7 +120,6 @@ export default function Login() {
                 Show password
               </FormLabel>
             </div>
-
             <FormButton
               isPending={isPending}
               className="w-full flex items-center gap-2 bg-primary-blue hover:bg-[rgba(1,115,220,0.9)]"

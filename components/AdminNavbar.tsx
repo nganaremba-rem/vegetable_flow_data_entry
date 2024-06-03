@@ -1,6 +1,7 @@
 import type { userInfoType } from "@/typings";
 import { Home } from "lucide-react";
 import Link from "next/link";
+import Logo from "./Logo";
 import ProfileButton from "./ProfileButton";
 import Sidebar from "./Sidebar";
 
@@ -12,7 +13,10 @@ export default function AdminNavbar({
   if (!userInfo) return null;
   return (
     <div className="flex justify-between p-2 dark:shadow-gray-900 shadow-sky-50 shadow-lg mb-10">
-      <Sidebar />
+      <div className="flex items-center">
+        <Sidebar />
+        <Logo />
+      </div>
       <div className="flex items-center gap-2">
         <Link
           href={"/"}

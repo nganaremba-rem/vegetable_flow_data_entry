@@ -14,7 +14,7 @@ export const columns: ColumnDef<SrPredictedDataType>[] = [
   {
     accessorKey: "itemId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Item ID" />
+      <DataTableColumnHeader column={column} title="Vegetable ID" />
     ),
   },
   {

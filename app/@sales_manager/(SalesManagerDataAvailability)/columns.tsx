@@ -28,7 +28,7 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
   {
     accessorKey: "availability",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Availability" />
+      <DataTableColumnHeader column={column} title="Forecast available" />
     ),
     cell: ({ row }) => {
       return row.original.availability ? (

@@ -17,7 +17,7 @@ export default function MainComponent({
 
   return (
     <div className="px-3 2xl:px-[20rem] flex flex-col gap-2 py-2">
-      <h1 className="text-3xl font-bold">Data Availability</h1>
+      <h1 className="text-3xl font-bold">Store Forecast Status</h1>
       <p className="text-muted-foreground text-sm">
         Date: {format(Date.now(), "dd/MM/yyyy")}
       </p>

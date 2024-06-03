@@ -23,7 +23,7 @@ export default function SelectVegList() {
 
   const scrollToComponent = (id: string) => {
     const element = document.getElementById(`component-${id}`);
-    console.log(element, id);
+    // console.log(element, id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }

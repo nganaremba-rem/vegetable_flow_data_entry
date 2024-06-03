@@ -32,8 +32,8 @@ export default async function ProcurementTeam() {
   return (
     <>
       <div className="2xl:px-[10rem] py-10">
-        <h1 className="font-extrabold px-3 dark:text-slate-300 md:px-10 py-4 text-gray-800 text-3xl">
-          Final Forecasted Data
+        <h1 className="font-extrabold px-3 dark:text-slate-300 md:px-10 py-4 text-gray-800 text-xl md:text-3xl">
+          Final Forecasted Data by Sales Manager
         </h1>
         <MainComponent finalForecastedData={finalForecastedData.data} />
       </div>

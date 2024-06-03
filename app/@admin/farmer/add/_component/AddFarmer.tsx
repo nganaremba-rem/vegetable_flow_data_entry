@@ -151,7 +151,7 @@ export default function AddFarmer() {
                       Phone Number
                     </FormLabel>
                     <FormControl>
-                      <Input {...field} />
+                      <Input type="tel" maxLength={10} {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

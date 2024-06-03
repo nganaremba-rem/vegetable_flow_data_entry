@@ -34,7 +34,7 @@ export default async function ProfileButton() {
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-full">
+      <DropdownMenuContent className="w-full backdrop-blur-2xl backdrop-brightness-95 bg-transparent shadow-xl">
         <div className="w-56 overflow-hidden group">
           <DropdownMenuLabel className="whitespace-nowrap w-max text-ellipsis overflow-hidden group-hover:overflow-visible transition-all duration-300 ease-in-out ">
             {/* <DropdownMenuLabel className="whitespace-nowrap w-max text-ellipsis overflow-hidden group-hover:overflow-visible transition-all duration-300 ease-in-out group-hover:animate-scroll"> */}

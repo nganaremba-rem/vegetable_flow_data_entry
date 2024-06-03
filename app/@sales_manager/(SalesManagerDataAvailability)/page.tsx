@@ -4,7 +4,7 @@ import type { DataAvailabilityType, userSessionType } from "@/typings";
 import MainComponent from "./_components/MainComponent";
 
 async function getDataAvailability(userId: string) {
-  return await getRequest<DataAvailabilityType>({
+  return await getRequest<DataAvailabilityType[]>({
     endpointUrl: "/forecast/availability",
     tags: ["data_availability"],
     userId,
