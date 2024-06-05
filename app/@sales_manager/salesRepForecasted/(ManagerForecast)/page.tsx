@@ -11,7 +11,7 @@ async function getSalesRepForecastedData(userId: string) {
   });
 }
 
-export async function checkIfAlreadySubmitted(userId: string) {
+async function checkIfAlreadySubmitted(userId: string) {
   return await getRequest({
     endpointUrl: "/forecast/smReportStatus",
     tags: ["smReportStatus"],

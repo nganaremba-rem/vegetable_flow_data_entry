@@ -1,9 +1,9 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
-import { Button } from "@/components/ui/button";
 import type { FinalForecastedDataType } from "@/typings";
 import type { ColumnDef } from "@tanstack/react-table";
+import Suppliers from "./_components/Suppliers";
 
 export const columns: ColumnDef<FinalForecastedDataType>[] = [
   {
@@ -15,7 +15,7 @@ export const columns: ColumnDef<FinalForecastedDataType>[] = [
   {
     accessorKey: "count",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Total Packets" />
+      <DataTableColumnHeader column={column} title="Forecasted Packets" />
     ),
   },
   {
@@ -30,31 +30,25 @@ export const columns: ColumnDef<FinalForecastedDataType>[] = [
       <DataTableColumnHeader column={column} title="Suppliers" />
     ),
     cell: ({ row }) => {
-      return (
-        <div className="max-w-[5rem] overflow-hidden">
-          <div className="overflow-hidden text-ellipsis">
-            {row.original.suppliers}
-          </div>
-        </div>
-      );
+      return <Suppliers suppliers={row.original.suppliers} />;
     },
   },
-  {
-    id: "send_sms",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Send SMS" />
-    ),
-    cell: ({ row }) => {
-      return (
-        <Button
-          className="bg-primary-blue hover:bg-sky-700 p-2 rounded text-white"
-          onClick={() => {
-            alert("SMS Sent");
-          }}
-        >
-          Send SMS
-        </Button>
-      );
-    },
-  },
+  // {
+  //   id: "send_sms",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Send SMS" />
+  //   ),
+  //   cell: ({ row }) => {
+  //     return (
+  //       <Button
+  //         className="bg-primary-blue hover:bg-sky-700 p-2 rounded text-white"
+  //         onClick={() => {
+  //           alert("SMS Sent");
+  //         }}
+  //       >
+  //         Send SMS
+  //       </Button>
+  //     );
+  //   },
+  // },
 ];

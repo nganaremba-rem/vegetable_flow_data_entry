@@ -54,19 +54,19 @@ export const columns: ColumnDef<StoreType>[] = [
       );
     },
   },
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="ID" />
+  //   ),
+  // },
 
-  {
-    accessorKey: "storeId",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Store ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "storeId",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Store ID" />
+  //   ),
+  // },
   {
     accessorKey: "storeName",
     header: ({ column }) => (
@@ -79,18 +79,18 @@ export const columns: ColumnDef<StoreType>[] = [
       <DataTableColumnHeader column={column} title="Sales Rep" />
     ),
   },
-  {
-    accessorKey: "address",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Address" />
-    ),
-  },
-  {
-    accessorKey: "delKey",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Del Key" />
-    ),
-  },
+  // {
+  //   accessorKey: "address",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Address" />
+  //   ),
+  // },
+  // {
+  //   accessorKey: "delKey",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Del Key" />
+  //   ),
+  // },
   {
     accessorKey: "createdOn",
     header: ({ column }) => (

@@ -11,12 +11,12 @@ export const columns: ColumnDef<SrPredictedDataType>[] = [
       <DataTableColumnHeader column={column} title="Store ID" />
     ),
   },
-  {
-    accessorKey: "itemId",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Vegetable ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "itemId",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Vegetable ID" />
+  //   ),
+  // },
   {
     accessorKey: "inventory",
     header: ({ column }) => (

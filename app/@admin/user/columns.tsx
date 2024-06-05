@@ -45,19 +45,19 @@ export const columns: ColumnDef<UserType>[] = [
       );
     },
   },
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="ID" />
+  //   ),
+  // },
 
-  {
-    accessorKey: "empId",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Employee ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "empId",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Employee ID" />
+  //   ),
+  // },
   {
     accessorKey: "userName",
     header: ({ column }) => (
@@ -76,12 +76,12 @@ export const columns: ColumnDef<UserType>[] = [
       <DataTableColumnHeader column={column} title="Address" />
     ),
   },
-  {
-    accessorKey: "gender",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Gender" />
-    ),
-  },
+  // {
+  //   accessorKey: "gender",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Gender" />
+  //   ),
+  // },
   {
     accessorKey: "roleCode",
     header: ({ column }) => (
@@ -94,12 +94,12 @@ export const columns: ColumnDef<UserType>[] = [
       <DataTableColumnHeader column={column} title="Store ID" />
     ),
   },
-  {
-    accessorKey: "info",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Info" />
-    ),
-  },
+  // {
+  //   accessorKey: "info",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Info" />
+  //   ),
+  // },
   {
     accessorKey: "createdOn",
     header: ({ column }) => (

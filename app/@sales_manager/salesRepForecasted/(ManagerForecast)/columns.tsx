@@ -12,23 +12,37 @@ export const columns: ColumnDef<SrPredictedDataType>[] = [
       <DataTableColumnHeader column={column} title="Store ID" />
     ),
   },
-  {
-    accessorKey: "itemId",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Vegetable ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "itemId",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Vegetable ID" />
+  //   ),
+  // },
   {
     accessorKey: "inventory",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Inventory" />
     ),
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.srForecast === -1 ? "N/A" : row.original.inventory}
+        </div>
+      );
+    },
   },
   {
     accessorKey: "srForecast",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Sales Rep. Forecast" />
     ),
+    cell: ({ row }) => {
+      return (
+        <div>
+          {row.original.srForecast === -1 ? "N/A" : row.original.srForecast}
+        </div>
+      );
+    },
   },
   {
     id: "final_forecast",

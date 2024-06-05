@@ -22,9 +22,9 @@ export default async function ItemPage() {
 
   return (
     <>
-      <div className="p-2">
+      <div className="p-2 md:px-[15rem]">
         <div className="flex justify-between items-center px-3 md:px-10">
-          <h1 className="font-extrabold text-xl px-3 md:px-10">Vegetables</h1>
+          <h1 className="font-extrabold text-xl px-3">Vegetables</h1>
           <div className="flex items-center gap-4">
             <Link href={"/vegetable/add"}>
               <Button className="bg-primary-blue text-white flex items-center gap-2 hover:bg-sky-700">

@@ -46,12 +46,12 @@ export const columns: ColumnDef<VegetableType>[] = [
       );
     },
   },
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="ID" />
+  //   ),
+  // },
   {
     accessorKey: "itemName",
     header: ({ column }) => (
@@ -67,13 +67,13 @@ export const columns: ColumnDef<VegetableType>[] = [
   {
     accessorKey: "packetWeight",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Vegetable Weight" />
+      <DataTableColumnHeader column={column} title="Packet Weight" />
     ),
   },
-  {
-    accessorKey: "preset",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Target" />
-    ),
-  },
+  // {
+  //   accessorKey: "preset",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="Target" />
+  //   ),
+  // },
 ];

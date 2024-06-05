@@ -1,12 +1,20 @@
 import Logo from "@/components/Logo";
 import ProfileButton from "@/components/ProfileButton";
 import { getSession } from "@/lib/auth";
+import { getRequest } from "@/services/apiGetRequests";
 import type { userSessionType } from "@/typings";
 import { Home } from "lucide-react";
 import Link from "next/link";
-import { checkIfAlreadySubmitted } from "../page";
 import SelectVegList from "./SelectVegList";
 import SubmitToProcurementButton from "./SubmitToProcurementButton";
+
+async function checkIfAlreadySubmitted(userId: string) {
+  return await getRequest({
+    endpointUrl: "/forecast/smReportStatus",
+    tags: ["smReportStatus"],
+    userId,
+  });
+}
 
 export default async function StickyNav() {
   const session = await getSession<userSessionType>();

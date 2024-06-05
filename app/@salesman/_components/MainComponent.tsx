@@ -9,9 +9,9 @@ import { Separator } from "@/components/ui/separator";
 import { generateCSVData } from "@/lib/generateCsvData";
 import { useItemStore } from "@/store/itemStore";
 import type { itemType } from "@/typings";
+import { format } from "date-fns";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
-import { alreadForecastedColumns } from "../alreadySubmittedColumns";
 import { columns } from "../columns";
 
 export default function MainComponent({
@@ -127,26 +127,29 @@ export default function MainComponent({
           </Button>
         </div>
       </DialogContainer>
-      <div className="self-end flex items-center gap-2">
+      <div className="flex justify-between items-center gap-2">
+        <p className="text-gray-700 text-sm">
+          Date: {format(Date.now(), "dd/MM/yyyy")}
+        </p>
         <CSVDownloadButton filename="Sales Rep Record" csvData={csvData} />
-        <Button
-          onClick={() => {
-            startTransition(() => {
-              submitForecast(finalItems);
-            });
-          }}
-          disabled={isPending || isAlreadyForecasted}
-          className="w-max bg-primary-blue hover:bg-sky-700 dark:text-white"
-        >
-          {isPending ? "Submitting..." : "Submit to Sales Manager"}
-        </Button>
       </div>
       <DataTable
         searchId="itemName"
         searchPlaceholder="Search Items"
-        columns={isAlreadyForecasted ? alreadForecastedColumns : columns}
+        columns={isAlreadyForecasted ? columns : columns}
         data={items}
       />
+      <Button
+        onClick={() => {
+          startTransition(() => {
+            submitForecast(finalItems);
+          });
+        }}
+        disabled={isPending || isAlreadyForecasted}
+        className="w-full my-10 shadow-lg bg-primary-blue hover:bg-sky-700 dark:text-white"
+      >
+        {isPending ? "Submitting..." : "Submit to Sales Manager"}
+      </Button>
     </div>
   );
 }

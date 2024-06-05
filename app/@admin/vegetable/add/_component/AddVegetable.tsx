@@ -135,7 +135,7 @@ export default function AddVegetable() {
                 return (
                   <FormItem>
                     <FormLabel className="text-gray-800 dark:text-white">
-                      Vegetable Weight
+                      Packet Weight
                     </FormLabel>
                     <FormControl>
                       <Input key={weightKey} type="number" {...field} />

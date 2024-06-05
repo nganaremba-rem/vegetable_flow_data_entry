@@ -1,9 +1,19 @@
-import { getStoreByStoreId } from "@/app/@admin/store/edit/[storeId]/page";
 import Logo from "@/components/Logo";
 import ProfileButton from "@/components/ProfileButton";
 import { Separator } from "@/components/ui/separator";
 import { getSession } from "@/lib/auth";
+import type { StoreSchema } from "@/schema/StoreSchema";
+import { getRequest } from "@/services/apiGetRequests";
 import type { userSessionType } from "@/typings";
+import type { z } from "zod";
+
+async function getStoreByStoreId(storeId: string, userId: string) {
+  return getRequest<z.infer<typeof StoreSchema>>({
+    endpointUrl: `/store/getById/${storeId}`,
+    tags: [],
+    userId,
+  });
+}
 
 export default async function SalesRepNavbar() {
   const session = await getSession<userSessionType>();

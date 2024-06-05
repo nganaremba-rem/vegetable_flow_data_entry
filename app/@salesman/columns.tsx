@@ -75,7 +75,7 @@ export const columns: ColumnDef<ItemType>[] = [
   {
     id: "packets_required",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Packets Required" />
+      <DataTableColumnHeader column={column} title="Sales Rep. Forecast" />
     ),
     cell: ({ row }) => {
       return <UpdatePacketsRequiredField row={row} />;

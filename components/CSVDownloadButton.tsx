@@ -1,7 +1,6 @@
 import type { CSVDataFinalType } from "@/lib/generateCsvData";
 import { CSVLink } from "react-csv";
 import { FaFileCsv } from "react-icons/fa6";
-import { Button } from "./ui/button";
 
 export default function CSVDownloadButton({
   csvData,
@@ -11,10 +10,13 @@ export default function CSVDownloadButton({
   filename: string;
 }) {
   return (
-    <CSVLink data={csvData} filename={`${filename}.csv`}>
-      <Button className="bg-inherit shadow hover:bg-slate-200">
-        <FaFileCsv color="green" size={35} />
-      </Button>
+    <CSVLink
+      className="shadow-lg w-max text-sm flex items-center gap-2 text-gray-700 bg-slate-100 hover:bg-slate-200  px-5 py-2 rounded"
+      data={csvData}
+      filename={`${filename}.csv`}
+    >
+      Download as CSV
+      <FaFileCsv color="green" size={20} />
     </CSVLink>
   );
 }

@@ -16,19 +16,13 @@ export default function MainComponent({
   const csvData = generateCSVData(dataAvailability);
 
   return (
-    <div className="px-3 2xl:px-[20rem] flex flex-col gap-2 py-2">
+    <div className="px-3 2xl:px-[15rem] flex flex-col gap-2 py-2">
       <h1 className="text-3xl font-bold">Store Forecast Status</h1>
       <p className="text-muted-foreground text-sm">
         Date: {format(Date.now(), "dd/MM/yyyy")}
       </p>
       <div className="self-end flex items-center gap-2">
         <CSVDownloadButton csvData={csvData} filename="Data availability" />
-        <Link
-          className="bg-primary-blue hover:bg-sky-700 p-2 rounded text-white"
-          href={"/salesRepForecasted"}
-        >
-          Continue
-        </Link>
       </div>
       <DataTable
         searchId="storeName"
@@ -36,6 +30,12 @@ export default function MainComponent({
         columns={columns}
         data={dataAvailability}
       />
+      <Link
+        className="bg-primary-blue my-10 text-center hover:bg-sky-700 p-2 rounded text-white"
+        href={"/salesRepForecasted"}
+      >
+        Check Sales Rep Forecasted Report
+      </Link>
     </div>
   );
 }

@@ -52,16 +52,16 @@ export default function Login() {
 
   return (
     <div className="md:flex justify-center bg-white  md:dark:bg-secondary-baseDark  pt-10 md:pt-0 items-center min-h-[100svh] md:bg-primary-base dark:bg-primary-baseDark">
-      <div className=" rounded-xl md:shadow-xl md:ring-1 md:dark:ring-slate-700 md:ring-slate-200 p-5 sm:p-7 md:p-8 lg:py-6 lg:px-12 md:bg-white dark:bg-primary-baseDark">
+      <div className=" rounded-xl md:shadow-xl md:min-w-[25rem] md:max-w-[25rem]  md:ring-1 md:dark:ring-slate-700 md:ring-slate-200 p-5 sm:p-7 md:p-8 lg:py-6 lg:px-12 md:bg-white dark:bg-primary-baseDark">
         <div className="flex justify-center">
           <Logo size={100} />
         </div>
         <Form {...form}>
           {state?.issues?.[0] && (
-            <div className="text-red-600">{state?.issues?.[0]}</div>
+            <p className="text-red-600 ">{state?.issues?.[0]}</p>
           )}
           {state?.message && (
-            <div className="text-green-600">{state?.message}</div>
+            <p className="text-green-600 ">{state?.message}</p>
           )}
           <form
             method="post"

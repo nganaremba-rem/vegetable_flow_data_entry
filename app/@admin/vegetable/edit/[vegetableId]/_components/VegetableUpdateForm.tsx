@@ -147,7 +147,7 @@ export default function VegetableUpdateForm({
                   return (
                     <FormItem>
                       <FormLabel className="text-gray-800 dark:text-white">
-                        Vegetable Weight
+                        Packet Weight
                       </FormLabel>
                       <FormControl>
                         <Input type="number" {...field} />

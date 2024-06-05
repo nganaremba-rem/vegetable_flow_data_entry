@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { Button } from "@/components/ui/button";
 import type { DataAvailabilityType } from "@/typings";
 import type { ColumnDef } from "@tanstack/react-table";
 import { CheckCheck, CircleX } from "lucide-react";
@@ -26,6 +27,12 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
     ),
   },
   {
+    id: "time",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Forecasted Time" />
+    ),
+  },
+  {
     accessorKey: "availability",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Forecast available" />
@@ -35,6 +42,19 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
         <CheckCheck size={30} color="green" />
       ) : (
         <CircleX size={30} color="red" />
+      );
+    },
+  },
+  {
+    id: "forceAdd",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="" />,
+    cell: ({ row }) => {
+      return row.original.availability ? (
+        <></>
+      ) : (
+        <>
+          <Button>Force Add</Button>
+        </>
       );
     },
   },

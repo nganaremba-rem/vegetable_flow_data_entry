@@ -24,7 +24,7 @@ export default async function Store() {
   return (
     <>
       <div className="p-2">
-        <div className="flex justify-between items-center px-3 md:px-10">
+        <div className="flex justify-between items-center px-3 md:px-[15rem]">
           <h1 className="font-extrabold text-xl px-3 md:px-10">Store</h1>
           <div className="flex items-center gap-4">
             <Link href={"/store/add"}>
@@ -36,7 +36,7 @@ export default async function Store() {
           </div>
         </div>
 
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 md:px-[15rem]">
           <TableContainer data={response.data} />
         </div>
       </div>

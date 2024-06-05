@@ -47,12 +47,12 @@ export const columns: ColumnDef<FarmerType>[] = [
       );
     },
   },
-  {
-    accessorKey: "id",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="ID" />
-    ),
-  },
+  // {
+  //   accessorKey: "id",
+  //   header: ({ column }) => (
+  //     <DataTableColumnHeader column={column} title="ID" />
+  //   ),
+  // },
   {
     accessorKey: "farmerId",
     header: ({ column }) => (

@@ -5,7 +5,7 @@ import type { userSessionType } from "@/typings";
 import type { z } from "zod";
 import StoreUpdateForm from "./_components/StoreUpdateForm";
 
-export async function getStoreByStoreId(storeId: string, userId: string) {
+async function getStoreByStoreId(storeId: string, userId: string) {
   return getRequest<z.infer<typeof StoreSchema>>({
     endpointUrl: `/store/getById/${storeId}`,
     tags: [],

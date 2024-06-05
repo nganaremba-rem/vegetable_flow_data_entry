@@ -22,9 +22,9 @@ export default async function FarmerPage() {
 
   return (
     <>
-      <div className="p-2">
+      <div className="p-2 2xl:px-[10rem]">
         <div className="flex justify-between items-center px-3 md:px-10">
-          <h1 className="font-extrabold text-xl px-3 md:px-10">Farmers</h1>
+          <h1 className="font-extrabold text-xl px-3">Farmers</h1>
           <div className="flex items-center gap-4">
             <Link href={"/farmer/add"}>
               <Button className="bg-primary-blue text-white flex items-center gap-2 hover:bg-sky-700">
@@ -35,7 +35,7 @@ export default async function FarmerPage() {
           </div>
         </div>
 
-        <div className="container mx-auto 2xl:px-[10rem] py-10">
+        <div className="container mx-auto  py-10">
           <TableContainer data={response.data || []} />
         </div>
       </div>
