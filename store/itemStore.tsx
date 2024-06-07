@@ -1,21 +1,23 @@
-import type { itemType } from "@/typings";
+import type { ItemsWithPreset } from "@/typings";
 import { create } from "zustand";
 
 export type itemStoreStateType = {
-  items: itemType[];
+  items: ItemsWithPreset[];
   updateItem: (
-    id: number,
+    itemCode: number,
     noOfItem: number,
     field: "inventory" | "packets_required"
   ) => void;
-  setItems: (items: itemType[]) => void;
+  setItems: (items: ItemsWithPreset[]) => void;
 };
 
 export const useItemStore = create<itemStoreStateType>((set) => ({
   items: [],
-  updateItem: (id, noOfItem, field) =>
+  updateItem: (itemCode, noOfItem, field) =>
     set((state) => {
-      const currentItem = state.items.find((item) => item.id === id);
+      const currentItem = state.items.find(
+        (item) => item.itemCode === itemCode
+      );
       if (!currentItem) return state;
       const index = state.items.indexOf(currentItem);
       state.items[index][field] = noOfItem;

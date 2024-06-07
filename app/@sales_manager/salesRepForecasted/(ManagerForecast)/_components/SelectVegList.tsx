@@ -16,9 +16,9 @@ export default function SelectVegList() {
     return null;
   }
 
-  const vegList = forcastedData?.map((item) => ({
-    label: item.itemName,
-    value: item.itemName.replace(/\s/g, "-"),
+  const storeList = forcastedData?.map((item) => ({
+    label: item.storeName,
+    value: item.storeId.replace(/\s/g, "-"),
   }));
 
   const scrollToComponent = (id: string) => {
@@ -32,8 +32,8 @@ export default function SelectVegList() {
   return (
     <ComboBoxResponsive
       cb={scrollToComponent}
-      data={vegList}
-      placeholder="Select Veg"
+      data={storeList}
+      placeholder="Select Store"
     />
   );
 }

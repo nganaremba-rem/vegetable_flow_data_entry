@@ -25,33 +25,21 @@ export default function SubmitToProcurementButton({
     message: "",
   });
 
-  if (!forcastedData || forcastedData?.[0]?.srPredictDataList === undefined) {
+  if (!forcastedData) {
     return null;
   }
 
-  const storeIds = forcastedData?.[0].srPredictDataList?.map(
-    (item) => item.storeId
-  );
-
-  const dataToSubmit = storeIds.map((storeId) => {
-    const itemForecastList = forcastedData.map((item) => {
-      const smForeCast =
-        item.srPredictDataList.find((item) => item.storeId === storeId)
-          ?.smForeCast || 0;
-
-      return {
-        itemCode: item.itemCode,
-        smForeCast,
-      };
-    });
-
+  const dataToSubmit = forcastedData.map((store) => {
     return {
-      storeId,
-      itemForecastList,
+      storeId: store.storeId,
+      itemForecastList: store.data.map((item) => {
+        return {
+          itemCode: item.itemCode.toString(),
+          smForeCast: item.smForeCast || 0,
+        };
+      }),
     };
   });
-
-  console.log(dataToSubmit);
 
   async function submitData() {
     const { issues, message } = await salesManagerForecastAction(dataToSubmit);
@@ -68,8 +56,6 @@ export default function SubmitToProcurementButton({
 
     setOpenSuccessDialog(true);
   }
-
-  console.log(isAlreadySubmitted);
 
   return (
     <>
@@ -111,7 +97,7 @@ export default function SubmitToProcurementButton({
           });
         }}
         disabled={isPending || isAlreadySubmitted}
-        className="bg-primary-blue hover:bg-sky-700 text-white"
+        className="bg-primary-blue w-full hover:bg-sky-700 text-white"
       >
         {isPending ? "Submitting..." : "Submit to Procurement Team"}
       </Button>

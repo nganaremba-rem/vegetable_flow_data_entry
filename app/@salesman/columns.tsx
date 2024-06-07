@@ -3,6 +3,7 @@
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import type { ColumnDef } from "@tanstack/react-table";
 
+import type { ItemsWithPreset } from "@/typings";
 import SuggestedForecastField from "./_components/SuggestedForecastField";
 import UpdateInventoryField from "./_components/UpdateInventoryField";
 import UpdatePacketsRequiredField from "./_components/UpdatePacketsRequiredField";
@@ -17,7 +18,7 @@ export type ItemType = {
   preset: number;
 };
 
-export const columns: ColumnDef<ItemType>[] = [
+export const columns: ColumnDef<ItemsWithPreset>[] = [
   // {
   //   id: "select",
   //   header: ({ table }) => (

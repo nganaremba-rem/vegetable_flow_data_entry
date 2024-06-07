@@ -33,6 +33,7 @@ export interface DataAvailabilityType {
 	storeName: string;
 	salesRep: string;
 	availability: boolean;
+	entryTime: string | null;
 }
 
 export interface SrPredictedDataType {
@@ -49,6 +50,22 @@ export interface SalesRepForcastedDataType {
 	presetTarget: number;
 	packetWeight: number;
 	srPredictDataList: SrPredictedDataType[];
+}
+
+export interface SalesRepForecastType {
+	itemCode: number;
+	itemName: string;
+	preset: number;
+	inventory: number;
+	srForecast: number;
+	smForeCast?: number;
+	storeId?: string;
+}
+
+export interface SalesRepForecastedLatestDataType {
+	storeId: string;
+	storeName: string;
+	data: SalesRepForecastType[];
 }
 
 export interface SMItemForCastDataType {
@@ -81,7 +98,7 @@ export interface salesManagerReportStatus {
 }
 
 export interface CustomResponseType<T> {
-	status: "SUCCESS" | "ERROR" | boolean;
+	status: "SUCCESS" | "ERROR" | boolean | "AVAILABLE" | "UNAVAILABLE";
 	message: string;
 	data: T;
 }
@@ -127,4 +144,20 @@ export interface FarmerType {
 	address: string;
 	phoneNo: string;
 	availableItem: string;
+}
+
+export interface ItemsWithPreset {
+	itemCode: number;
+	itemName: string | null;
+	preset: number;
+	inventory?: number;
+	packets_required?: number;
+}
+
+export interface SalesManagerTableDataType {
+	"Vegetable Types": string;
+	"Packet Weight": number;
+	"Total Packets": number;
+	"Total KG/PC": number;
+	[storeName: string]: string | number; // Indexed signature for dynamic properties
 }

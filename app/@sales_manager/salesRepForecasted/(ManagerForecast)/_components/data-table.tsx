@@ -29,7 +29,7 @@ interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   searchPlaceholder?: string;
-  searchId: string;
+  searchId?: string;
   pagination?: {
     pageSize: number;
     pageIndex: number;
@@ -40,7 +40,7 @@ export function DataTable<TData, TValue>({
   columns,
   data,
   searchPlaceholder = "Search Store",
-  searchId,
+  searchId = "",
   pagination,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -60,7 +60,7 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onRowSelectionChange: setRowSelection,
     initialState: {
-      pagination: pagination ?? { pageSize: 3, pageIndex: 0 },
+      pagination: pagination ?? { pageSize: 50, pageIndex: 0 },
     },
     state: {
       sorting,

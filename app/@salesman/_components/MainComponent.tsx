@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { generateCSVData } from "@/lib/generateCsvData";
 import { useItemStore } from "@/store/itemStore";
-import type { itemType } from "@/typings";
+import type { ItemsWithPreset } from "@/typings";
 import { format } from "date-fns";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
@@ -20,7 +20,7 @@ export default function MainComponent({
   byRole,
   isAlreadyForecasted,
 }: {
-  items: itemType[];
+  items: ItemsWithPreset[];
   storeId: string;
   byRole: string;
   isAlreadyForecasted: boolean;
@@ -48,7 +48,7 @@ export default function MainComponent({
     setItems(items);
   }, [items, setItems]);
 
-  async function submitForecast(finalItems: itemType[]) {
+  async function submitForecast(finalItems: ItemsWithPreset[]) {
     const dataToSubmit = finalItems.map((item) => {
       let srForecast = 0;
 
@@ -64,7 +64,7 @@ export default function MainComponent({
       }
 
       return {
-        itemCode: item.id,
+        itemCode: item.itemCode,
         inventory: item?.inventory || 0,
         srForecast,
       };

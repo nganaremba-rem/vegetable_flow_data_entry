@@ -1,29 +1,27 @@
-import type { SalesRepForcastedDataType } from "@/typings";
+import type { SalesRepForecastedLatestDataType } from "@/typings";
 import { create } from "zustand";
 
 export type srForecastedStoreType = {
-  forcastedData: SalesRepForcastedDataType[];
-  updateItem: (itemId: string, storeId: string, noOfItem: number) => void;
-  setItems: (forcastedData: SalesRepForcastedDataType[]) => void;
+  forcastedData: SalesRepForecastedLatestDataType[];
+  updateItem: (itemCode: string, storeId: string, noOfItem: number) => void;
+  setItems: (forcastedData: SalesRepForecastedLatestDataType[]) => void;
 };
 
 export const useSrForcastedStore = create<srForecastedStoreType>((set) => ({
   forcastedData: [],
-  updateItem: (itemId, storeId, noOfItem) =>
+  updateItem: (itemCode, storeId, noOfItem) =>
     set((state) => {
-      const currentItem = state.forcastedData.find(
-        (item) => item.itemCode === itemId
+      const currentStore = state.forcastedData.find(
+        (item) => item.storeId === storeId
       );
-      if (!currentItem) return state;
-      const index = state.forcastedData.indexOf(currentItem);
-      const store = state.forcastedData[index].srPredictDataList.find(
-        (prediction) => prediction.storeId === storeId
+      if (!currentStore) return state;
+      const index = state.forcastedData.indexOf(currentStore);
+      const item = state.forcastedData[index].data.find(
+        (prediction) => prediction.itemCode === Number(itemCode)
       );
-      if (!store) return state;
-      const storeIndex =
-        state.forcastedData[index].srPredictDataList.indexOf(store);
-      state.forcastedData[index].srPredictDataList[storeIndex].smForeCast =
-        noOfItem;
+      if (!item) return state;
+      const itemIndex = state.forcastedData[index].data.indexOf(item);
+      state.forcastedData[index].data[itemIndex].smForeCast = noOfItem;
       return { forcastedData: state.forcastedData };
     }),
   setItems: (forcastedData) => set({ forcastedData }),

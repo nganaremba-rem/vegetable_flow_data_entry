@@ -4,6 +4,7 @@ import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { Button } from "@/components/ui/button";
 import type { DataAvailabilityType } from "@/typings";
 import type { ColumnDef } from "@tanstack/react-table";
+import { format } from "date-fns";
 import { CheckCheck, CircleX } from "lucide-react";
 
 export const columns: ColumnDef<DataAvailabilityType>[] = [
@@ -27,9 +28,21 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
     ),
   },
   {
-    id: "time",
+    accessorKey: "entryTime",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Forecasted Time" />
+    ),
+    cell: ({ row }) => (
+      <>
+        <div className="text-sm">
+          {row.original.entryTime !== null &&
+            format(row.original.entryTime, "dd/MM/yyyy")}
+        </div>
+        <div className="text-xs text-muted-foreground">
+          {row.original.entryTime !== null &&
+            format(row.original.entryTime, "hh:mm a")}
+        </div>
+      </>
     ),
   },
   {

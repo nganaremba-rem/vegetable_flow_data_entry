@@ -5,8 +5,6 @@ import { getRequest } from "@/services/apiGetRequests";
 import type { userSessionType } from "@/typings";
 import { Home } from "lucide-react";
 import Link from "next/link";
-import SelectVegList from "./SelectVegList";
-import SubmitToProcurementButton from "./SubmitToProcurementButton";
 
 async function checkIfAlreadySubmitted(userId: string) {
   return await getRequest({
@@ -34,11 +32,11 @@ export default async function StickyNav() {
         >
           <Home size={30} className="text-gray-800 dark:text-slate-200" />
         </Link>
-        <div className="hidden md:flex items-center gap-2">
-          <SubmitToProcurementButton
+        <div className="hidden items-center gap-2">
+          {/* <SubmitToProcurementButton
             isAlreadySubmitted={smReportStatus.status === true}
           />
-          <SelectVegList />
+          <SelectVegList /> */}
         </div>
         {/* <Link href={"/"} className="p-2 hover:bg-slate-200 rounded">
           <Home size={30} color="#333" />

@@ -1,98 +1,80 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import DecreaseButton from "@/components/DecreaseButton";
+import IncreaseButton from "@/components/IncreaseButton";
 import { Input } from "@/components/ui/input";
 import { useSrForcastedStore } from "@/store/srForcastedStore";
-import type { SrPredictedDataType } from "@/typings";
+import type { SalesRepForecastType } from "@/typings";
 import type { Row } from "@tanstack/react-table";
 import { useState } from "react";
 
 export default function FinalForeCastInput({
   row,
 }: {
-  row: Row<SrPredictedDataType>;
+  row: Row<SalesRepForecastType>;
 }) {
-  const { updateItem, forcastedData } = useSrForcastedStore((state) => state);
-
-  const currentValue = forcastedData
-    .find((data) => data.itemCode === row.original.itemId)
-    ?.srPredictDataList.find(
-      (item) => item.storeId === row.original.storeId
-    )?.smForeCast;
-
-  const [dataToShow, setDataToShow] = useState<string | number | undefined>(
-    currentValue
+  const { updateItem } = useSrForcastedStore((state) => state);
+  const [value, setValue] = useState<number | string>(
+    row.original.smForeCast || 0
   );
 
   return (
     <div className="flex items-center gap-2">
-      <Button
+      <DecreaseButton
         onClick={() => {
-          if (!currentValue) return;
+          if (!row.original.storeId) return;
+          if (!row.original.itemCode) return;
+          if (!row.original.smForeCast) return;
+          if (row.original.smForeCast === 0) return;
 
-          if (currentValue > 0) {
-            if (!row.original.itemId) return;
-            setDataToShow(Number(currentValue - 1));
+          setValue(row.original.smForeCast - 1);
 
-            updateItem(
-              row.original.itemId,
-              row.original.storeId,
-              Number(currentValue - 1)
-            );
-          }
-        }}
-        className="bg-red-600 hover:bg-red-700 text-white"
-      >
-        -
-      </Button>
-      <Input
-        className={"w-[5rem]"}
-        value={dataToShow}
-        onBlur={() => {
-          if (!row.original.itemId) return;
-
-          if (dataToShow === "") {
-            setDataToShow(0);
-            updateItem(row.original.itemId, row.original.storeId, 0);
-          }
-        }}
-        onChange={(e) => {
-          if (!row.original.itemId) return;
-
-          console.log(e.target.value);
-          if (
-            e.target.value === "" ||
-            Number(e.target.value) < 0 ||
-            Number.isNaN(Number(e.target.value))
-          ) {
-            setDataToShow("");
-            updateItem(row.original.itemId, row.original.storeId, 0);
-            return;
-          }
-
-          setDataToShow(Number(e.target.value));
           updateItem(
-            row.original.itemId,
+            row.original.itemCode.toString(),
             row.original.storeId,
-            Number(e.target.value)
+            row.original.smForeCast - 1
           );
         }}
       />
-      <Button
-        onClick={() => {
-          if (!row.original.itemId || currentValue === undefined) return;
+      <Input
+        value={value}
+        className={"w-[5rem]"}
+        min={0}
+        onChange={(e) => {
+          const value = Number(e.currentTarget.value.replace(/[^0-9]/g, ""));
+          if (!row.original.storeId) return;
+          if (!row.original.itemCode) return;
 
-          setDataToShow(Number(currentValue + 1));
+          if (!e.currentTarget.value) {
+            setValue("");
+            updateItem(
+              row.original.itemCode.toString(),
+              row.original.storeId,
+              0
+            );
+            return;
+          }
+
+          setValue(value);
           updateItem(
-            row.original.itemId,
+            row.original.itemCode.toString(),
             row.original.storeId,
-            Number(currentValue + 1)
+            value
           );
         }}
-        className="bg-green-600 text-white hover:bg-green-700"
-      >
-        +
-      </Button>
+      />
+      <IncreaseButton
+        onClick={() => {
+          if (!row.original.storeId) return;
+          if (!row.original.itemCode) return;
+          setValue((row.original.smForeCast || 0) + 1);
+          updateItem(
+            row.original.itemCode.toString(),
+            row.original.storeId,
+            (row.original.smForeCast || 0) + 1
+          );
+        }}
+      />
     </div>
   );
 }
