@@ -1,11 +1,11 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
-import { Button } from "@/components/ui/button";
 import type { DataAvailabilityType } from "@/typings";
 import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { CheckCheck, CircleX } from "lucide-react";
+import SubmitBySMForSR from "./_components/SubmitBySMForSR";
 
 export const columns: ColumnDef<DataAvailabilityType>[] = [
   //   {
@@ -62,13 +62,7 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
     id: "forceAdd",
     header: ({ column }) => <DataTableColumnHeader column={column} title="" />,
     cell: ({ row }) => {
-      return row.original.availability ? (
-        <></>
-      ) : (
-        <>
-          <Button>Force Add</Button>
-        </>
-      );
+      return row.original.availability ? <></> : <SubmitBySMForSR row={row} />;
     },
   },
 ];

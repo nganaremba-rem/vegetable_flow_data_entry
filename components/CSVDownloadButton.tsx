@@ -11,6 +11,7 @@ export default function CSVDownloadButton({
 }) {
   return (
     <CSVLink
+      suppressHydrationWarning
       className="shadow-lg w-max text-sm flex items-center gap-2 text-gray-700 bg-slate-100 hover:bg-slate-200  px-5 py-2 rounded"
       data={csvData}
       filename={`${filename}.csv`}

@@ -6,6 +6,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import deleteFarmerAction from "@/actions/deleteFarmerAction";
 import TableRowAction from "@/components/TableRowAction";
 import type { FarmerType } from "@/typings";
+import AvailableItems from "./_component/AvailableItems";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -82,5 +83,8 @@ export const columns: ColumnDef<FarmerType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Available Items" />
     ),
+    cell: ({ row }) => {
+      return <AvailableItems row={row} />;
+    },
   },
 ];

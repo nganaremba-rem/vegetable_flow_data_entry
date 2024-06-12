@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import RemoveSRAssigned from "@/app/@admin/store/_component/RemoveSRAssigned";
 import DeleteEntry from "@/components/DeleteEntry";
 import {
   DropdownMenu,
@@ -29,6 +30,9 @@ export default function TableRowAction({
   editPageLink,
   serverActionFn,
   availableItemUpdateLink = null,
+  assignSalesRepLink = null,
+  removeSalesRepAssigned = null,
+  storeItemsLink = null,
 }: {
   editPageLink: string;
   serverActionFn: () => Promise<
@@ -41,6 +45,9 @@ export default function TableRowAction({
     | CustomMutateResponseType<[]>
   >;
   availableItemUpdateLink?: string | null;
+  assignSalesRepLink?: string | null;
+  removeSalesRepAssigned?: { storeId: string } | null;
+  storeItemsLink?: string | null;
 }) {
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [state, setState] = React.useState<{
@@ -68,7 +75,7 @@ export default function TableRowAction({
           Edit
         </Link>
         <DropdownMenuSeparator />
-        <Dialog>
+        <Dialog onOpenChange={setOpenDropdown}>
           <DialogTrigger className="py-1 px-2 w-full text-left text-sm rounded hover:bg-red-600 hover:text-white">
             Delete
           </DialogTrigger>
@@ -104,6 +111,32 @@ export default function TableRowAction({
             href={availableItemUpdateLink}
           >
             Update Available Items
+          </Link>
+        )}
+
+        {assignSalesRepLink !== null && (
+          <Link
+            className="w-full block py-1 px-2 rounded hover:bg-green-600 hover:text-white"
+            href={assignSalesRepLink}
+          >
+            Assign Sales Rep
+          </Link>
+        )}
+
+        {removeSalesRepAssigned !== null && (
+          <RemoveSRAssigned
+            setOpenDropdown={setOpenDropdown}
+            storeId={removeSalesRepAssigned.storeId}
+          />
+        )}
+        <DropdownMenuSeparator />
+
+        {storeItemsLink !== null && (
+          <Link
+            className="w-full block py-1 px-2 rounded hover:bg-teal-600 hover:text-white"
+            href={storeItemsLink}
+          >
+            View Store Items
           </Link>
         )}
       </DropdownMenuContent>

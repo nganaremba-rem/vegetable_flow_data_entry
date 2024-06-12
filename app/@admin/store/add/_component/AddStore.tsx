@@ -42,7 +42,7 @@ export default function AddStore() {
     defaultValues: {
       storeId: "",
       address: "",
-      salesRep: "",
+      // salesRep: "",
       storeName: "",
     },
   });
@@ -121,7 +121,7 @@ export default function AddStore() {
                 </FormItem>
               )}
             />
-            <FormField
+            {/* <FormField
               control={form.control}
               name="salesRep"
               render={({ field }) => (
@@ -135,7 +135,7 @@ export default function AddStore() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
             <FormField
               control={form.control}
               name="address"

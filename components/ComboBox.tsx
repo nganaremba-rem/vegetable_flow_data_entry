@@ -18,8 +18,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
 
-type DataType = {
+export type DataType = {
   label: string;
   value: string;
 };
@@ -28,10 +29,12 @@ export function ComboBoxResponsive({
   placeholder,
   data,
   cb,
+  className,
 }: {
   placeholder: string;
   data: DataType[];
   cb: (id: string) => void;
+  className?: string;
 }) {
   const [open, setOpen] = React.useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -43,7 +46,10 @@ export function ComboBoxResponsive({
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button variant="outline" className="w-[150px] overflow-hidden">
+          <Button
+            variant="outline"
+            className={cn(["overflow-hidden", className])}
+          >
             <div className="justify-start whitespace-nowrap overflow-hidden text-ellipsis">
               {selectedStatus ? (
                 <>{selectedStatus.label}</>
@@ -103,7 +109,7 @@ export function StatusList({
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup>
-          {data.map((status) => (
+          {data?.map((status) => (
             <CommandItem
               key={status.value}
               value={status.value}

@@ -55,6 +55,7 @@ export default async function SalesRepForeCasted() {
     // <div>Hello</div>
     <MainComponent
       isAlreadySubmitted={smReportStatus.status === "AVAILABLE"}
+      smReportStatus={smReportStatus}
       salesManagerTableData={salesManagerTableData}
       rawSalesRepReport={response.data}
     />

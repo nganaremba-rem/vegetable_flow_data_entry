@@ -29,7 +29,7 @@ export async function mutateData<T>({
 			body: JSON.stringify(data),
 			cache: "no-store",
 		});
-		console.log(response);
+
 		if (!response.ok) {
 			return {
 				status: "ERROR",

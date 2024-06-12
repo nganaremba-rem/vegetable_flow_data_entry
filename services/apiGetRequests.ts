@@ -1,7 +1,8 @@
 "use server";
 
 import { apiBaseUrl } from "@/constants/constants";
-import type { CustomResponseType } from "@/typings";
+import { getSession } from "@/lib/auth";
+import type { CustomResponseType, userSessionType } from "@/typings";
 
 export async function getRequest<T>({
 	endpointUrl,
@@ -18,12 +19,20 @@ export async function getRequest<T>({
 		| "only-if-cached"
 		| "reload";
 	tags: string[];
-	userId: string;
+	userId?: string;
 }): Promise<CustomResponseType<T>> {
 	try {
+		const session = await getSession<userSessionType>();
+		if (!session)
+			return {
+				status: "ERROR",
+				message: "Session expired. Please login again.",
+				data: [] as T,
+			};
+
 		const response = await fetch(`${apiBaseUrl}${endpointUrl}`, {
 			headers: {
-				userId,
+				userId: session.userInfo.userId,
 			},
 			cache,
 			next: {
@@ -43,7 +52,11 @@ export async function getRequest<T>({
 
 		console.log(responseData);
 
-		if (responseData?.status !== "SUCCESS" && responseData?.status !== true) {
+		if (
+			responseData?.status !== "SUCCESS" &&
+			responseData?.status !== "AVAILABLE" &&
+			responseData?.status !== true
+		) {
 			return {
 				status: responseData?.status || "ERROR",
 				message: responseData?.message || "An error occurred",

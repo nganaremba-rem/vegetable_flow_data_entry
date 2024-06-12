@@ -71,7 +71,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center py-4 gap-2">
+      <div className="flex items-center py-4 gap-2 m-1">
         <Input
           placeholder={searchPlaceholder}
           value={(table.getColumn(searchId)?.getFilterValue() as string) ?? ""}
@@ -83,11 +83,11 @@ export function DataTable<TData, TValue>({
         <DataTableViewOptions table={table} />
       </div>
 
-      <div className="flex-1 text-sm text-muted-foreground">
+      {/* <div className="flex-1 text-sm text-muted-foreground">
         {table
           .getFilteredSelectedRowModel()
           .rows.map((row) => row.getValue("id"))}
-      </div>
+      </div> */}
       <div className="rounded-md border my-4">
         <Table>
           <TableHeader>

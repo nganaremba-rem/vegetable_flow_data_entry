@@ -12,7 +12,7 @@ export function DialogContainer({
 }) {
   return (
     <Dialog open={open} onOpenChange={(state) => setOpen(state)}>
-      <DialogContent>{children}</DialogContent>
+      <DialogContent className="h-[95svh]">{children}</DialogContent>
     </Dialog>
   );
 }

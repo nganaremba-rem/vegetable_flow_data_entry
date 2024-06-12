@@ -50,6 +50,15 @@ export const columns: ColumnDef<StoreType>[] = [
           serverActionFn={() =>
             deleteStoreAction(row.original.storeId.toString())
           }
+          assignSalesRepLink={
+            !row.original.salesRep
+              ? `/store/assign-sales-rep/${row.original.storeId}`
+              : null
+          }
+          removeSalesRepAssigned={
+            row.original.salesRep ? { storeId: row.original.storeId } : null
+          }
+          storeItemsLink={`/store/storeItems/${row.original.storeId}`}
         />
       );
     },

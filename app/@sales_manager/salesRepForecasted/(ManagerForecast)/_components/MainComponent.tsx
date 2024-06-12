@@ -1,14 +1,18 @@
 "use client";
 
+import CSVDownloadButton from "@/components/CSVDownloadButton";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useColumns } from "@/hooks/useColumns";
+import { generateCSVData } from "@/lib/generateCsvData";
 import { useSrForcastedStore } from "@/store/srForcastedStore";
 import type {
+  CustomResponseType,
   SalesManagerTableDataType,
   SalesRepForecastedLatestDataType,
 } from "@/typings";
+import { format } from "date-fns";
 import { useEffect } from "react";
 import FinalForeCastInput from "./FinalForecastInput";
 import SubmitToProcurementButton from "./SubmitToProcurementButton";
@@ -18,10 +22,12 @@ export default function MainComponent({
   isAlreadySubmitted,
   salesManagerTableData,
   rawSalesRepReport,
+  smReportStatus,
 }: {
   salesManagerTableData: SalesManagerTableDataType[];
   isAlreadySubmitted: boolean;
   rawSalesRepReport: SalesRepForecastedLatestDataType[];
+  smReportStatus: CustomResponseType<unknown>;
 }) {
   const { setItems, forcastedData, updateItem } = useSrForcastedStore(
     (state) => state
@@ -75,7 +81,10 @@ export default function MainComponent({
     <>
       <div className="relative px-2 2xl:px-[10rem]">
         <div className="text-gray-800 dark:text-slate-200 text-xl font-bold ">
-          Sales Rep Forecasted Data
+          Sales Rep Forecasted Data{" "}
+        </div>
+        <div className="text-sm text-green-500 my-2">
+          {smReportStatus.status === "AVAILABLE" && smReportStatus.message}
         </div>
 
         <Tabs defaultValue={forcastedData?.[0]?.storeId}>
@@ -95,6 +104,15 @@ export default function MainComponent({
           </ScrollArea>
           {forcastedData.map((store) => (
             <TabsContent key={store.storeId} value={store.storeId}>
+              <div className="flex justify-end">
+                <CSVDownloadButton
+                  filename={`${store.storeName} SM Forecasted - ${format(
+                    Date.now(),
+                    "dd-MM-yyyy hh:mm a"
+                  )}`}
+                  csvData={generateCSVData(store.data)}
+                />
+              </div>
               <DataTable
                 data={store.data}
                 searchId={"itemName"}

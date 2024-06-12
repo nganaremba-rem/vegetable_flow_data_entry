@@ -19,6 +19,7 @@ export default async function FarmerPage() {
   const session = await getSession<userSessionType>();
   if (!session) return null;
   const response = await getData(session.userInfo.userId);
+  if (response.status !== "SUCCESS") return null;
 
   return (
     <>

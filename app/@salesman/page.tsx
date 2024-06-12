@@ -1,6 +1,11 @@
 import { getSession } from "@/lib/auth";
 import { getRequest } from "@/services/apiGetRequests";
-import type { ItemsWithPreset, userSessionType } from "@/typings";
+import type {
+  ItemsWithPreset,
+  SalesRepForecastType,
+  userSessionType,
+} from "@/typings";
+import type { StoreType } from "../@admin/store/columns";
 import MainComponent from "./_components/MainComponent";
 
 async function getItems(userId: string, storeId: string) {
@@ -12,10 +17,21 @@ async function getItems(userId: string, storeId: string) {
 }
 
 async function getCurrentSRForecastStatus(userId: string, storeId: string) {
-  return await getRequest<{ status: boolean; updateTime: string | null }>({
+  return await getRequest<{
+    storeId: string;
+    storeName: string;
+    data: SalesRepForecastType[];
+  }>({
     endpointUrl: `/forecast/srReportStatus?storeId=${storeId}`,
     tags: ["storeForecastStatus", storeId],
     userId,
+  });
+}
+
+async function getStoreByStoreId(storeId: string) {
+  return await getRequest<StoreType>({
+    endpointUrl: `/store/getById/${storeId}`,
+    tags: ["store", storeId],
   });
 }
 
@@ -32,12 +48,18 @@ export default async function SaleRep() {
     session.userInfo.storeId
   );
 
+  const storeResponse = await getStoreByStoreId(session.userInfo.storeId);
+
+  if (storeResponse.status !== "SUCCESS") return null;
+
   return (
     <MainComponent
-      isAlreadyForecasted={
-        forecastStatus.status === true || items.data === null
+      isAlreadyForecasted={forecastStatus.status === "AVAILABLE"}
+      alreadyForecastedData={
+        forecastStatus.status === "AVAILABLE" ? forecastStatus : null
       }
       storeId={session.userInfo.storeId}
+      storeDetail={storeResponse.data}
       byRole={session.userInfo.userRole}
       items={items.data || []}
     />

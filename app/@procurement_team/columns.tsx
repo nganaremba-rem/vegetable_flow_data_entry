@@ -17,12 +17,18 @@ export const columns: ColumnDef<FinalForecastedDataType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Forecasted Packets" />
     ),
+    cell: ({ row }) => {
+      return row.original.count < 0 ? "N/A" : row.original.count;
+    },
   },
   {
     accessorKey: "weight",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Total Weights" />
     ),
+    cell: ({ row }) => {
+      return row.original.weight < 0 ? "N/A" : row.original.weight;
+    },
   },
   {
     accessorKey: "suppliers",

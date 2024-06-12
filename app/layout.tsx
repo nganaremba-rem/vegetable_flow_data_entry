@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import type { userSessionType } from "@/typings";
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
+import "react-toastify/ReactToastify.minimal.css";
 import "./globals.css";
 
 const fontSans = FontSans({

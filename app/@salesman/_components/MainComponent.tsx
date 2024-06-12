@@ -1,6 +1,7 @@
 "use client";
 
 import { salesRepForecast } from "@/actions/salesRepForecast";
+import type { StoreType } from "@/app/@admin/store/columns";
 import CSVDownloadButton from "@/components/CSVDownloadButton";
 import { DialogContainer } from "@/components/DialogContainer";
 import { DataTable } from "@/components/data-table";
@@ -8,10 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { generateCSVData } from "@/lib/generateCsvData";
 import { useItemStore } from "@/store/itemStore";
-import type { ItemsWithPreset } from "@/typings";
+import type {
+  CustomResponseType,
+  ItemsWithPreset,
+  SalesRepForecastType,
+} from "@/typings";
 import { format } from "date-fns";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
+import { alreadForecastedColumns } from "../alreadySubmittedColumns";
 import { columns } from "../columns";
 
 export default function MainComponent({
@@ -19,11 +25,19 @@ export default function MainComponent({
   storeId,
   byRole,
   isAlreadyForecasted,
+  storeDetail,
+  alreadyForecastedData,
 }: {
   items: ItemsWithPreset[];
   storeId: string;
   byRole: string;
   isAlreadyForecasted: boolean;
+  storeDetail: StoreType;
+  alreadyForecastedData: CustomResponseType<{
+    storeId: string;
+    storeName: string;
+    data: SalesRepForecastType[];
+  }> | null;
 }) {
   const { setItems, items: finalItems } = useItemStore((state) => state);
   const [isPending, startTransition] = useTransition();
@@ -131,13 +145,26 @@ export default function MainComponent({
         <p className="text-gray-700 text-sm">
           Date: {format(Date.now(), "dd/MM/yyyy")}
         </p>
-        <CSVDownloadButton filename="Sales Rep Record" csvData={csvData} />
+        <CSVDownloadButton
+          filename={`Sales Rep Record - ${storeDetail.storeName} (${format(
+            Date.now(),
+            "dd-MM-yyyy hh:mma"
+          )})`}
+          csvData={csvData}
+        />
+      </div>
+      <div className="text-green-500 text-sm">
+        {isAlreadyForecasted && alreadyForecastedData?.message}
       </div>
       <DataTable
         searchId="itemName"
         searchPlaceholder="Search Items"
-        columns={isAlreadyForecasted ? columns : columns}
-        data={items}
+        columns={isAlreadyForecasted ? alreadForecastedColumns : columns}
+        data={
+          alreadyForecastedData !== null
+            ? alreadyForecastedData?.data?.data
+            : items
+        }
       />
       <Button
         onClick={() => {
@@ -145,7 +172,7 @@ export default function MainComponent({
             submitForecast(finalItems);
           });
         }}
-        disabled={isPending || isAlreadyForecasted}
+        disabled={isPending || isAlreadyForecasted || finalItems.length === 0}
         className="w-full my-10 shadow-lg bg-primary-blue hover:bg-sky-700 dark:text-white"
       >
         {isPending ? "Submitting..." : "Submit to Sales Manager"}

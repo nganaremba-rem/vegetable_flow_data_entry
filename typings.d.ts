@@ -161,3 +161,9 @@ export interface SalesManagerTableDataType {
 	"Total KG/PC": number;
 	[storeName: string]: string | number; // Indexed signature for dynamic properties
 }
+
+export interface StoreItemsType {
+	itemCode: number;
+	itemName: string;
+	preset: number;
+}
