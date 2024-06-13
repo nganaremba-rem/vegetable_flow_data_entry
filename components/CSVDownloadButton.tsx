@@ -5,9 +5,11 @@ import { FaFileCsv } from "react-icons/fa6";
 export default function CSVDownloadButton({
   csvData,
   filename,
+  text = "Download as CSV",
 }: {
   csvData: CSVDataFinalType;
   filename: string;
+  text?: string;
 }) {
   return (
     <CSVLink
@@ -16,7 +18,7 @@ export default function CSVDownloadButton({
       data={csvData}
       filename={`${filename}.csv`}
     >
-      Download as CSV
+      {text}
       <FaFileCsv color="green" size={20} />
     </CSVLink>
   );

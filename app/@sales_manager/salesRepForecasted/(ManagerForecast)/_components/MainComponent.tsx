@@ -33,6 +33,8 @@ export default function MainComponent({
     (state) => state
   );
 
+  const allCsvData = generateCSVData(salesManagerTableData);
+
   // set the forecasted data along with storeId and default smForecast
   useEffect(() => {
     if (!rawSalesRepReport) return;
@@ -75,6 +77,8 @@ export default function MainComponent({
     ["itemCode", "storeId"]
   );
 
+  const salesManagerTableDataCols = useColumns(salesManagerTableData);
+
   if (!forcastedData?.[0]?.storeId) return null;
 
   return (
@@ -86,10 +90,27 @@ export default function MainComponent({
         <div className="text-sm text-green-500 my-2">
           {smReportStatus.status === "AVAILABLE" && smReportStatus.message}
         </div>
+        {/* <div className="flex items-center gap-2 my-4">
+          <CSVDownloadButton
+            text="Download All Combined Forecast Report"
+            csvData={allCsvData}
+            filename={`Combined Forecast Report - ${format(
+              Date.now(),
+              "dd-MM-yyyy | hh:mm a"
+            )}`}
+          />
+        </div> */}
 
         <Tabs defaultValue={forcastedData?.[0]?.storeId}>
           <ScrollArea className="w-full">
             <TabsList>
+              <TabsTrigger
+                title={"All"}
+                key={"allCombinedForecastReport"}
+                value={"allCombinedForecastReport"}
+              >
+                All
+              </TabsTrigger>
               {forcastedData.map((store) => (
                 <TabsTrigger
                   title={store.storeName}
@@ -102,6 +123,27 @@ export default function MainComponent({
             </TabsList>
             <ScrollBar orientation="horizontal" />
           </ScrollArea>
+          <TabsContent
+            key={"allCombinedForecastReport"}
+            value={"allCombinedForecastReport"}
+          >
+            <div className="flex justify-end">
+              <CSVDownloadButton
+                text="Download All Combined Forecast Report"
+                csvData={allCsvData}
+                filename={`Combined Forecast Report - ${format(
+                  Date.now(),
+                  "dd-MM-yyyy | hh:mm a"
+                )}`}
+              />
+            </div>
+            <DataTable
+              data={salesManagerTableData}
+              searchId={"itemName"}
+              searchPlaceholder="Search Vegetable"
+              columns={salesManagerTableDataCols}
+            />
+          </TabsContent>
           {forcastedData.map((store) => (
             <TabsContent key={store.storeId} value={store.storeId}>
               <div className="flex justify-end">
