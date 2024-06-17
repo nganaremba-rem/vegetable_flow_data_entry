@@ -18,8 +18,15 @@ async function getData(userId: string) {
 
 export default async function Store() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const response = await getData(session.userInfo.userId);
+  if (response.status !== "SUCCESS") {
+    return (
+      <div className="text-center text-red-600 font-bold tracking-wide">
+        {response.message || "Unable to get the store data"}
+      </div>
+    );
+  }
 
   return (
     <>

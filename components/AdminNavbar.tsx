@@ -10,7 +10,7 @@ export default function AdminNavbar({
 }: {
   userInfo: userInfoType | undefined;
 }) {
-  if (!userInfo) return null;
+  if (!userInfo) return <div>Session Expired</div>;
   return (
     <div className="flex justify-between p-2 dark:shadow-gray-900 shadow-sky-50 shadow-lg mb-10">
       <div className="flex items-center">

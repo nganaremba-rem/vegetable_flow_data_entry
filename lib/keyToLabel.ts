@@ -1,0 +1,38 @@
+export const keyToLabel = {
+	id: "ID",
+	storeName: "Store Name",
+	salesRep: "Sales Rep",
+	createdOn: "Created On",
+	createdBy: "Created By",
+	itemName: "Vegetable Name",
+	preset: "Target",
+	itemGroup: "Vegetable Group",
+	packetWeight: "Packet Weight",
+	farmerId: "Farmer ID",
+	fullName: "Full Name",
+	address: "Address",
+	phoneNo: "Phone Number",
+	availableItem: "Available Items",
+	userName: "Username",
+	email: "Email",
+	roleCode: "Role Code",
+	storeId: "Store ID",
+	empId: "Employee ID",
+	inventory: "Inventory",
+	quantity: "Quantity",
+	suggested_forecast: "Suggested Forecast",
+	packets_required: "Sales Rep. Forecast",
+	srForecast: "Sales Rep. Forecast",
+	entryTime: "Forecasted Time",
+	availability: "Forecast available",
+	itemCode: "Item Code",
+	smForeCast: "Sales Manager Forecast",
+	count: "Forecasted Packets",
+	weight: "Weight",
+	suppliers: "Suppliers",
+	"Vegetable Types": "Vegetable Types",
+};
+
+export function getColumnLabel(key: keyof typeof keyToLabel): string {
+	return keyToLabel[key] || key;
+}

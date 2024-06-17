@@ -5,7 +5,7 @@ import type { userSessionType } from "@/typings";
 
 export default async function SalesManagerNavbar() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   return (
     <div className="flex  bg-slate-100 dark:bg-[#0A0A0A] dark:shadow-gray-900 justify-between items-center p-2 shadow-sky-50 shadow-lg mb-10">

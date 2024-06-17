@@ -2,27 +2,27 @@ import type { SalesRepForecastedLatestDataType } from "@/typings";
 import { create } from "zustand";
 
 export type srForecastedStoreType = {
-  forcastedData: SalesRepForecastedLatestDataType[];
+  forecastedData: SalesRepForecastedLatestDataType[];
   updateItem: (itemCode: string, storeId: string, noOfItem: number) => void;
   setItems: (forcastedData: SalesRepForecastedLatestDataType[]) => void;
 };
 
 export const useSrForcastedStore = create<srForecastedStoreType>((set) => ({
-  forcastedData: [],
+  forecastedData: [],
   updateItem: (itemCode, storeId, noOfItem) =>
     set((state) => {
-      const currentStore = state.forcastedData.find(
+      const currentStore = state.forecastedData.find(
         (item) => item.storeId === storeId
       );
       if (!currentStore) return state;
-      const index = state.forcastedData.indexOf(currentStore);
-      const item = state.forcastedData[index].data.find(
+      const index = state.forecastedData.indexOf(currentStore);
+      const item = state.forecastedData[index].data.find(
         (prediction) => prediction.itemCode === Number(itemCode)
       );
       if (!item) return state;
-      const itemIndex = state.forcastedData[index].data.indexOf(item);
-      state.forcastedData[index].data[itemIndex].smForeCast = noOfItem;
-      return { forcastedData: state.forcastedData };
+      const itemIndex = state.forecastedData[index].data.indexOf(item);
+      state.forecastedData[index].data[itemIndex].smForeCast = noOfItem;
+      return { forecastedData: state.forecastedData };
     }),
-  setItems: (forcastedData) => set({ forcastedData }),
+  setItems: (forecastedData) => set({ forecastedData }),
 }));

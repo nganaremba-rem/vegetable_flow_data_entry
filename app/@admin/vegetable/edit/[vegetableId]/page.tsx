@@ -19,7 +19,7 @@ type paramType = {
 
 export default async function EditVegetable({ params }: paramType) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const vegetableResponse = await getVegetableById(
     params.vegetableId,

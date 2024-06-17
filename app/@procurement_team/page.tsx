@@ -14,7 +14,7 @@ async function getFinalForecastedData(userId: string) {
 
 export default async function ProcurementTeam() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   // const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
 

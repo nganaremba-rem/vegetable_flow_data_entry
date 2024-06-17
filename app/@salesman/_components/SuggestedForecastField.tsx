@@ -13,7 +13,7 @@ export default function SuggestedForecastField({
 
   const item = items.find((item) => item.itemCode === row.original.itemCode);
 
-  if (!item) return null;
+  if (!item) return <div>Item not found</div>;
 
   return <div>{item?.preset - (item?.inventory || 0)}</div>;
 }

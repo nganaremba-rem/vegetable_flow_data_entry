@@ -25,9 +25,13 @@ export default async function UpdateTarget({
   };
 }) {
   const storeItemsResponse = await getStoreItems(params.storeId);
-  if (storeItemsResponse.status !== "SUCCESS") return null;
+  if (storeItemsResponse.status !== "SUCCESS")
+    return (
+      <div>{storeItemsResponse.message || "Unable to get store items"}</div>
+    );
   const storeResponse = await getStoreByStoreId(params.storeId);
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse.message || "Unable to get store info"}</div>;
 
   return (
     <div className="p-2 sm:px-[3rem] lg:px-[5rem] xl:px-[10rem] 2xl:px-[20rem] ">

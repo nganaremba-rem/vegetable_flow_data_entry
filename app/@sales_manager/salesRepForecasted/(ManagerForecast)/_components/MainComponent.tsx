@@ -4,6 +4,7 @@ import CSVDownloadButton from "@/components/CSVDownloadButton";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useCSVData from "@/hooks/useCSVData";
 import { useColumns } from "@/hooks/useColumns";
 import { generateCSVData } from "@/lib/generateCsvData";
 import { useSrForcastedStore } from "@/store/srForcastedStore";
@@ -29,11 +30,11 @@ export default function MainComponent({
   rawSalesRepReport: SalesRepForecastedLatestDataType[];
   smReportStatus: CustomResponseType<unknown>;
 }) {
-  const { setItems, forcastedData, updateItem } = useSrForcastedStore(
+  const { setItems, forecastedData, updateItem } = useSrForcastedStore(
     (state) => state
   );
 
-  const allCsvData = generateCSVData(salesManagerTableData);
+  const allCsvData = useCSVData({ data: salesManagerTableData });
 
   // set the forecasted data along with storeId and default smForecast
   useEffect(() => {
@@ -58,7 +59,7 @@ export default function MainComponent({
 
   // Create table column with extra column for Sales Manager Forecast and hide some columns
   const columns = useColumns(
-    forcastedData?.[0]?.data,
+    forecastedData?.[0]?.data,
     [
       {
         accessorKey: "smForeCast",
@@ -79,7 +80,13 @@ export default function MainComponent({
 
   const salesManagerTableDataCols = useColumns(salesManagerTableData);
 
-  if (!forcastedData?.[0]?.storeId) return null;
+  if (forecastedData?.length === 0) {
+    return (
+      <div className="text-gray-800 text-center dark:text-slate-200 text-xl font-bold ">
+        No Data Available
+      </div>
+    );
+  }
 
   return (
     <>
@@ -101,7 +108,7 @@ export default function MainComponent({
           />
         </div> */}
 
-        <Tabs defaultValue={forcastedData?.[0]?.storeId}>
+        <Tabs defaultValue={forecastedData?.[0]?.storeId}>
           <ScrollArea className="w-full">
             <TabsList>
               <TabsTrigger
@@ -111,7 +118,7 @@ export default function MainComponent({
               >
                 All
               </TabsTrigger>
-              {forcastedData.map((store) => (
+              {forecastedData.map((store) => (
                 <TabsTrigger
                   title={store.storeName}
                   key={store.storeId}
@@ -144,7 +151,7 @@ export default function MainComponent({
               columns={salesManagerTableDataCols}
             />
           </TabsContent>
-          {forcastedData.map((store) => (
+          {forecastedData.map((store) => (
             <TabsContent key={store.storeId} value={store.storeId}>
               <div className="flex justify-end">
                 <CSVDownloadButton
@@ -152,7 +159,7 @@ export default function MainComponent({
                     Date.now(),
                     "dd-MM-yyyy hh:mm a"
                   )}`}
-                  csvData={generateCSVData(store.data)}
+                  csvData={generateCSVData(store.data, ["itemCode", "storeId"])}
                 />
               </div>
               <DataTable

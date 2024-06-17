@@ -39,20 +39,21 @@ export default async function ProxyEntry({
   params: { storeId: string };
 }) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const items = await getItems(params.storeId);
 
   const forecastStatus = await getCurrentSRForecastStatus(params.storeId);
 
   const storeResponse = await getStoreByStoreId(params.storeId);
 
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse?.message || "Unable to get Store Info"}</div>;
 
   return (
     <MainComponent
       isAlreadyForecasted={forecastStatus.status === "AVAILABLE"}
       alreadyForecastedData={
-        forecastStatus.status === "AVAILABLE" ? forecastStatus : null
+        forecastStatus?.status === "AVAILABLE" ? forecastStatus : null
       }
       storeId={params.storeId}
       storeDetail={storeResponse.data}

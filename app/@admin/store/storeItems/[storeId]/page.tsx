@@ -1,8 +1,8 @@
-import { DataTable } from "@/components/data-table";
 import { getRequest } from "@/services/apiGetRequests";
 import type { StoreItemsType, VegetableType } from "@/typings";
 import type { StoreType } from "../../columns";
 import ModifyStoreItems from "./_components/ModifyStoreItems";
+import TableAndCSVComponent from "./_components/TableAndCSVComponent";
 import { columns } from "./columns";
 
 async function getStoreItems(storeId: string) {
@@ -34,11 +34,19 @@ export default async function StoreItems({
   };
 }) {
   const storeItemsResponse = await getStoreItems(params.storeId);
-  if (storeItemsResponse.status !== "SUCCESS") return null;
+
+  if (storeItemsResponse.status !== "SUCCESS")
+    return (
+      <div>{storeItemsResponse?.message || "Unable to get Store Item"}</div>
+    );
   const storeResponse = await getStoreByStoreId(params.storeId);
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse?.message || "Unable to get Store Info"}</div>;
   const vegetablesResponse = await getAllVeg();
-  if (vegetablesResponse.status !== "SUCCESS") return null;
+  if (vegetablesResponse.status !== "SUCCESS")
+    return (
+      <div>{vegetablesResponse?.message || "Unable to get Vegetables"}</div>
+    );
 
   return (
     <div className="p-2 sm:px-[3rem] lg:px-[5rem] xl:px-[10rem] 2xl:px-[20rem] ">
@@ -50,11 +58,13 @@ export default async function StoreItems({
         data={storeItemsResponse.data || []}
         vegetables={vegetablesResponse.data || []}
       />
-      <DataTable
+
+      <TableAndCSVComponent
         searchId="itemName"
         searchPlaceholder="Search Vegetable Name"
         data={storeItemsResponse.data || []}
         columns={columns}
+        storeName={storeResponse.data.storeName}
       />
     </div>
   );

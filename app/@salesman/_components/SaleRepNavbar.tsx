@@ -17,7 +17,7 @@ async function getStoreByStoreId(storeId: string, userId: string) {
 
 export default async function SalesRepNavbar() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const storeResponse = await getStoreByStoreId(
     session.userInfo.storeId,

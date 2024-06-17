@@ -29,7 +29,7 @@ export default async function UpdateAvailableItems({
   params: { farmerId: string };
 }) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const farmerResponse = await getFarmerById(
     params.farmerId,

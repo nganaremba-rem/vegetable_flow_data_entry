@@ -1,6 +1,5 @@
 "use server";
 
-import { userInfoType, type userSessionType } from "@/typings";
 import { type JWTPayload, SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";

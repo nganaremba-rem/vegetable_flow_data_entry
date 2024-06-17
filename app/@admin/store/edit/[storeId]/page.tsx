@@ -21,7 +21,7 @@ type paramType = {
 
 export default async function EditStore({ params }: paramType) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const storeResponse = await getStoreByStoreId(
     params.storeId,

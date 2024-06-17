@@ -5,7 +5,7 @@ import type { userSessionType } from "@/typings";
 
 export default async function ProcurementNavbar() {
   const userInfo = await getSession<userSessionType>();
-  if (!userInfo) return null;
+  if (!userInfo) return <div>Session Expired</div>;
 
   return (
     <div className="flex  bg-slate-100 dark:bg-[#0A0A0A] dark:shadow-gray-900 justify-between items-center  shadow-sky-50 shadow-lg mb-10">

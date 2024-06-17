@@ -19,7 +19,7 @@ type paramType = {
 
 export default async function EditFarmer({ params }: paramType) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const farmerResponse = await getFarmerById(
     params.farmerId,

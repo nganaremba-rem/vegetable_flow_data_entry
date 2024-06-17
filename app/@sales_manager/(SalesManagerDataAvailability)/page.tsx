@@ -1,3 +1,5 @@
+"use server";
+
 import { getSession } from "@/lib/auth";
 import { getRequest } from "@/services/apiGetRequests";
 import type { DataAvailabilityType, userSessionType } from "@/typings";
@@ -13,9 +15,11 @@ async function getDataAvailability(userId: string) {
 
 export default async function SalesManager() {
   const userInfo = await getSession<userSessionType>();
-  if (!userInfo) return null;
+  if (!userInfo) return <div>Session Expired</div>;
 
   const response = await getDataAvailability(userInfo.userInfo.userId);
+  if (response?.status !== "SUCCESS")
+    return <div>{response?.message || "Unable to get data availability"}</div>;
 
   return <MainComponent dataAvailability={response.data} />;
 }

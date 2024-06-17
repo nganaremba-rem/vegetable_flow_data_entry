@@ -37,7 +37,7 @@ async function getStoreByStoreId(storeId: string) {
 
 export default async function SaleRep() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const items = await getItems(
     session.userInfo.userId,
     session.userInfo.storeId
@@ -50,7 +50,8 @@ export default async function SaleRep() {
 
   const storeResponse = await getStoreByStoreId(session.userInfo.storeId);
 
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse?.message || "Unable to get Store Info"}</div>;
 
   return (
     <MainComponent

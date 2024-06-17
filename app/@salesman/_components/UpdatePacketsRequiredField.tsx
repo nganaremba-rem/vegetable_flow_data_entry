@@ -57,7 +57,7 @@ export default function UpdatePacketsRequiredField({
     }
   }, [item?.inventory, oldInventory, updatePacketRequired]);
 
-  if (!item) return null;
+  if (!item) return <div>Item not found</div>;
 
   return (
     <div className="flex items-center gap-2 w-[5rem]">

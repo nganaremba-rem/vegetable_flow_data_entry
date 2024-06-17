@@ -13,7 +13,7 @@ export default function SubmitToProcurementButton({
 }: {
   isAlreadySubmitted: boolean;
 }) {
-  const { forcastedData } = useSrForcastedStore((state) => state);
+  const { forecastedData } = useSrForcastedStore((state) => state);
   const [isPending, startTransition] = useTransition();
   const [openErrorDialog, setOpenErrorDialog] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
@@ -25,11 +25,11 @@ export default function SubmitToProcurementButton({
     message: "",
   });
 
-  if (!forcastedData) {
-    return null;
+  if (!forecastedData) {
+    return <div>Unable to get forecasted Data</div>;
   }
 
-  const dataToSubmit = forcastedData.map((store) => {
+  const dataToSubmit = forecastedData.map((store) => {
     return {
       storeId: store.storeId,
       itemForecastList: store.data.map((item) => {

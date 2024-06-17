@@ -21,7 +21,7 @@ export async function getStores(userId: string) {
 
 export default async function page() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const responseRoleCode = await getRoles(session.userInfo.userId);
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { getColumnLabel, type keyToLabel } from "@/lib/keyToLabel";
 import type { Column, ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
@@ -22,12 +23,13 @@ export function useColumns<T>(
     const columns = Object.keys(data?.[0] as object).map((key) => ({
       accessorKey: key,
       header: ({ column }: { column: Column<T, unknown> }) => {
-        const title = key
-          .replace(/([A-Z])/g, " $1")
-          .replace(/([_-])/g, " ")
-          .replace(/^./, (str) => {
-            return str.toUpperCase();
-          });
+        // const title = key
+        //   .replace(/([A-Z])/g, " $1")
+        //   .replace(/([_-])/g, " ")
+        //   .replace(/^./, (str) => {
+        //     return str.toUpperCase();
+        //   });
+        const title = getColumnLabel(key as keyof typeof keyToLabel);
         return <DataTableColumnHeader column={column} title={title} />;
       },
     }));

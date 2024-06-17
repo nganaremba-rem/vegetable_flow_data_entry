@@ -7,7 +7,7 @@ import { DialogContainer } from "@/components/DialogContainer";
 import { DataTable } from "@/components/data-table";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { generateCSVData } from "@/lib/generateCsvData";
+import useCSVData from "@/hooks/useCSVData";
 import { useItemStore } from "@/store/itemStore";
 import type {
   CustomResponseType,
@@ -16,7 +16,7 @@ import type {
 } from "@/typings";
 import { format } from "date-fns";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useMemo, useState, useTransition } from "react";
 import { alreadForecastedColumns } from "../alreadySubmittedColumns";
 import { columns } from "../columns";
 
@@ -104,7 +104,15 @@ export default function MainComponent({
     }
   }
 
-  const csvData = generateCSVData(items);
+  const hiddenColumns = useMemo(() => ["itemCode"], []);
+
+  const csvData = useCSVData({
+    data:
+      alreadyForecastedData !== null
+        ? alreadyForecastedData?.data?.data
+        : items,
+    hiddenColumns,
+  });
 
   return (
     <div className="2xl:px-[17rem] px-3 md:px-10 flex flex-col gap-2 py-2">

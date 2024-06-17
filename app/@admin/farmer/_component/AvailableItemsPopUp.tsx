@@ -14,6 +14,7 @@ export default function AvailableItemsPopUp({ data }: { data: string[] }) {
 
   useEffect(() => {
     setIsPending(true);
+    if (data.every((item) => item === "")) return setIsPending(false);
     const getAllData = async () => {
       try {
         const response = await Promise.all(
@@ -22,10 +23,12 @@ export default function AvailableItemsPopUp({ data }: { data: string[] }) {
               endpointUrl: `/item/getById/${vegId}`,
               tags: ["vegetable"],
             });
-            if (vegRes.status !== "SUCCESS") return null;
+            if (vegRes.status !== "SUCCESS")
+              return `Veg ID ${vegId} - Not Found`;
             return vegRes.data.itemName;
           })
         );
+
         setVegetables(response);
       } catch (error: any) {
         console.log(error);
@@ -48,6 +51,10 @@ export default function AvailableItemsPopUp({ data }: { data: string[] }) {
           <h1 className="text-xl font-bold text-gray-700 mb-3">
             Available Items
           </h1>
+
+          {vegetables.length === 0 && !pending && (
+            <p className="text-gray-600">No items available</p>
+          )}
 
           {vegetables.map((item) => (
             <p key={item} className="text-gray-600">

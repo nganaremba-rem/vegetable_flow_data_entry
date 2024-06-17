@@ -23,9 +23,13 @@ export default async function AddorRemoveVegForStore({
   params: { storeId: string };
 }) {
   const storeItemsResponse = await getStoreItems(params.storeId);
-  if (storeItemsResponse.status !== "SUCCESS") return null;
+  if (storeItemsResponse.status !== "SUCCESS")
+    return (
+      <div>{storeItemsResponse?.message || "Unable to get Store Items"}</div>
+    );
   const storeResponse = await getStoreByStoreId(params.storeId);
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse?.message || "Unable to get Store info"}</div>;
 
   return (
     <div className="p-2 sm:px-[3rem] lg:px-[5rem] xl:px-[10rem] 2xl:px-[20rem] ">

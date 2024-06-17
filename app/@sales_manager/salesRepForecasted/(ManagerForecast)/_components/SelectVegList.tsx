@@ -5,18 +5,18 @@ import { useSrForcastedStore } from "@/store/srForcastedStore";
 import { useState } from "react";
 
 export default function SelectVegList() {
-  const { forcastedData } = useSrForcastedStore((state) => state);
+  const { forecastedData } = useSrForcastedStore((state) => state);
   const [open, setOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<any>(null);
   if (
-    !forcastedData ||
-    !Array.isArray(forcastedData) ||
-    forcastedData.length === 0
+    !forecastedData ||
+    !Array.isArray(forecastedData) ||
+    forecastedData.length === 0
   ) {
-    return null;
+    return <div>Unable to get forecasted Data</div>;
   }
 
-  const storeList = forcastedData?.map((item) => ({
+  const storeList = forecastedData?.map((item) => ({
     label: item.storeName,
     value: item.storeId.replace(/\s/g, "-"),
   }));

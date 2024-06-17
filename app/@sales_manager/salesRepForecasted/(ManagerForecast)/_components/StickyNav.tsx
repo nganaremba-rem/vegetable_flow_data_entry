@@ -16,7 +16,7 @@ async function checkIfAlreadySubmitted(userId: string) {
 
 export default async function StickyNav() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
 

@@ -34,17 +34,18 @@ async function getAllVegData(userId: string) {
 
 export default async function SalesRepForeCasted() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
 
   const allVeg = await getAllVegData(session.userInfo.userId);
-  if (!allVeg) return null;
+  if (allVeg.status !== "SUCCESS")
+    return <div>{allVeg?.message || "Unable to get Vegetables"}</div>;
 
   const smReportStatus = await checkIfAlreadySubmitted(session.userInfo.userId);
   if (smReportStatus.status !== "AVAILABLE")
     return <>{smReportStatus.message}</>;
 
   const response = await getSalesRepForecastedData(session.userInfo.userId);
-  if (!response) return null;
+  if (!response) return <div>Unable to get Sales Rep Forecasted Data</div>;
 
   const salesManagerTableData = generateSalesManagerTableData({
     allVeg: allVeg.data,

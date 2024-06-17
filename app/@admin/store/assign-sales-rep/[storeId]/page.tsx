@@ -30,18 +30,24 @@ async function getStoreByStoreId(storeId: string, userId: string) {
 
 export default async function AssignSalesRep({ params }: AssignSalesRepProps) {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const availableSRResponse = await getAvailableSalesReps(
     session.userInfo.userId
   );
-  if (availableSRResponse.status !== "SUCCESS") return null;
+  if (availableSRResponse.status !== "SUCCESS")
+    return (
+      <div>
+        {availableSRResponse?.message || "Unable to get SR Report Status"}
+      </div>
+    );
 
   const storeResponse = await getStoreByStoreId(
     params.storeId,
     session.userInfo.userId
   );
 
-  if (storeResponse.status !== "SUCCESS") return null;
+  if (storeResponse.status !== "SUCCESS")
+    return <div>{storeResponse.message || "Unable to get Store Info"}</div>;
 
   const data = availableSRResponse.data.map((sr) => ({
     label: sr.userName,

@@ -17,8 +17,15 @@ async function getData(userId: string) {
 
 export default async function ItemPage() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const response = await getData(session.userInfo.userId);
+  if (response.status !== "SUCCESS") {
+    return (
+      <div className="text-red-600 text-center font-bold tracking-wide">
+        {response?.message || "Unable to fetch vegetables"}
+      </div>
+    );
+  }
 
   return (
     <>

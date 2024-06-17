@@ -17,10 +17,15 @@ async function getData(userId: string) {
 
 export default async function FarmerPage() {
   const session = await getSession<userSessionType>();
-  if (!session) return null;
+  if (!session) return <div>Session Expired</div>;
   const response = await getData(session.userInfo.userId);
-  if (response.status !== "SUCCESS") return null;
-
+  if (response.status !== "SUCCESS") {
+    return (
+      <div className="text-center text-red-600 font-bold tracking-wide">
+        {response.message || "Unable to get the farmers data"}
+      </div>
+    );
+  }
   return (
     <>
       <div className="p-2 2xl:px-[10rem]">
