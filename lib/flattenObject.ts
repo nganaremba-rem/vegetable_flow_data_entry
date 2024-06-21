@@ -15,7 +15,9 @@ export const flattenObject = (
 			} else if (Array.isArray(obj[key])) {
 				const firstItem = obj[key][0];
 				if (
-					obj[key].every((item) => typeof item !== "object" || item === null)
+					obj[key].every(
+						(item: any) => typeof item !== "object" || item === null,
+					)
 				) {
 					res[propName] = obj[key].join(", ");
 				} else if (typeof firstItem === "object" && firstItem !== null) {

@@ -56,7 +56,7 @@ export default function UserUpdateForm({
       info: user.info,
       gender: user.gender || "",
       roleCode: user.roleCode || "",
-      storeId: user.storeId || "",
+      // storeId: user.storeId || "",
     },
   });
 
@@ -236,7 +236,7 @@ export default function UserUpdateForm({
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="storeId"
                 render={({ field }) => {
@@ -260,7 +260,7 @@ export default function UserUpdateForm({
                     </FormItem>
                   );
                 }}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name="info"
