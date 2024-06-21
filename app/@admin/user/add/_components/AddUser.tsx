@@ -63,8 +63,9 @@ export default function AddUser({
       empId: "",
       info: "",
       password: "",
+      confirmPassword: "",
       roleCode: "",
-      storeId: "",
+      phNo: "",
       userName: "",
     },
   });
@@ -226,6 +227,24 @@ export default function AddUser({
             />
             <FormField
               control={form.control}
+              name="confirmPassword"
+              render={({ field }) => {
+                return (
+                  <FormItem>
+                    <FormLabel className="text-gray-800 dark:text-white">
+                      Confirm Password
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                );
+              }}
+            />
+
+            <FormField
+              control={form.control}
               name="roleCode"
               render={({ field }) => (
                 <FormItem>
@@ -250,12 +269,12 @@ export default function AddUser({
             />
             <FormField
               control={form.control}
-              name="storeId"
+              name="phNo"
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel>Store ID</FormLabel>
-                    <Select
+                    <FormLabel>Phone Number</FormLabel>
+                    {/* <Select
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                       key={storeKey}
@@ -268,7 +287,8 @@ export default function AddUser({
                       <SelectContent>
                         <FormSelectOption options={storeOptions} />
                       </SelectContent>
-                    </Select>
+                    </Select> */}
+                    <Input type="tel" {...field} />
                     <FormMessage />
                   </FormItem>
                 );

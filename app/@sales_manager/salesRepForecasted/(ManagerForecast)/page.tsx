@@ -2,6 +2,7 @@ import { getSession } from "@/lib/auth";
 import generateSalesManagerTableData from "@/lib/generateSalesManagerTableData";
 import { getRequest } from "@/services/apiGetRequests";
 import type {
+  DataAvailabilityType,
   SalesRepForecastedLatestDataType,
   itemType,
   userSessionType,
@@ -32,6 +33,14 @@ async function getAllVegData(userId: string) {
   });
 }
 
+async function getDataAvailability(userId: string) {
+  return await getRequest<DataAvailabilityType[]>({
+    endpointUrl: "/forecast/availability",
+    tags: ["data_availability"],
+    userId,
+  });
+}
+
 export default async function SalesRepForeCasted() {
   const session = await getSession<userSessionType>();
   if (!session) return <div>Session Expired</div>;
@@ -52,6 +61,16 @@ export default async function SalesRepForeCasted() {
     salesRepForecastedData: response.data,
   });
 
+  const forecastedStoreList = await getDataAvailability(
+    session.userInfo.userId
+  );
+  if (forecastedStoreList?.status !== "SUCCESS")
+    return <div>{response?.message || "Unable to get data availability"}</div>;
+
+  const isAllDataAvailable = forecastedStoreList.data.every(
+    (store) => store.availability === true
+  );
+
   return (
     // <div>Hello</div>
     <MainComponent
@@ -59,6 +78,7 @@ export default async function SalesRepForeCasted() {
       smReportStatus={smReportStatus}
       salesManagerTableData={salesManagerTableData}
       rawSalesRepReport={response.data}
+      isAllDataAvailable={isAllDataAvailable}
     />
   );
 }

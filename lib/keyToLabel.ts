@@ -31,6 +31,10 @@ export const keyToLabel = {
 	weight: "Weight",
 	suppliers: "Suppliers",
 	"Vegetable Types": "Vegetable Types",
+	"salesRep.name": "Sales Rep",
+	"salesRep.phNo": "Phone Number",
+	"suppliers.name": "Supplier Name",
+	"suppliers.phNo": "Supplier Phone Number",
 };
 
 export function getColumnLabel(key: keyof typeof keyToLabel): string {

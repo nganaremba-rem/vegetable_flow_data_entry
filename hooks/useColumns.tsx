@@ -1,6 +1,7 @@
 "use client";
 
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { flattenObject } from "@/lib/flattenObject";
 import { getColumnLabel, type keyToLabel } from "@/lib/keyToLabel";
 import type { Column, ColumnDef } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
@@ -20,7 +21,7 @@ export function useColumns<T>(
 
   useEffect(() => {
     if (!data) return;
-    const columns = Object.keys(data?.[0] as object).map((key) => ({
+    const columns = Object.keys(flattenObject(data?.[0])).map((key) => ({
       accessorKey: key,
       header: ({ column }: { column: Column<T, unknown> }) => {
         // const title = key

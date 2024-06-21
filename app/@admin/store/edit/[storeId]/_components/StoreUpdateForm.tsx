@@ -37,7 +37,7 @@ export default function StoreUpdateForm({
     resolver: zodResolver(StoreSchema),
     defaultValues: {
       address: store.address || "",
-      salesRep: store.salesRep || "",
+      // salesRep: store.salesRep || "",
       storeId: store.storeId || "",
       storeName: store.storeName || "",
     },
@@ -118,7 +118,7 @@ export default function StoreUpdateForm({
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="salesRep"
                 render={({ field }) => (
@@ -132,7 +132,7 @@ export default function StoreUpdateForm({
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <FormField
                 control={form.control}
                 name="address"

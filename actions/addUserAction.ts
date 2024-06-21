@@ -11,10 +11,11 @@ export async function addUserAction(formObject: z.infer<typeof UserSchema>) {
 		address: formObject.address,
 		gender: formObject.gender,
 		email: formObject.email,
+		confirmPassword: formObject.confirmPassword,
 		password: formObject.password,
 		roleCode: formObject.roleCode,
-		storeId: formObject.storeId,
 		info: formObject.info,
+		phNo: formObject.phNo,
 	});
 
 	const data = await submitHandleValidationAndSessionErrors({

@@ -1,3 +1,4 @@
+import { flattenObject } from "./flattenObject";
 import { getColumnLabel, type keyToLabel } from "./keyToLabel";
 
 export type CSVDataFormatRequired = {
@@ -19,7 +20,7 @@ export function generateCSVData(
 	if (!data || data?.length === 0) return [];
 
 	const csvData: CSVDataFinalType = [];
-	const headerKeys = Object.keys(data[0]).filter(
+	const headerKeys = Object.keys(flattenObject(data[0])).filter(
 		(key) => !hiddenColumns?.includes(key),
 	);
 	const headers = headerKeys.map((headerKey) =>
@@ -30,7 +31,9 @@ export function generateCSVData(
 
 	let isFormattedValue = false;
 
-	for (const item of data) {
+	const flattenData = data.map((item) => flattenObject(item));
+
+	for (const item of flattenData) {
 		const row: string[] = [];
 		for (const headerKey of headerKeys) {
 			if (listOfKeysWithFormatterCallback !== null) {

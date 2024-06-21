@@ -26,6 +26,14 @@ export const columns: ColumnDef<DataAvailabilityType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Sales Rep" />
     ),
+    cell: ({ row }) => (
+      <>
+        <div className="text-sm">{row.original.salesRep.name}</div>
+        <div className="text-xs text-muted-foreground">
+          {row.original.salesRep.phNo}
+        </div>
+      </>
+    ),
   },
   {
     accessorKey: "entryTime",

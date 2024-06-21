@@ -31,7 +31,10 @@ export interface salesForecastSubmitDataType {
 export interface DataAvailabilityType {
 	storeId: string;
 	storeName: string;
-	salesRep: string;
+	salesRep: {
+		name: string;
+		phNo: string | null;
+	};
 	availability: boolean;
 	entryTime: string | null;
 }
@@ -78,12 +81,17 @@ export interface SalesManagerForcastDataType {
 	itemForecastList: SMItemForCastDataType[];
 }
 
+export interface SupplierType {
+	name: string;
+	phNo: string;
+}
+
 export interface FinalForecastedDataType {
 	itemCode: string;
 	itemName: string;
 	count: number;
 	weight: number;
-	suppliers: string;
+	suppliers: SupplierType[];
 }
 
 export interface FinalForecastedDataResponseType {

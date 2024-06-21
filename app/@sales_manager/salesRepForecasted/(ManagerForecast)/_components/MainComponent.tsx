@@ -24,11 +24,13 @@ export default function MainComponent({
   salesManagerTableData,
   rawSalesRepReport,
   smReportStatus,
+  isAllDataAvailable,
 }: {
   salesManagerTableData: SalesManagerTableDataType[];
   isAlreadySubmitted: boolean;
   rawSalesRepReport: SalesRepForecastedLatestDataType[];
   smReportStatus: CustomResponseType<unknown>;
+  isAllDataAvailable: boolean;
 }) {
   const { setItems, forecastedData, updateItem } = useSrForcastedStore(
     (state) => state
@@ -172,7 +174,9 @@ export default function MainComponent({
           ))}
         </Tabs>
         <div className="my-10">
-          <SubmitToProcurementButton isAlreadySubmitted={isAlreadySubmitted} />
+          <SubmitToProcurementButton
+            isAlreadySubmitted={isAlreadySubmitted || !isAllDataAvailable}
+          />
         </div>
       </div>
     </>

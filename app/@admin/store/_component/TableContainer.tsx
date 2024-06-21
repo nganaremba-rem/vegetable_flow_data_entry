@@ -29,7 +29,10 @@ export default function TableContainer({ data }: { data: StoreType[] }) {
 
   return (
     <div>
-      <CSVDownloadButton csvData={csvData} filename="Store" />
+      <CSVDownloadButton
+        csvData={csvData}
+        filename={`Store - ${format(Date.now(), "dd-MM-yyyy hh:ss a")}`}
+      />
       <DataTable
         searchPlaceholder="Search Store Name"
         searchId="storeName"
