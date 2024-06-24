@@ -80,7 +80,17 @@ export default function MainComponent({
     ["itemCode", "storeId"]
   );
 
-  const salesManagerTableDataCols = useColumns(salesManagerTableData);
+  const salesManagerTableDataCols = useColumns(salesManagerTableData, [
+    {
+      accessorKey: "Packet Weight",
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title="Packet Weight (g)" />
+      ),
+      cell: ({ row }) => {
+        return `${row.original["Packet Weight"]} g`;
+      },
+    },
+  ]);
 
   if (forecastedData?.length === 0) {
     return (
@@ -138,7 +148,7 @@ export default function MainComponent({
           >
             <div className="flex justify-end">
               <CSVDownloadButton
-                text="Download All Combined Forecast Report"
+                text="Download Combined Forecast Report"
                 csvData={allCsvData}
                 filename={`Combined Forecast Report - ${format(
                   Date.now(),
@@ -156,13 +166,18 @@ export default function MainComponent({
           {forecastedData.map((store) => (
             <TabsContent key={store.storeId} value={store.storeId}>
               <div className="flex justify-end">
-                <CSVDownloadButton
-                  filename={`${store.storeName} SM Forecasted - ${format(
-                    Date.now(),
-                    "dd-MM-yyyy hh:mm a"
-                  )}`}
-                  csvData={generateCSVData(store.data, ["itemCode", "storeId"])}
-                />
+                {isAlreadySubmitted && (
+                  <CSVDownloadButton
+                    filename={`${store.storeName} SM Forecasted - ${format(
+                      Date.now(),
+                      "dd-MM-yyyy hh:mm a"
+                    )}`}
+                    csvData={generateCSVData(store.data, [
+                      "itemCode",
+                      "storeId",
+                    ])}
+                  />
+                )}
               </div>
               <DataTable
                 data={store.data}
@@ -174,6 +189,14 @@ export default function MainComponent({
           ))}
         </Tabs>
         <div className="my-10">
+          {!isAllDataAvailable && (
+            <div className="p-2 text-red-600">
+              Unable to proceed until all stores have submitted the forecast.
+            </div>
+          )}
+          {isAlreadySubmitted && (
+            <div className="text-green-600 text-center">Already Submitted</div>
+          )}
           <SubmitToProcurementButton
             isAlreadySubmitted={isAlreadySubmitted || !isAllDataAvailable}
           />

@@ -3,19 +3,25 @@
 import CSVDownloadButton from "@/components/CSVDownloadButton";
 import { DataTable } from "@/components/data-table";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { Button } from "@/components/ui/button";
 import useCSVData from "@/hooks/useCSVData";
 import { useColumns } from "@/hooks/useColumns";
-import type { DataAvailabilityType } from "@/typings";
+import type { DataAvailabilityType, userSessionType } from "@/typings";
 import { format } from "date-fns";
 import { CheckCheck, CircleX } from "lucide-react";
 import Link from "next/link";
 import { useMemo } from "react";
 import SubmitBySMForSR from "./SubmitBySMForSR";
+import SubmitZerosButton from "./SubmitZerosButton";
 
 export default function MainComponent({
   dataAvailability,
+  isAllDataAvailable,
+  session,
 }: {
   dataAvailability: DataAvailabilityType[];
+  isAllDataAvailable: boolean;
+  session: userSessionType;
 }) {
   const listOfKeysWithFormatterCallback = useMemo(
     () => [
@@ -82,6 +88,19 @@ export default function MainComponent({
           );
         },
       },
+      {
+        id: "submitZeros",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="" />
+        ),
+        cell: ({ row }) => {
+          return row.original.availability ? (
+            <></>
+          ) : (
+            <SubmitZerosButton session={session} row={row} />
+          );
+        },
+      },
     ],
     ["storeId"]
   );
@@ -107,12 +126,28 @@ export default function MainComponent({
         columns={columnss}
         data={dataAvailability}
       />
-      <Link
-        className="bg-primary-blue my-10 text-center hover:bg-sky-700 p-2 rounded text-white"
-        href={"/salesRepForecasted"}
-      >
-        Check Sales Rep Forecasted Report
-      </Link>
+      {!isAllDataAvailable && (
+        <div className="p-2 mt-10 text-red-600">
+          Unable to proceed until all stores have submitted the forecast.
+        </div>
+      )}
+
+      {!isAllDataAvailable ? (
+        <Button
+          type="button"
+          className="bg-red-600 mb-10 text-center hover:bg-sky-700 p-2 rounded text-white"
+          disabled={!isAllDataAvailable}
+        >
+          Check Sales Rep Forecasted Report
+        </Button>
+      ) : (
+        <Link
+          className="bg-primary-blue my-10 text-center hover:bg-sky-700 p-2 rounded text-white"
+          href={"/salesRepForecasted"}
+        >
+          Check Sales Rep Forecasted Report
+        </Link>
+      )}
     </div>
   );
 }

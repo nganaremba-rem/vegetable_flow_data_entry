@@ -5,20 +5,24 @@ import type { StoreType } from "@/app/@admin/store/columns";
 import CSVDownloadButton from "@/components/CSVDownloadButton";
 import { DialogContainer } from "@/components/DialogContainer";
 import { DataTable } from "@/components/data-table";
+import { DataTableColumnHeader } from "@/components/data-table-column-header";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import useCSVData from "@/hooks/useCSVData";
+import { useColumns } from "@/hooks/useColumns";
 import { useItemStore } from "@/store/itemStore";
 import type {
   CustomResponseType,
   ItemsWithPreset,
   SalesRepForecastType,
 } from "@/typings";
+import type { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import { MailCheck, MessageCircleWarning } from "lucide-react";
 import { useEffect, useMemo, useState, useTransition } from "react";
-import { alreadForecastedColumns } from "../alreadySubmittedColumns";
-import { columns } from "../columns";
+import SuggestedForecastField from "./SuggestedForecastField";
+import UpdateInventoryField from "./UpdateInventoryField";
+import UpdatePacketsRequiredField from "./UpdatePacketsRequiredField";
 
 export default function MainComponent({
   items,
@@ -114,6 +118,47 @@ export default function MainComponent({
     hiddenColumns,
   });
 
+  const alreadyForecastedColumns = useColumns(
+    alreadyForecastedData?.data?.data || [],
+    [],
+    ["itemCode"]
+  ) as ColumnDef<SalesRepForecastType | ItemsWithPreset>[];
+
+  const columns = useColumns(
+    items,
+    [
+      {
+        id: "inventory",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Inventory" />
+        ),
+        cell: ({ row }) => {
+          // add inventory when the input is updated
+          return <UpdateInventoryField row={row} />;
+        },
+      },
+      {
+        id: "suggested_forecast",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Suggested Forecast" />
+        ),
+        cell: ({ row }) => {
+          return <SuggestedForecastField row={row} />;
+        },
+      },
+      {
+        id: "packets_required",
+        header: ({ column }) => (
+          <DataTableColumnHeader column={column} title="Sales Rep. Forecast" />
+        ),
+        cell: ({ row }) => {
+          return <UpdatePacketsRequiredField row={row} />;
+        },
+      },
+    ],
+    ["itemCode"]
+  );
+
   return (
     <div className="2xl:px-[17rem] px-3 md:px-10 flex flex-col gap-2 py-2">
       <DialogContainer open={isErrorDialogOpen} setOpen={setIsErrorDialogOpen}>
@@ -153,21 +198,23 @@ export default function MainComponent({
         <p className="text-gray-700 text-sm">
           Date: {format(Date.now(), "dd/MM/yyyy")}
         </p>
-        <CSVDownloadButton
-          filename={`Sales Rep Record - ${storeDetail.storeName} (${format(
-            Date.now(),
-            "dd-MM-yyyy hh:mma"
-          )})`}
-          csvData={csvData}
-        />
+        {isAlreadyForecasted && (
+          <CSVDownloadButton
+            filename={`Sales Rep Record - ${storeDetail.storeName} (${format(
+              Date.now(),
+              "dd-MM-yyyy hh:mma"
+            )})`}
+            csvData={csvData}
+          />
+        )}
       </div>
       <div className="text-green-500 text-sm">
         {isAlreadyForecasted && alreadyForecastedData?.message}
       </div>
       <DataTable
         searchId="itemName"
-        searchPlaceholder="Search Items"
-        columns={isAlreadyForecasted ? alreadForecastedColumns : columns}
+        searchPlaceholder="Search Vegetable"
+        columns={isAlreadyForecasted ? alreadyForecastedColumns : columns}
         data={
           alreadyForecastedData !== null
             ? alreadyForecastedData?.data?.data

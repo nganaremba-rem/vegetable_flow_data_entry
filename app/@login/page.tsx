@@ -3,6 +3,7 @@
 import { loginAction } from "@/actions/loginAction";
 import FormButton from "@/components/FormButton";
 import Logo from "@/components/Logo";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Form,
@@ -20,6 +21,25 @@ import type { z } from "zod";
 import { formSchema } from "../../schema/LoginFormSchema";
 
 type FormSchema = z.infer<typeof formSchema>;
+
+const userCredentials = {
+  admin: {
+    email: "admin@ksw.com",
+    password: "123",
+  },
+  salesRep: {
+    email: "sr_s2@ksw.com",
+    password: "123",
+  },
+  manager: {
+    email: "sm@ksw.com",
+    password: "123",
+  },
+  pt: {
+    email: "pt@ksw.com",
+    password: "123",
+  },
+};
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -127,6 +147,45 @@ export default function Login() {
               Login
             </FormButton>
           </form>
+
+          <div className="flex gap-2">
+            <Button
+              size={"sm"}
+              onClick={() => {
+                form.setValue("email", userCredentials.admin.email);
+                form.setValue("password", userCredentials.admin.password);
+              }}
+            >
+              Admin
+            </Button>
+            <Button
+              size={"sm"}
+              onClick={() => {
+                form.setValue("email", userCredentials.salesRep.email);
+                form.setValue("password", userCredentials.salesRep.password);
+              }}
+            >
+              SR
+            </Button>
+            <Button
+              size={"sm"}
+              onClick={() => {
+                form.setValue("email", userCredentials.manager.email);
+                form.setValue("password", userCredentials.manager.password);
+              }}
+            >
+              SM
+            </Button>
+            <Button
+              size={"sm"}
+              onClick={() => {
+                form.setValue("email", userCredentials.pt.email);
+                form.setValue("password", userCredentials.pt.password);
+              }}
+            >
+              PT
+            </Button>
+          </div>
         </Form>
       </div>
     </div>

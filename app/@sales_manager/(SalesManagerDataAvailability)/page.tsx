@@ -21,5 +21,15 @@ export default async function SalesManager() {
   if (response?.status !== "SUCCESS")
     return <div>{response?.message || "Unable to get data availability"}</div>;
 
-  return <MainComponent dataAvailability={response.data} />;
+  const isAllDataAvailable = response.data.every(
+    (store) => store.availability === true
+  );
+
+  return (
+    <MainComponent
+      isAllDataAvailable={isAllDataAvailable}
+      dataAvailability={response.data}
+      session={userInfo}
+    />
+  );
 }

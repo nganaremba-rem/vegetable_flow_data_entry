@@ -62,6 +62,35 @@ export default function MainComponent({
     setItems(items);
   }, [items, setItems]);
 
+  async function submitZerosForecast(finalItems: ItemsWithPreset[]) {
+    const dataToSubmit = finalItems.map((item) => {
+      return {
+        itemCode: item.itemCode,
+        inventory: 0,
+        srForecast: 0,
+      };
+    });
+
+    const finalData = {
+      storeId,
+      byRole,
+      data: dataToSubmit,
+    };
+
+    console.log(finalData);
+
+    const { issues, message } = await salesRepForecast(finalData);
+    setState({ issues, message });
+
+    if (issues.length > 0) {
+      setIsErrorDialogOpen(true);
+      setIsSuccessDialogOpen(false);
+    } else {
+      setIsSuccessDialogOpen(true);
+      setIsErrorDialogOpen(false);
+    }
+  }
+
   async function submitForecast(finalItems: ItemsWithPreset[]) {
     const dataToSubmit = finalItems.map((item) => {
       let srForecast = 0;

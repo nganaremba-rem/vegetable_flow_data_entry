@@ -44,7 +44,7 @@ export const columns: ColumnDef<ItemsWithPreset | SalesRepForecastType>[] = [
   {
     accessorKey: "itemName",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Vegetable Name" />
+      <DataTableColumnHeader column={column} title="Vegetable" />
     ),
   },
 

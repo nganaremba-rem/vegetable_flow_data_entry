@@ -45,13 +45,14 @@ export default function generateSalesManagerTableData({
 				if (!srForecast) return acc;
 				return acc + srForecast;
 			}, 0),
-			"Total KG/PC": salesRepForecastedData.reduce((acc, curr) => {
-				const srForecast = curr.data.find(
-					(item) => item.itemCode === veg.id,
-				)?.srForecast;
-				if (!srForecast) return acc;
-				return acc + srForecast * veg.packetWeight;
-			}, 0),
+			"Total KG/PC":
+				salesRepForecastedData.reduce((acc, curr) => {
+					const srForecast = curr.data.find(
+						(item) => item.itemCode === veg.id,
+					)?.srForecast;
+					if (!srForecast) return acc;
+					return acc + srForecast * veg.packetWeight;
+				}, 0) / 1000,
 		};
 	});
 }

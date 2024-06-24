@@ -4,7 +4,7 @@ export const keyToLabel = {
 	salesRep: "Sales Rep",
 	createdOn: "Created On",
 	createdBy: "Created By",
-	itemName: "Vegetable Name",
+	itemName: "Vegetable",
 	preset: "Target",
 	itemGroup: "Vegetable Group",
 	packetWeight: "Packet Weight",
