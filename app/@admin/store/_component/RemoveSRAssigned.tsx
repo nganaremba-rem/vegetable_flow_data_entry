@@ -33,12 +33,17 @@ export default function RemoveSRAssigned({
     <Dialog
       open={openDialog}
       onOpenChange={(open) => {
-        setOpenDialog(open);
         setOpenDropdown(open);
+        setOpenDialog(open);
       }}
     >
-      <DialogTrigger className="py-1 px-2 w-full text-left text-sm rounded hover:bg-red-600 hover:text-white">
-        Remove Sales Rep from Store
+      <DialogTrigger asChild>
+        <button
+          type="button"
+          className="p-2 bg-white text-left text-sm rounded hover:bg-red-600 hover:text-white"
+        >
+          Remove Sales Rep from Store
+        </button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -62,11 +67,12 @@ export default function RemoveSRAssigned({
               startTransition(async () => {
                 const response = await removeSRFromStore(storeId);
                 if (response.status === "SUCCESS") {
-                  setOpenDialog(false);
+                  setOpenDropdown(false);
+                  // setOpenDialog(false);
+
                   toast.success(
                     response.message || "Sales Rep removed successfully"
                   );
-                  setOpenDropdown(false);
                 } else {
                   setState({
                     issues: response.issues,

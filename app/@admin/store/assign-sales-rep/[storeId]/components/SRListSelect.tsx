@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { submitHandleValidationAndSessionErrors } from "@/services/submitHandleValidationAndSessionErrors";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useCallback, useState, useTransition } from "react";
 import { toast } from "react-toastify";
 
 export default function SRListSelect({
@@ -26,6 +26,8 @@ export default function SRListSelect({
   });
   const router = useRouter();
 
+  const callBackToSetSRId = useCallback((srId: string) => setSrId(srId), []);
+
   return (
     <div className="flex flex-col gap-5">
       <div className="flex items-center gap-5">
@@ -40,7 +42,7 @@ export default function SRListSelect({
           className="min-w-[10rem]"
           placeholder="Select Sales Rep"
           data={data}
-          cb={(srId) => setSrId(srId)}
+          cb={callBackToSetSRId}
         />
       </div>
       <Button

@@ -108,7 +108,6 @@ export default function TableRowAction({
           </DialogContent>
         </Dialog>
         <DropdownMenuSeparator />
-
         {availableItemUpdateLink !== null && (
           <Link
             className="w-full block py-1 px-2 rounded hover:bg-sky-600 hover:text-white"
@@ -128,10 +127,12 @@ export default function TableRowAction({
         )}
 
         {removeSalesRepAssigned !== null && (
-          <RemoveSRAssigned
-            setOpenDropdown={setOpenDropdown}
-            storeId={removeSalesRepAssigned.storeId}
-          />
+          <>
+            <RemoveSRAssigned
+              setOpenDropdown={setOpenDropdown}
+              storeId={removeSalesRepAssigned.storeId}
+            />
+          </>
         )}
         <DropdownMenuSeparator />
 

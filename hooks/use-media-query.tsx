@@ -6,9 +6,7 @@ import { useEffect, useState } from "react";
  * @returns A boolean indicating if the query matches the current viewport.
  */
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(
-    () => window.matchMedia(query).matches
-  );
+  const [matches, setMatches] = useState<boolean>(false);
 
   useEffect(() => {
     const mediaQueryList = window.matchMedia(query);
