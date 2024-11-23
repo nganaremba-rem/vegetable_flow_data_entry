@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { DataTableColumnHeader } from "@/components/data-table-column-header";
-import type { ColumnDef } from "@tanstack/react-table";
+import { DataTableColumnHeader } from '@/components/data-table-column-header';
+import type { ColumnDef } from '@tanstack/react-table';
 
-import deleteStoreAction from "@/actions/deleteStoreAction";
-import TableRowAction from "@/components/TableRowAction";
-import { format } from "date-fns";
+import deleteStoreAction from '@/actions/deleteStoreAction';
+import TableRowAction from '@/components/TableRowAction';
+import { format } from 'date-fns';
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type StoreType = {
@@ -42,24 +42,28 @@ export const columns: ColumnDef<StoreType>[] = [
   //   enableHiding: false,
   // },
   {
-    id: "actions",
+    id: 'actions',
+    // The issue is likely due to z-index stacking - the overlay from the action buttons
+    // may be appearing behind other elements. Setting a higher z-index should fix this
     cell: ({ row }) => {
       return (
-        <TableRowAction
-          editPageLink={`/store/edit/${row.original.storeId}`}
-          serverActionFn={() =>
-            deleteStoreAction(row.original.storeId.toString())
-          }
-          assignSalesRepLink={
-            !row.original.salesRep
-              ? `/store/assign-sales-rep/${row.original.storeId}`
-              : null
-          }
-          removeSalesRepAssigned={
-            row.original.salesRep ? { storeId: row.original.storeId } : null
-          }
-          storeItemsLink={`/store/storeItems/${row.original.storeId}`}
-        />
+        <div className='relative z-50'>
+          <TableRowAction
+            editPageLink={`/store/edit/${row.original.storeId}`}
+            serverActionFn={() =>
+              deleteStoreAction(row.original.storeId.toString())
+            }
+            assignSalesRepLink={
+              !row.original.salesRep
+                ? `/store/assign-sales-rep/${row.original.storeId}`
+                : null
+            }
+            removeSalesRepAssigned={
+              row.original.salesRep ? { storeId: row.original.storeId } : null
+            }
+            storeItemsLink={`/store/storeItems/${row.original.storeId}`}
+          />
+        </div>
       );
     },
   },
@@ -77,15 +81,15 @@ export const columns: ColumnDef<StoreType>[] = [
   //   ),
   // },
   {
-    accessorKey: "storeName",
+    accessorKey: 'storeName',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Store Name" />
+      <DataTableColumnHeader column={column} title='Store Name' />
     ),
   },
   {
-    accessorKey: "salesRep",
+    accessorKey: 'salesRep',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Sales Rep" />
+      <DataTableColumnHeader column={column} title='Sales Rep' />
     ),
   },
   // {
@@ -101,12 +105,12 @@ export const columns: ColumnDef<StoreType>[] = [
   //   ),
   // },
   {
-    accessorKey: "createdOn",
+    accessorKey: 'createdOn',
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Created On" />
+      <DataTableColumnHeader column={column} title='Created On' />
     ),
     cell: ({ row }) => {
-      return format(row.original.createdOn, "dd/MM/yyyy");
+      return format(row.original.createdOn, 'dd/MM/yyyy');
     },
   },
 ];

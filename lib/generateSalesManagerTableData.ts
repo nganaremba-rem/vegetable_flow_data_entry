@@ -12,8 +12,17 @@ export default function generateSalesManagerTableData({
 	salesRepForecastedData: SalesRepForecastedLatestDataType[];
 }): SalesManagerTableDataType[] {
 	/*
+		OUTPUT FORMAT
             [{
                 'Vegetable Types': 'Tomato',
+                'Packet Weight': 100,
+                'Store 1': 100,
+                'Store 2': 200,
+                'Store 3': 300,
+                'Total Packets': 600,
+                'Total KG/PC': 60000    
+            }, {
+                'Vegetable Types': 'Potato',
                 'Packet Weight': 100,
                 'Store 1': 100,
                 'Store 2': 200,
@@ -27,6 +36,12 @@ export default function generateSalesManagerTableData({
 		return {
 			"Vegetable Types": veg.itemName,
 			"Packet Weight": veg.packetWeight,
+			/* {
+				"Store 1": 100,
+				"Store 2": 200,
+				"Store 3": null,
+				}
+			*/
 			...salesRepForecastedData.reduce(
 				(acc: { [key: string]: number | null }, data) => {
 					const srForecast = data.data.find(

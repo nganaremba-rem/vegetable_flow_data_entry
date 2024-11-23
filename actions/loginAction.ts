@@ -40,7 +40,7 @@ export async function loginAction(formData: FormData) {
 
 		if (!responseData.success) {
 			return {
-				issues: [responseData?.message] || ["An error occurred"],
+				issues: [responseData?.message || "An error occurred"],
 				message: "",
 			};
 		}

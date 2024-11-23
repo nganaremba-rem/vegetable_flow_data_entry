@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Bounce, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; //add this line
+import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; //add this line
 
 export default function ToastifyProvider({
   children,
@@ -12,7 +12,7 @@ export default function ToastifyProvider({
     <>
       {children}
       <ToastContainer
-        position="top-center"
+        position='top-center'
         autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -21,7 +21,7 @@ export default function ToastifyProvider({
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
+        theme='light'
         transition={Bounce}
       />
     </>
